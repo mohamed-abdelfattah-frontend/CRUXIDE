@@ -1,0 +1,8 @@
+import { mkdir, rm } from 'node:fs/promises';
+
+await Promise.all([
+  rm(new URL('../dist', import.meta.url), { force: true, recursive: true }),
+  rm(new URL('../release', import.meta.url), { force: true, recursive: true }),
+]);
+
+await mkdir(new URL('../release', import.meta.url), { recursive: true });

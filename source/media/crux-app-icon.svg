@@ -1,0 +1,9 @@
+<svg width="512" height="512" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Exact in-view export of the 64px Figma favicon component 22:104. -->
+  <rect width="64" height="64" rx="13" fill="#15171A"/>
+  <path d="M13.3 13.3H24.3L30.9 19.9L27.05 23.75L22.1 18.8H18.8V23.2L24.85 29.25L21 33.1L13.3 25.4V13.3Z" fill="#F3EFE6"/>
+  <path d="M50.7 13.3V24.3L44.1 30.9L40.25 27.05L45.2 22.1V18.8H40.8L34.75 24.85L30.9 21L38.6 13.3H50.7Z" fill="#F3EFE6"/>
+  <path d="M50.7 50.7H39.7L33.1 44.1L36.95 40.25L41.9 45.2H45.2V40.8L39.15 34.75L43 30.9L50.7 38.6V50.7Z" fill="#F3EFE6"/>
+  <path d="M13.3 50.7V39.7L19.9 33.1L23.75 36.95L18.8 41.9V45.2H23.2L29.25 39.15L33.1 43L25.4 50.7H13.3Z" fill="#F3EFE6"/>
+  <path d="M27.875 25.95H38.875V29.8H32V34.2H38.875V38.05H27.875L25.125 35.3V28.7L27.875 25.95Z" fill="#F3EFE6"/>
+</svg>

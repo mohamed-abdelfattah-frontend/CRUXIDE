@@ -1,0 +1,8 @@
+<svg width="24" height="24" viewBox="0 0 136 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Canonical Figma 21:5 geometry; currentColor is required for VS Code Activity Bar tinting. -->
+  <path d="M0 0H40L64 24L50 38L32 20H20V36L42 58L28 72L0 44V0Z" fill="currentColor"/>
+  <path d="M136 0V40L112 64L98 50L116 32V20H100L78 42L64 28L92 0H136Z" fill="currentColor"/>
+  <path d="M136 136H96L72 112L86 98L104 116H116V100L94 78L108 64L136 92V136Z" fill="currentColor"/>
+  <path d="M0 136V96L24 72L38 86L20 104V116H36L58 94L72 108L44 136H0Z" fill="currentColor"/>
+  <path d="M53 46H93V60H68V76H93V90H53L43 80V56L53 46Z" fill="currentColor"/>
+</svg>

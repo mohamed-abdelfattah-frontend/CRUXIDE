@@ -1,0 +1,49 @@
+# Context7
+
+Retrieve current version-specific library documentation into agent context.
+
+## Benefits
+
+- Retrieve current version-specific library documentation into agent context.
+
+## When to use
+
+- Use when the task matches: Retrieve current version-specific library documentation into agent context.
+
+## Compatibility
+
+- Agents: codex, claude-code, copilot, cursor, gemini, generic
+- Category: AI Engineering
+- Type: skill
+- Status: recommended
+- Required with CRUX Skills installs: undefined
+- Invocation: automatic or explicit when supported
+- Source: external
+- Version: provider-managed
+- License: See provider
+
+## Permissions
+
+| Capability | Requirement |
+| --- | --- |
+| Filesystem | read |
+| Network | true |
+| Scripts | false |
+| Hooks | false |
+| Authentication | true |
+
+## Installation
+
+CRUXIDE does not silently repackage or execute this provider's code. Review the provider page and permissions first.
+
+## Project impact
+
+CRUXIDE never adds application runtime dependencies automatically. Project Local installs are excluded from Git by default. External runtimes and caches stay outside the application project unless the developer explicitly chooses otherwise.
+
+## Uninstall
+
+Use **CRUXIDE: Manage Skills**, select the installed skill, and choose Uninstall. Review any project-authored changes before removal.
+
+## Source
+
+https://claude.com/plugins/context7

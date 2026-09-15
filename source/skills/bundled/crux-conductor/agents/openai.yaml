@@ -1,0 +1,6 @@
+interface:
+  display_name: "CRUX Conductor"
+  short_description: "Coordinate the right skills for one result"
+  default_prompt: "Use $crux-conductor to analyze this prompt, select and coordinate the minimum relevant installed skills, and verify the result."
+policy:
+  allow_implicit_invocation: false

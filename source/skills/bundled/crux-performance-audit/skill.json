@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "crux-performance-audit",
+  "displayName": "CRUX Performance Audit",
+  "category": "Architecture & Core",
+  "kind": "skill",
+  "version": "1.0.0",
+  "agents": [
+    "codex",
+    "claude-code",
+    "copilot",
+    "cursor",
+    "gemini",
+    "generic"
+  ],
+  "permissions": {
+    "filesystem": "read",
+    "network": false,
+    "scripts": false,
+    "hooks": false,
+    "authentication": false
+  },
+  "license": "MIT",
+  "required": false,
+  "explicitOnly": false
+}

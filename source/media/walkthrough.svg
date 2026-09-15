@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <rect width="640" height="360" rx="28" fill="#15171A"/>
+  <path opacity=".2" stroke="#7A8088" d="M0 60h640M0 120h640M0 180h640M0 240h640M0 300h640M80 0v360M160 0v360M240 0v360M320 0v360M400 0v360M480 0v360M560 0v360"/>
+  <g transform="translate(252 58)" fill="#F3EFE6">
+    <path d="M0 0H40L64 24L50 38L32 20H20V36L42 58L28 72L0 44V0Z"/>
+    <path d="M136 0V40L112 64L98 50L116 32V20H100L78 42L64 28L92 0H136Z"/>
+    <path d="M136 136H96L72 112L86 98L104 116H116V100L94 78L108 64L136 92V136Z"/>
+    <path d="M0 136V96L24 72L38 86L20 104V116H36L58 94L72 108L44 136H0Z"/>
+    <path d="M53 46H93V60H68V76H93V90H53L43 80V56L53 46Z"/>
+  </g>
+  <text x="320" y="268" text-anchor="middle" fill="#F3EFE6" font-family="Space Grotesk, Arial, sans-serif" font-size="36" font-weight="700">CRUXIDE</text>
+  <text x="320" y="308" text-anchor="middle" fill="#2456E8" font-family="Roboto Mono, monospace" font-size="13" font-weight="700" letter-spacing="4">CRUXCODE DEVELOPER EXPERIENCE</text>
+</svg>
