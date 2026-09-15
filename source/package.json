@@ -2,7 +2,7 @@
   "name": "cruxide",
   "displayName": "CRUXIDE",
   "description": "The secure CRUXCODE developer experience for Visual Studio Code.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "cruxcode",
   "license": "MIT",
   "icon": "media/crux-logo.png",

@@ -2,6 +2,13 @@
 
 All notable changes follow Keep a Changelog conventions.
 
+## 1.0.1 - 2026-09-15
+
+### Fixed
+
+- Made Windows per-user Roboto Mono installation idempotent by skipping byte-identical installed font files instead of attempting to overwrite files currently loaded by VS Code.
+- Added content-addressed fallback filenames when an existing per-user font path contains different bytes, preserving integrity without replacing a locked font.
+
 ## 1.0.0 - 2026-09-15
 
 ### Added

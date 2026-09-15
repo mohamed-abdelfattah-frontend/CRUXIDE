@@ -8,7 +8,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $ProfileName = 'CRUXIDE'
 $ExtensionId = 'cruxcode.cruxide'
-$Version = '1.0.0'
+$Version = '1.0.1'
 $PackageRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $VsixPath = Join-Path $PackageRoot "cruxide-$Version.vsix"
 $IconPath = Join-Path $PackageRoot 'cruxide.ico'
@@ -316,8 +316,32 @@ function Install-RobotoMono {
         if (($header | ForEach-Object { $_.ToString('X2') }) -join '' -ne '00010000') {
             throw "The bundled font is not a valid TrueType file: $($font.Source)"
         }
+        $sourceHash = (Get-FileHash -LiteralPath ([string]$font.Source) -Algorithm SHA256).Hash.ToLowerInvariant()
         $destination = Join-Path $fontDestination ([string]$font.FileName)
-        Copy-Item -LiteralPath ([string]$font.Source) -Destination $destination -Force
+        $copyRequired = $true
+
+        if (Test-Path -LiteralPath $destination -PathType Leaf) {
+            $destinationHash = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash.ToLowerInvariant()
+            if ($destinationHash -eq $sourceHash) {
+                $copyRequired = $false
+                Write-Host "Font already installed: $($font.FileName)" -ForegroundColor DarkCyan
+            }
+            else {
+                $contentAddressedName = "CRUXIDE-$($sourceHash.Substring(0, 12))-$($font.FileName)"
+                $destination = Join-Path $fontDestination $contentAddressedName
+                if (Test-Path -LiteralPath $destination -PathType Leaf) {
+                    $destinationHash = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash.ToLowerInvariant()
+                    if ($destinationHash -ne $sourceHash) {
+                        throw "Existing content-addressed font failed integrity verification: $destination"
+                    }
+                    $copyRequired = $false
+                }
+            }
+        }
+
+        if ($copyRequired) {
+            Copy-Item -LiteralPath ([string]$font.Source) -Destination $destination
+        }
         New-ItemProperty -Path $registryPath -Name ([string]$font.RegistryName) -Value $destination -PropertyType String -Force | Out-Null
     }
 

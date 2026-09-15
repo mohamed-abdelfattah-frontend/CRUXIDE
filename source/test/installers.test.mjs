@@ -26,6 +26,8 @@ test('Windows separates CLI installation from GUI shortcut launch', async () => 
   assert.match(source, /selected VS Code CLI is not paired with Code\.exe/);
   assert.match(source, /--locate-extension/);
   assert.match(source, /is a built-in extension with version/);
+  assert.match(source, /Get-FileHash[\s\S]*Font already installed/);
+  assert.match(source, /contentAddressedName/);
   assert.match(source, /cannot be downgraded/);
   assert.match(source, /Using the newer GitHub Copilot Chat bundled with VS Code/);
   assert.doesNotMatch(source, /\$LASTEXITCODE\s*=/);

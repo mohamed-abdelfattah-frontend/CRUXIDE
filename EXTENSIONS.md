@@ -1,6 +1,6 @@
 # CRUXIDE curated extensions
 
-CRUXIDE 1.0.0 references the following 61 fixed Visual Studio Marketplace IDs. The extension binaries are downloaded by the official VS Code CLI and are not embedded or republished by CRUXIDE. If a current VS Code build supplies one of these IDs as a newer application-scoped built-in, the installers use that bundled version and never attempt to downgrade it.
+CRUXIDE 1.0.1 references the following 61 fixed Visual Studio Marketplace IDs. The extension binaries are downloaded by the official VS Code CLI and are not embedded or republished by CRUXIDE. If a current VS Code build supplies one of these IDs as a newer application-scoped built-in, the installers use that bundled version and never attempt to downgrade it.
 
 ## Code quality and formatting
 

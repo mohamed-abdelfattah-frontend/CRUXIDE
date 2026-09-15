@@ -66,7 +66,7 @@ extension_pack_ids=(
   "shd101wyy.markdown-preview-enhanced"
   "pkief.material-icon-theme"
 )
-version="1.0.0"
+version="1.0.1"
 package_root="$(cd "$(dirname "$0")" && pwd)"
 vsix_path="$package_root/cruxide-$version.vsix"
 logo_path="$package_root/crux-logo.png"
@@ -244,7 +244,7 @@ cat > "$app_path/Contents/Info.plist" <<'PLIST'
   <key>CFBundleIdentifier</key><string>com.cruxcode.cruxide.launcher</string>
   <key>CFBundleName</key><string>CRUXIDE</string>
   <key>CFBundlePackageType</key><string>APPL</string>
-  <key>CFBundleShortVersionString</key><string>1.0.0</string>
+  <key>CFBundleShortVersionString</key><string>1.0.1</string>
 </dict>
 </plist>
 PLIST
