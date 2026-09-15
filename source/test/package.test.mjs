@@ -85,3 +85,13 @@ test('production compilation omits source maps', async () => {
   const config = JSON.parse(await readText('tsconfig.json'));
   assert.equal(config.compilerOptions.sourceMap, false);
 });
+
+test('VSIX packaging awaits the supported API and rejects truncated archives', async () => {
+  const source = await readText('scripts/package.mjs');
+  assert.match(source, /await createVSIX/);
+  assert.match(source, /await waitForCompletedWrite/);
+  assert.match(source, /centralDirectoryOffset \+ centralDirectorySize/);
+  assert.match(source, /unexpectedly small/);
+  assert.match(source, /Packaged VSIX is incomplete/);
+  assert.doesNotMatch(source, /spawnSync|npx\.cmd|shell:\s*true/);
+});
