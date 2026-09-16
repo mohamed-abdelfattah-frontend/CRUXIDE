@@ -4,6 +4,8 @@ All notable changes follow Keep a Changelog conventions.
 
 ## Unreleased
 
+## 1.1.0 - 2026-09-16
+
 ### Senior architecture and technology rules
 
 - Added version-aware rule packs for every supported language and framework track.
