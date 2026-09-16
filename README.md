@@ -2,6 +2,9 @@
 
 The CRUXCODE developer experience for Visual Studio Code.
 
+> [!IMPORTANT]
+> Install CRUXIDE from the versioned ZIP attached to a [GitHub Release](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/releases), not from GitHub's **Code → Download ZIP** source archive. Source archives do not contain the current release-built VSIX.
+
 CRUXIDE adds a track-based VS Code setup, CRUX themes, a branded 4K Home experience, curated developer tooling, Roboto Mono code typography, and CRUX Skills: a portable capability and rules layer for AI coding agents. It does not replace or patch Microsoft VS Code binaries.
 
 ## Highlights

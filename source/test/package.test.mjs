@@ -137,6 +137,11 @@ test('profile experience applies the Figma code typography', async () => {
   assert.match(extension, /'Roboto Mono'/);
   assert.match(extension, /'fontFamily'/);
   assert.match(extension, /terminal\.integrated/);
+  assert.match(extension, /cruxide\.setupPrompted\.v2/);
+  assert.match(extension, /setupOpened = await openFirstRunSetup/);
+  assert.match(extension, /SetupPanel\.show\(context, output\)/);
+  assert.match(extension, /No tools are installed until the user confirms/);
+  assert.doesNotMatch(extension, /'Not now'/);
 });
 
 test('production compilation omits source maps', async () => {

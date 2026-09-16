@@ -1,5 +1,7 @@
 # Install CRUXIDE 1.1.0
 
+Download the versioned `CRUXIDE-v1.1.0.zip` asset from [GitHub Releases](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/releases). Do not use GitHub's **Code → Download ZIP** source archive; it is source code, not an installable release.
+
 Do not run an installer directly from inside the ZIP. Extract the entire archive first so the VSIX, icon, and checksum manifest stay together.
 
 ## Windows

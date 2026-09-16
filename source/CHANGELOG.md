@@ -31,6 +31,7 @@ All notable changes follow Keep a Changelog conventions.
 ### Changed
 
 - Replaced the static 61-extension manifest with track-specific, deduplicated installation after explicit confirmation.
+- First launch now opens the track-selection Setup directly when no prior setup exists, so the choice cannot be hidden behind Home or missed as a notification.
 - Offline Windows and macOS installers now install and verify CRUXIDE only; track tooling is selected inside the active profile.
 - Deselecting a track never silently removes an extension, and already-installed or application-provided tools are not downgraded.
 
