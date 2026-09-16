@@ -9,6 +9,12 @@ description: Review repositories for exposed secrets, risky packages, lockfile d
 
 Review repositories for exposed secrets, risky packages, lockfile drift, and unsafe dependency practices.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Inspect manifests, lockfiles, registries, install scripts, CI configuration, and secret-handling patterns.

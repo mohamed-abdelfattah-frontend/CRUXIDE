@@ -389,7 +389,11 @@ async function writeProjectRules(
     const source = await readFile(sourcePath, 'utf8');
     const workflow = /## Workflow\s+([^]*?)(?=\n## |$)/.exec(source)?.[1]?.trim()
       ?? '- Follow the rule pack README and project overrides.';
-    sections.push(`## ${rule.name}\n\n${rule.description}\n\n${workflow}`);
+    const references = rule.references?.length
+      ? `\n\n### Official references\n\n${rule.references.map((reference) => `- ${reference}`).join('\n')}`
+      : '';
+    const reviewed = rule.lastReviewed ? `; reviewed ${rule.lastReviewed}` : '';
+    sections.push(`## ${rule.name}\n\n${rule.description}\n\n**Pack version:** ${rule.version}${reviewed}\n\n**Version policy:** ${rule.versionPolicy ?? 'Follow project-supported versions and repository policy.'}\n\n${workflow}${references}`);
   }
 
   const modeText: Readonly<Record<SkillInstallRequest['ruleMode'], string>> = {
@@ -413,6 +417,7 @@ async function writeProjectRules(
     '4. General recommendations from optional skills.',
     '',
     'Agents must never claim a rule, test, scanner, command, or review ran without evidence.',
+    'Agents must inspect the repository language, framework, runtime, and toolchain versions before applying technology-specific guidance. Project-supported versions take precedence; deprecated APIs must not be added to new code unless compatibility requires them and the exception is documented.',
     '',
     '## Selected Rule Packs',
     '',

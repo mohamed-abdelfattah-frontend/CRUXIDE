@@ -36,6 +36,10 @@ function isCatalogEntry(value: unknown): value is SkillCatalogEntry {
     && typeof value.description === 'string'
     && (value.kind === 'skill' || value.kind === 'rule-pack')
     && (value.source === 'crux' || value.source === 'external')
+    && (value.lastReviewed === undefined || (typeof value.lastReviewed === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value.lastReviewed)))
+    && (value.versionPolicy === undefined || typeof value.versionPolicy === 'string')
+    && (value.references === undefined || (Array.isArray(value.references)
+      && value.references.every((reference) => typeof reference === 'string' && reference.startsWith('https://'))))
     && Array.isArray(value.agents)
     && value.agents.every((agent) => typeof agent === 'string' && agents.has(agent));
 }

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "crux-express-rules",
+  "displayName": "CRUX Express Rules",
+  "category": "Technology Rules",
+  "kind": "rule-pack",
+  "version": "1.1.0",
+  "lastReviewed": "2026-09-16",
+  "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+  "references": [
+    "https://expressjs.com/en/advanced/best-practice-security/",
+    "https://expressjs.com/en/advanced/healthcheck-graceful-shutdown/"
+  ],
+  "agents": [
+    "codex",
+    "claude-code",
+    "copilot",
+    "cursor",
+    "gemini",
+    "generic"
+  ],
+  "permissions": {
+    "filesystem": "read",
+    "network": false,
+    "scripts": false,
+    "hooks": false,
+    "authentication": false
+  },
+  "license": "MIT",
+  "required": false,
+  "explicitOnly": false
+}

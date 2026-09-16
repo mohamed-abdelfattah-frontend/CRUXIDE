@@ -19,8 +19,13 @@ Apply secure-by-default patterns to authentication, input handling, data, APIs, 
 - Required with CRUX Skills installs: false
 - Invocation: automatic or explicit when supported
 - Source: crux
-- Version: 1.0.0
+- Version: 1.1.0
+- Last reviewed: 2026-09-16
 - License: MIT
+
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
 
 ## Permissions
 

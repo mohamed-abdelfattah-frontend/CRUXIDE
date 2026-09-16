@@ -4,6 +4,14 @@ All notable changes follow Keep a Changelog conventions.
 
 ## Unreleased
 
+### Senior architecture and technology rules
+
+- Added version-aware rule packs for every supported language and framework track.
+- Added dedicated Senior Solution Architecture and Senior Technical Lead rule packs.
+- Added official references, review dates, compatibility policy, and pack versions to generated skill documentation and project rules.
+- Added production guidance for frontend, native mobile, backend, databases, containers/CI/CD, and AI/RAG/agent systems.
+- Added regression coverage requiring substantial rules and complete track-to-rule mappings.
+
 ### Added
 
 - Added consent-based first-run **CRUXIDE Setup** with 23 selectable tracks and an all-tracks default that can be reduced before installation.

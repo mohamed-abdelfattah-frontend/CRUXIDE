@@ -26,3 +26,32 @@ test('iOS-only integrations are filtered by platform', () => {
   assert.ok(extensionPlan(tracks, 'darwin').some((item) => item.id === 'sweetpad.sweetpad'));
   assert.ok(!extensionPlan(tracks, 'linux').some((item) => item.id === 'sweetpad.sweetpad'));
 });
+
+test('every supported engineering track maps its technology-specific rule packs', () => {
+  const expected = new Map([
+    ['frontend-shared', ['crux-web-platform-rules', 'crux-typescript-javascript-rules']],
+    ['frontend-angular', ['crux-angular-rules']],
+    ['frontend-react', ['crux-react-rules']],
+    ['frontend-nextjs', ['crux-nextjs-rules']],
+    ['mobile-react-native', ['crux-react-native-rules']],
+    ['mobile-android', ['crux-kotlin-android-rules']],
+    ['mobile-ios', ['crux-swift-ios-rules']],
+    ['mobile-flutter', ['crux-dart-flutter-rules']],
+    ['backend-node', ['crux-nodejs-rules']],
+    ['backend-express', ['crux-express-rules']],
+    ['backend-nestjs', ['crux-nestjs-rules']],
+    ['backend-php-laravel', ['crux-php-rules', 'crux-laravel-rules']],
+    ['backend-dotnet', ['crux-csharp-dotnet-rules']],
+    ['backend-java-spring', ['crux-java-spring-rules']],
+    ['backend-go-rust', ['crux-go-rules', 'crux-rust-rules']],
+    ['ai-python', ['crux-python-rules', 'crux-ai-rag-production-rules']],
+    ['databases', ['crux-sql-database-rules']],
+    ['devops-containers', ['crux-container-cicd-rules']],
+  ]);
+  const byId = new Map(TRACKS_CATALOG.tracks.map((track) => [track.id, track]));
+  for (const [trackId, ruleIds] of expected) {
+    const track = byId.get(trackId);
+    assert.ok(track, `${trackId} must exist`);
+    for (const ruleId of ruleIds) assert.ok(track.ruleIds.includes(ruleId), `${trackId} must map ${ruleId}`);
+  }
+});

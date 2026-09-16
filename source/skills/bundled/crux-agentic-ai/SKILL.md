@@ -9,6 +9,12 @@ description: Design bounded agents with explicit tools, permissions, state, appr
 
 Design bounded agents with explicit tools, permissions, state, approvals, and evaluation.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Use an agent only when dynamic planning or tool selection adds value over a deterministic workflow.

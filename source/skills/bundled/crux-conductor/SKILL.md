@@ -10,6 +10,12 @@ disable-model-invocation: true
 
 Explicitly orchestrate the minimum relevant installed skills for a prompt and project, resolve conflicts, coordinate structured handoffs, and verify one coherent result.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Invocation
 
 - Run only after explicit user invocation. Do not invoke this skill automatically.

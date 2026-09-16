@@ -20,7 +20,12 @@ Use an evidence-first structured review workflow from the Agensi marketplace.
 - Invocation: automatic or explicit when supported
 - Source: external
 - Version: provider-managed
+- Last reviewed: Provider-managed
 - License: See provider
+
+## Version policy
+
+Follow the provider-supported compatibility policy for the installed version.
 
 ## Permissions
 

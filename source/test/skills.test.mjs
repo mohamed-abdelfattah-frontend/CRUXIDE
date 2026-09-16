@@ -38,6 +38,37 @@ test('catalog covers agreed platforms, review, Archify, ESLint, and Git workflow
   assert.match(gitSkill, /Conventional Commits/);
 });
 
+test('technology rules are version-aware, current, sourced, and substantial', async () => {
+  const { skills } = await import('../scripts/skill-definitions.mjs');
+  const technologyRules = skills.filter(({ tags = [] }) => tags.includes('technology-rules'));
+  assert.ok(technologyRules.length >= 20);
+  for (const rule of technologyRules) {
+    assert.equal(rule.source, 'crux');
+    assert.equal(rule.kind, 'rule-pack');
+    assert.equal(rule.version, '1.1.0');
+    assert.equal(rule.lastReviewed, '2026-09-16');
+    assert.match(rule.versionPolicy, /Detect the repository language, framework, runtime, and toolchain versions/i);
+    assert.ok(rule.instructions.length >= 7, `${rule.id} needs production-grade coverage`);
+    assert.ok(rule.instructions.every((instruction) => instruction.length >= 40), `${rule.id} contains a shallow rule`);
+    assert.ok(rule.references.every((reference) => reference.startsWith('https://')));
+  }
+
+  const catalog = JSON.parse(await readText('skills/catalog.json'));
+  const expected = [
+    'crux-solution-architecture-rules', 'crux-technical-lead-rules',
+    'crux-typescript-javascript-rules', 'crux-web-platform-rules', 'crux-angular-rules',
+    'crux-react-rules', 'crux-nextjs-rules', 'crux-react-native-rules',
+    'crux-kotlin-android-rules', 'crux-swift-ios-rules', 'crux-dart-flutter-rules',
+    'crux-nodejs-rules', 'crux-express-rules', 'crux-nestjs-rules',
+    'crux-php-rules', 'crux-laravel-rules', 'crux-csharp-dotnet-rules',
+    'crux-java-spring-rules', 'crux-go-rules', 'crux-rust-rules',
+    'crux-python-rules', 'crux-sql-database-rules', 'crux-container-cicd-rules',
+    'crux-ai-rag-production-rules',
+  ];
+  const catalogIds = new Set(catalog.skills.map(({ id }) => id));
+  for (const id of expected) assert.ok(catalogIds.has(id), `${id} must be generated`);
+});
+
 test('CRUX Conductor is required, explicit-only, documented, and attributed', async () => {
   const catalog = JSON.parse(await readText('skills/catalog.json'));
   const conductor = catalog.skills.find(({ id }) => id === 'crux-conductor');

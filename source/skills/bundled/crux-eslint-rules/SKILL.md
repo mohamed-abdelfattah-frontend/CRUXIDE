@@ -9,6 +9,12 @@ description: Optional ESLint guidance that uses existing project configuration w
 
 Optional ESLint guidance that uses existing project configuration without adding dependencies by default.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Use the repository ESLint flat or legacy configuration when present and do not rewrite it without approval.

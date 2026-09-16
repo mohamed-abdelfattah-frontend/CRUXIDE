@@ -45,6 +45,9 @@ for (const skill of skills) {
       category: skill.category,
       kind: skill.kind,
       version: skill.version,
+      lastReviewed: skill.lastReviewed,
+      versionPolicy: skill.versionPolicy,
+      references: skill.references,
       agents: skill.agents,
       permissions: skill.permissions,
       license: skill.license,
@@ -60,11 +63,14 @@ await writeFile(join(skillsRoot, 'README.md'), renderCatalogReadme(), 'utf8');
 
 function renderSkill(skill) {
   const workflow = skill.instructions.map((instruction, index) => `${index + 1}. ${instruction}`).join('\n');
+  const references = skill.references?.length
+    ? `\n## Official references\n\n${skill.references.map((reference) => `- ${reference}`).join('\n')}\n`
+    : '';
   const invocation = skill.explicitOnly
     ? '\n## Invocation\n\n- Run only after explicit user invocation. Do not invoke this skill automatically.\n- Use the command syntax supported by the current agent, such as `/crux-conductor` or `$crux-conductor`.\n'
     : '';
   const ownership = renderOwnership(skill);
-  return `---\nname: ${skill.id}\ndescription: ${skill.description}${skill.explicitOnly ? '\ndisable-model-invocation: true' : ''}\n---\n\n# ${skill.name}\n\n## Outcome\n\n${skill.description}\n${invocation}\n## Workflow\n\n${workflow}\n\n## Project control\n\n- Treat this skill as optional guidance unless the project explicitly selects warning or strict enforcement.\n- Project instructions and developer-authored overrides take precedence over CRUX recommendations.\n- Do not install dependencies, enable hooks, change Git configuration, or mutate agent settings without explicit approval.\n- Keep generated artifacts and caches outside the application build unless the developer explicitly chooses project sharing.\n${ownership}`;
+  return `---\nname: ${skill.id}\ndescription: ${skill.description}${skill.explicitOnly ? '\ndisable-model-invocation: true' : ''}\n---\n\n# ${skill.name}\n\n## Outcome\n\n${skill.description}\n\n## Version policy\n\n${skill.versionPolicy}\n\nLast reviewed: ${skill.lastReviewed}.\n${invocation}\n## Workflow\n\n${workflow}\n${references}\n## Project control\n\n- Treat this skill as optional guidance unless the project explicitly selects warning or strict enforcement.\n- Project instructions and developer-authored overrides take precedence over CRUX recommendations.\n- Do not install dependencies, enable hooks, change Git configuration, or mutate agent settings without explicit approval.\n- Keep generated artifacts and caches outside the application build unless the developer explicitly chooses project sharing.\n${ownership}`;
 }
 
 function renderReadme(skill) {
@@ -84,7 +90,10 @@ function renderReadme(skill) {
   const details = `${tagline}${skill.documentation ? `\n## How it works\n\n${skill.documentation}\n` : ''}`;
   const diagram = skill.diagram ? `\n## Workflow diagram\n\n\`\`\`mermaid\n${skill.diagram}\n\`\`\`\n` : '';
   const invocation = skill.explicitOnly ? '\n## Invocation\n\nThis skill is **explicit-only**. Invoke it with `/crux-conductor` in Claude Code or the equivalent named-skill syntax exposed by the selected agent. It must not run automatically for ordinary prompts.\n' : '';
-  return `# ${skill.name}\n\n${skill.description}\n${details}${diagram}${invocation}\n## Benefits\n\n${benefits}\n\n## When to use\n\n${useCases}\n\n## Compatibility\n\n- Agents: ${skill.agents.join(', ')}\n- Category: ${skill.category}\n- Type: ${skill.kind}\n- Status: ${skill.status}\n- Required with CRUX Skills installs: ${String(skill.required)}\n- Invocation: ${skill.explicitOnly ? 'explicit only' : 'automatic or explicit when supported'}\n- Source: ${skill.source}\n- Version: ${skill.version}\n- License: ${skill.license}\n\n## Permissions\n\n| Capability | Requirement |\n| --- | --- |\n${permissionRows}\n\n## Installation\n\n${installation}\n\n## Project impact\n\nCRUXIDE never adds application runtime dependencies automatically. Project Local installs are excluded from Git by default. External runtimes and caches stay outside the application project unless the developer explicitly chooses otherwise.\n\n## Uninstall\n\nUse **CRUXIDE: Manage Skills**, select the installed skill, and choose Uninstall. Review any project-authored changes before removal.\n\n## Source\n\n${skill.sourceUrl ?? 'Developed by CRUX Team and distributed with CRUXIDE.'}\n${renderOwnership(skill)}`;
+  const references = skill.references?.length
+    ? `\n## Official references\n\n${skill.references.map((reference) => `- ${reference}`).join('\n')}\n`
+    : '';
+  return `# ${skill.name}\n\n${skill.description}\n${details}${diagram}${invocation}\n## Benefits\n\n${benefits}\n\n## When to use\n\n${useCases}\n\n## Compatibility\n\n- Agents: ${skill.agents.join(', ')}\n- Category: ${skill.category}\n- Type: ${skill.kind}\n- Status: ${skill.status}\n- Required with CRUX Skills installs: ${String(skill.required)}\n- Invocation: ${skill.explicitOnly ? 'explicit only' : 'automatic or explicit when supported'}\n- Source: ${skill.source}\n- Version: ${skill.version}\n- Last reviewed: ${skill.lastReviewed ?? 'Provider-managed'}\n- License: ${skill.license}\n\n## Version policy\n\n${skill.versionPolicy ?? 'Follow the provider-supported compatibility policy for the installed version.'}\n${references}\n## Permissions\n\n| Capability | Requirement |\n| --- | --- |\n${permissionRows}\n\n## Installation\n\n${installation}\n\n## Project impact\n\nCRUXIDE never adds application runtime dependencies automatically. Project Local installs are excluded from Git by default. External runtimes and caches stay outside the application project unless the developer explicitly chooses otherwise.\n\n## Uninstall\n\nUse **CRUXIDE: Manage Skills**, select the installed skill, and choose Uninstall. Review any project-authored changes before removal.\n\n## Source\n\n${skill.sourceUrl ?? 'Developed by CRUX Team and distributed with CRUXIDE.'}\n${renderOwnership(skill)}`;
 }
 
 function renderOwnership(skill) {

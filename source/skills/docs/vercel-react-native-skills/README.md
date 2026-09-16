@@ -20,7 +20,12 @@ Apply React Native and Expo performance and implementation guidance.
 - Invocation: automatic or explicit when supported
 - Source: external
 - Version: provider-managed
+- Last reviewed: Provider-managed
 - License: See provider
+
+## Version policy
+
+Follow the provider-supported compatibility policy for the installed version.
 
 ## Permissions
 

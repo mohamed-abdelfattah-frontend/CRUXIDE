@@ -20,7 +20,12 @@ Assess dependency provenance, lifecycle, install behavior, and supply-chain expo
 - Invocation: automatic or explicit when supported
 - Source: external
 - Version: provider-managed
+- Last reviewed: Provider-managed
 - License: CC-BY-SA-4.0
+
+## Version policy
+
+Follow the provider-supported compatibility policy for the installed version.
 
 ## Permissions
 

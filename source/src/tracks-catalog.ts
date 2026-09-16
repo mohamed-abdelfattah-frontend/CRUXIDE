@@ -49,7 +49,8 @@ export const TRACKS_CATALOG: TracksCatalog = {
         'crux-secrets-dependency-audit',
       ], [
         'crux-base-quality-rules', 'crux-clean-architecture-rules', 'crux-git-workflow-rules',
-        'crux-security-rules', 'crux-testing-rules',
+        'crux-security-rules', 'crux-testing-rules', 'crux-solution-architecture-rules',
+        'crux-technical-lead-rules',
       ], [], ['core', 'architecture', 'documentation'], true),
 
     track('quality-testing', 'Quality & Testing', 'Core',
@@ -85,87 +86,124 @@ export const TRACKS_CATALOG: TracksCatalog = {
         'crux-frontend-architecture', 'crux-tailwind-shadcn', 'crux-design-system',
         'crux-accessibility-i18n', 'frontend-design', 'web-design-guidelines',
         'building-components', 'build-web-apps',
-      ], ['crux-accessibility-rules', 'crux-performance-rules'], [], ['web', 'ui', 'css']),
+      ], [
+        'crux-accessibility-rules', 'crux-performance-rules', 'crux-web-platform-rules',
+        'crux-typescript-javascript-rules',
+      ], [], ['web', 'ui', 'css']),
 
     track('frontend-angular', 'Angular', 'Frontend',
       'Official Angular language tooling plus Angular-oriented snippets and architecture guidance.', [
         extension('angular.ng-template', 'Angular Language Service'),
         extension('johnpapa.angular2', 'Angular Snippets'),
-      ], ['crux-angular-architecture'], ['crux-eslint-rules'], ['Node.js and the Angular CLI used by the project'], ['angular', 'typescript']),
+      ], ['crux-angular-architecture'], [
+        'crux-eslint-rules', 'crux-typescript-javascript-rules', 'crux-angular-rules',
+      ], ['Node.js and the Angular CLI used by the project'], ['angular', 'typescript']),
 
     track('frontend-react', 'React', 'Frontend',
       'React snippets, composition patterns, architecture, testing, and production best practices.', [
         extension('dsznajder.es7-react-js-snippets', 'ES7+ React/Redux/React-Native Snippets'),
-      ], ['crux-react-architecture', 'vercel-react-best-practices', 'vercel-composition-patterns'], ['crux-eslint-rules'], ['Node.js and the package manager used by the project'], ['react', 'typescript']),
+      ], ['crux-react-architecture', 'vercel-react-best-practices', 'vercel-composition-patterns'], [
+        'crux-eslint-rules', 'crux-typescript-javascript-rules', 'crux-react-rules',
+      ], ['Node.js and the package manager used by the project'], ['react', 'typescript']),
 
     track('frontend-nextjs', 'Next.js', 'Frontend',
       'Next.js App Router guidance, snippets, server/client boundaries, and Vercel-maintained practices.', [
         extension('pulkitgangwar.nextjs-snippets', 'Next.js Snippets'),
-      ], ['crux-nextjs-architecture', 'vercel-nextjs-best-practices'], ['crux-eslint-rules', 'crux-security-rules'], ['Node.js supported by the project Next.js version'], ['nextjs', 'react']),
+      ], ['crux-nextjs-architecture', 'vercel-nextjs-best-practices'], [
+        'crux-eslint-rules', 'crux-security-rules', 'crux-typescript-javascript-rules',
+        'crux-react-rules', 'crux-nextjs-rules',
+      ], ['Node.js supported by the project Next.js version'], ['nextjs', 'react']),
 
     track('mobile-react-native', 'React Native & Expo', 'Mobile',
       'Microsoft React Native runtime tooling, snippets, native-boundary guidance, and Expo workflows.', [
         extension('msjsdiag.vscode-react-native', 'React Native Tools'),
         extension('jundat95.react-native-snippet', 'React Native Snippet'),
-      ], ['crux-react-native-architecture', 'crux-mobile-quality', 'vercel-react-native-skills', 'expo-development'], ['crux-security-rules', 'crux-accessibility-rules'], ['A working React Native or Expo environment', 'Android SDK for Android targets', 'macOS and Xcode for iOS targets'], ['react-native', 'expo']),
+      ], ['crux-react-native-architecture', 'crux-mobile-quality', 'vercel-react-native-skills', 'expo-development'], [
+        'crux-security-rules', 'crux-accessibility-rules', 'crux-typescript-javascript-rules',
+        'crux-react-rules', 'crux-react-native-rules',
+      ], ['A working React Native or Expo environment', 'Android SDK for Android targets', 'macOS and Xcode for iOS targets'], ['react-native', 'expo']),
 
     track('mobile-android', 'Android & Kotlin', 'Mobile',
       'Official JetBrains Kotlin language support with Gradle and CRUX Android/Compose guidance.', [
         extension('JetBrains.kotlin-server', 'Kotlin by JetBrains', { note: 'Official extension; currently Alpha.' }),
         extension('vscjava.vscode-gradle', 'Gradle for Java'),
-      ], ['crux-android-kotlin', 'crux-mobile-quality', 'test-android-apps'], ['crux-security-rules', 'crux-testing-rules', 'crux-accessibility-rules'], ['JDK', 'Android SDK and platform tools', 'Android Studio remains recommended for full Android SDK and device management'], ['android', 'kotlin', 'compose']),
+      ], ['crux-android-kotlin', 'crux-mobile-quality', 'test-android-apps'], [
+        'crux-security-rules', 'crux-testing-rules', 'crux-accessibility-rules', 'crux-kotlin-android-rules',
+      ], ['JDK', 'Android SDK and platform tools', 'Android Studio remains recommended for full Android SDK and device management'], ['android', 'kotlin', 'compose']),
 
     track('mobile-ios', 'iOS & Swift', 'Mobile',
       'Official Swift language tooling plus optional macOS-only Xcode project integration.', [
         extension('swiftlang.swift-vscode', 'Swift for Visual Studio Code'),
         extension('sweetpad.sweetpad', 'SweetPad', { platforms: ['darwin'], note: 'macOS only; requires Xcode.' }),
-      ], ['crux-ios-swift', 'crux-mobile-quality', 'build-ios-apps'], ['crux-security-rules', 'crux-testing-rules', 'crux-accessibility-rules'], ['Swift toolchain', 'macOS and Xcode are required for native iOS builds'], ['ios', 'swift', 'swiftui']),
+      ], ['crux-ios-swift', 'crux-mobile-quality', 'build-ios-apps'], [
+        'crux-security-rules', 'crux-testing-rules', 'crux-accessibility-rules', 'crux-swift-ios-rules',
+      ], ['Swift toolchain', 'macOS and Xcode are required for native iOS builds'], ['ios', 'swift', 'swiftui']),
 
     track('mobile-flutter', 'Flutter & Dart', 'Mobile',
       'Flutter editing, refactoring, run/debug support, Dart dependency, and CRUX mobile architecture.', [
         extension('Dart-Code.flutter', 'Flutter', { note: 'Installs the Dart extension automatically.' }),
-      ], ['crux-flutter-architecture', 'crux-mobile-quality'], ['crux-security-rules', 'crux-testing-rules', 'crux-accessibility-rules'], ['Flutter SDK available on PATH', 'Platform SDKs for the intended targets'], ['flutter', 'dart']),
+      ], ['crux-flutter-architecture', 'crux-mobile-quality'], [
+        'crux-security-rules', 'crux-testing-rules', 'crux-accessibility-rules', 'crux-dart-flutter-rules',
+      ], ['Flutter SDK available on PATH', 'Platform SDKs for the intended targets'], ['flutter', 'dart']),
 
     track('backend-node', 'Node.js', 'Backend',
       'Node.js snippets, API workflows, runtime architecture, testing, and production lifecycle guidance.', [
         extension('chris-noring.node-snippets', 'Node Snippets'),
         extension('humao.rest-client', 'REST Client'),
-      ], ['crux-nodejs-architecture', 'crux-api-design', 'crux-backend-testing', 'crux-distributed-systems'], ['crux-api-rules', 'crux-security-rules', 'crux-testing-rules'], ['Node.js and the project package manager'], ['nodejs', 'api']),
+      ], ['crux-nodejs-architecture', 'crux-api-design', 'crux-backend-testing', 'crux-distributed-systems'], [
+        'crux-api-rules', 'crux-security-rules', 'crux-testing-rules',
+        'crux-typescript-javascript-rules', 'crux-nodejs-rules',
+      ], ['Node.js and the project package manager'], ['nodejs', 'api']),
 
     track('backend-express', 'Express', 'Backend',
       'Express snippets and secure middleware, validation, lifecycle, and service-boundary guidance.', [
         extension('Compulim.vscode-express', 'Express'),
-      ], ['crux-express-architecture'], ['crux-api-rules', 'crux-security-rules'], ['Node.js'], ['express', 'nodejs']),
+      ], ['crux-express-architecture'], [
+        'crux-api-rules', 'crux-security-rules', 'crux-typescript-javascript-rules',
+        'crux-nodejs-rules', 'crux-express-rules',
+      ], ['Node.js'], ['express', 'nodejs']),
 
     track('backend-nestjs', 'NestJS', 'Backend',
       'NestJS snippets and generators with module, DI, guard, pipe, and interceptor guidance.', [
         extension('imgildev.vscode-nestjs-snippets-extension', 'NestJS Snippets'),
         extension('imgildev.vscode-nestjs-generator', 'NestJS Generator'),
-      ], ['crux-nestjs-architecture'], ['crux-api-rules', 'crux-security-rules'], ['Node.js and Nest CLI when required by the project'], ['nestjs', 'nodejs']),
+      ], ['crux-nestjs-architecture'], [
+        'crux-api-rules', 'crux-security-rules', 'crux-typescript-javascript-rules',
+        'crux-nodejs-rules', 'crux-nestjs-rules',
+      ], ['Node.js and Nest CLI when required by the project'], ['nestjs', 'nodejs']),
 
     track('backend-php-laravel', 'PHP & Laravel', 'Backend',
       'PHP language intelligence, the official Laravel extension, debugging, and production backend guidance.', [
         extension('bmewburn.vscode-intelephense-client', 'PHP Intelephense'),
         extension('laravel.vscode-laravel', 'Laravel'),
         extension('xdebug.php-debug', 'PHP Debug'),
-      ], ['crux-php-architecture', 'crux-laravel-architecture', 'crux-api-design', 'crux-backend-testing'], ['crux-api-rules', 'crux-security-rules', 'crux-testing-rules'], ['PHP runtime', 'Composer', 'Xdebug for debugging', 'PHP 8.2+ for the official Laravel extension'], ['php', 'laravel']),
+      ], ['crux-php-architecture', 'crux-laravel-architecture', 'crux-api-design', 'crux-backend-testing'], [
+        'crux-api-rules', 'crux-security-rules', 'crux-testing-rules',
+        'crux-php-rules', 'crux-laravel-rules',
+      ], ['PHP runtime', 'Composer', 'Xdebug for debugging', 'PHP 8.2+ for the official Laravel extension'], ['php', 'laravel']),
 
     track('backend-dotnet', '.NET & ASP.NET Core', 'Backend',
       'Microsoft C# Dev Kit with .NET/ASP.NET Core architecture, testing, and API guidance.', [
         extension('ms-dotnettools.csdevkit', 'C# Dev Kit', { note: 'Use is subject to Microsoft licensing terms.' }),
-      ], ['crux-dotnet-architecture', 'crux-api-design', 'crux-backend-testing'], ['crux-api-rules', 'crux-security-rules', 'crux-testing-rules'], ['A supported .NET SDK'], ['dotnet', 'aspnet', 'csharp']),
+      ], ['crux-dotnet-architecture', 'crux-api-design', 'crux-backend-testing'], [
+        'crux-api-rules', 'crux-security-rules', 'crux-testing-rules', 'crux-csharp-dotnet-rules',
+      ], ['A supported .NET SDK'], ['dotnet', 'aspnet', 'csharp']),
 
     track('backend-java-spring', 'Java & Spring Boot', 'Backend',
       'Microsoft Java pack and Spring Tools with JVM service architecture and API guidance.', [
         extension('vscjava.vscode-java-pack', 'Extension Pack for Java'),
         extension('vmware.vscode-boot-dev-pack', 'Spring Boot Extension Pack'),
-      ], ['crux-java-spring-architecture', 'crux-api-design', 'crux-backend-testing'], ['crux-api-rules', 'crux-security-rules', 'crux-testing-rules'], ['A JDK supported by the project', 'Maven or Gradle when used by the project'], ['java', 'spring-boot']),
+      ], ['crux-java-spring-architecture', 'crux-api-design', 'crux-backend-testing'], [
+        'crux-api-rules', 'crux-security-rules', 'crux-testing-rules', 'crux-java-spring-rules',
+      ], ['A JDK supported by the project', 'Maven or Gradle when used by the project'], ['java', 'spring-boot']),
 
     track('backend-go-rust', 'Go & Rust', 'Backend',
       'Official Go and rust-analyzer language tooling with production service guidance.', [
         extension('golang.go', 'Go'),
         extension('rust-lang.rust-analyzer', 'rust-analyzer'),
-      ], ['crux-go-rust-backend', 'crux-api-design', 'crux-backend-testing'], ['crux-api-rules', 'crux-security-rules', 'crux-testing-rules'], ['Go toolchain for Go projects', 'Rustup and Cargo for Rust projects'], ['go', 'rust']),
+      ], ['crux-go-rust-backend', 'crux-api-design', 'crux-backend-testing'], [
+        'crux-api-rules', 'crux-security-rules', 'crux-testing-rules', 'crux-go-rules', 'crux-rust-rules',
+      ], ['Go toolchain for Go projects', 'Rustup and Cargo for Rust projects'], ['go', 'rust']),
 
     track('ai-python', 'Python, AI & Data Science', 'AI & Data',
       'Microsoft Python/Jupyter tooling, Ruff, Data Wrangler, and CRUX AI/backend engineering guidance.', [
@@ -173,7 +211,10 @@ export const TRACKS_CATALOG: TracksCatalog = {
         extension('ms-toolsai.jupyter', 'Jupyter'),
         extension('charliermarsh.ruff', 'Ruff'),
         extension('ms-toolsai.datawrangler', 'Data Wrangler'),
-      ], ['crux-python-ai-engineering', 'crux-python-backend', 'crux-rag-architecture', 'crux-agentic-ai', 'crux-langchain-langgraph'], ['crux-ai-rules', 'crux-security-rules', 'crux-testing-rules'], ['Python runtime and a project environment manager', 'Jupyter kernel packages when notebooks are used'], ['python', 'ai', 'ml', 'data']),
+      ], ['crux-python-ai-engineering', 'crux-python-backend', 'crux-rag-architecture', 'crux-agentic-ai', 'crux-langchain-langgraph'], [
+        'crux-ai-rules', 'crux-security-rules', 'crux-testing-rules',
+        'crux-python-rules', 'crux-ai-rag-production-rules',
+      ], ['Python runtime and a project environment manager', 'Jupyter kernel packages when notebooks are used'], ['python', 'ai', 'ml', 'data']),
 
     track('databases', 'Databases & Data Tools', 'AI & Data',
       'SQL clients and drivers for common backend data workflows plus database engineering guidance.', [
@@ -182,14 +223,18 @@ export const TRACKS_CATALOG: TracksCatalog = {
         extension('mtxr.sqltools-driver-mysql', 'SQLTools MySQL/MariaDB Driver'),
         extension('ms-mssql.mssql', 'SQL Server (mssql)'),
         extension('mechatroner.rainbow-csv', 'Rainbow CSV'),
-      ], ['crux-database-engineering', 'supabase-postgres-best-practices'], ['crux-security-rules', 'crux-performance-rules'], ['Database clients and credentials supplied by the developer'], ['sql', 'postgresql', 'mysql', 'mssql']),
+      ], ['crux-database-engineering', 'supabase-postgres-best-practices'], [
+        'crux-security-rules', 'crux-performance-rules', 'crux-sql-database-rules',
+      ], ['Database clients and credentials supplied by the developer'], ['sql', 'postgresql', 'mysql', 'mssql']),
 
     track('devops-containers', 'Containers & DevOps', 'Platform',
       'Containers, dev containers, CI/CD, GitHub Actions, and secure delivery guidance.', [
         extension('ms-azuretools.vscode-containers', 'Container Tools'),
         extension('ms-vscode-remote.remote-containers', 'Dev Containers'),
         extension('github.vscode-github-actions', 'GitHub Actions'),
-      ], ['crux-docker-containers', 'crux-cicd', 'github-actions', 'turborepo', 'sentry-observability', 'vercel-deployment', 'cloudflare'], ['crux-security-rules', 'crux-testing-rules'], ['Docker or a compatible container runtime when container commands are used'], ['docker', 'ci', 'cd']),
+      ], ['crux-docker-containers', 'crux-cicd', 'github-actions', 'turborepo', 'sentry-observability', 'vercel-deployment', 'cloudflare'], [
+        'crux-security-rules', 'crux-testing-rules', 'crux-container-cicd-rules',
+      ], ['Docker or a compatible container runtime when container commands are used'], ['docker', 'ci', 'cd']),
 
     track('git-collaboration', 'Git & Collaboration', 'Platform',
       'Pull requests, history, graphing, collaboration, and Git workflow guidance.', [
@@ -226,7 +271,10 @@ export const TRACKS_CATALOG: TracksCatalog = {
         'claude-code-review', 'code-simplifier', 'superpowers', 'planning-with-files',
         'grill-me', 'context7', 'mcp-builder', 'skill-creator', 'skill-seekers',
         'agensi-ai-code-reviewer', 'claude-mem',
-      ], ['crux-base-quality-rules', 'crux-security-rules', 'crux-testing-rules'], ['Provider authentication and subscriptions are separate from CRUXIDE'], ['agents', 'code-review', 'orchestration']),
+      ], [
+        'crux-base-quality-rules', 'crux-security-rules', 'crux-testing-rules',
+        'crux-technical-lead-rules', 'crux-ai-rag-production-rules',
+      ], ['Provider authentication and subscriptions are separate from CRUXIDE'], ['agents', 'code-review', 'orchestration']),
   ],
 };
 

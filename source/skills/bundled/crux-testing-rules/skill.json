@@ -4,7 +4,10 @@
   "displayName": "CRUX Testing Rules",
   "category": "Recommended Rules",
   "kind": "rule-pack",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "lastReviewed": "2026-09-16",
+  "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+  "references": [],
   "agents": [
     "codex",
     "claude-code",

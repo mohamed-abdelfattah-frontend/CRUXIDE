@@ -9,6 +9,12 @@ description: Design and assess scalable web, mobile, backend, cloud, and AI solu
 
 Design and assess scalable web, mobile, backend, cloud, and AI solution architectures.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Clarify functional requirements, quality attributes, constraints, scale, data sensitivity, and operational ownership.

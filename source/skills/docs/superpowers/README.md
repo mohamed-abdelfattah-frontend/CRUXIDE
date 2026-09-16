@@ -20,7 +20,12 @@ Use a comprehensive planning, TDD, debugging, implementation, and review methodo
 - Invocation: automatic or explicit when supported
 - Source: external
 - Version: provider-managed
+- Last reviewed: Provider-managed
 - License: MIT
+
+## Version policy
+
+Follow the provider-supported compatibility policy for the installed version.
 
 ## Permissions
 

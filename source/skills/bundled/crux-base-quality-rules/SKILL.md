@@ -9,6 +9,12 @@ description: Optional baseline rules for readable, typed, maintainable, and veri
 
 Optional baseline rules for readable, typed, maintainable, and verifiable code.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Prefer explicit types and contracts at boundaries; avoid unchecked any-like escapes without a documented reason.
