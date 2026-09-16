@@ -9,6 +9,12 @@ description: Translate Figma screens and components into maintainable code with 
 
 Translate Figma screens and components into maintainable code with measurable visual fidelity.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Inspect the exact design node, variables, components, typography, spacing, states, and responsive intent.

@@ -9,6 +9,12 @@ description: Design secure CI/CD pipelines with quality gates, environments, pro
 
 Design secure CI/CD pipelines with quality gates, environments, provenance, and rollback.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Use least-privilege short-lived credentials and pin third-party actions or dependencies.

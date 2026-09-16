@@ -9,6 +9,12 @@ description: Guide Flutter projects with feature boundaries, explicit state, nav
 
 Guide Flutter projects with feature boundaries, explicit state, navigation, testing, and platform integration.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Separate presentation, application, domain, and infrastructure concerns without unnecessary boilerplate.

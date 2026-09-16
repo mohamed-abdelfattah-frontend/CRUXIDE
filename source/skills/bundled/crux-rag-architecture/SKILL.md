@@ -9,6 +9,12 @@ description: Design retrieval-augmented generation systems with measurable relev
 
 Design retrieval-augmented generation systems with measurable relevance, grounding, and safety.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Define the user task, corpus ownership, freshness, permissions, latency, cost, and evaluation set.

@@ -52,8 +52,13 @@ This skill is **explicit-only**. Invoke it with `/crux-conductor` in Claude Code
 - Required with CRUX Skills installs: true
 - Invocation: explicit only
 - Source: crux
-- Version: 1.0.0
+- Version: 1.1.0
+- Last reviewed: 2026-09-16
 - License: MIT
+
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
 
 ## Permissions
 

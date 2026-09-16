@@ -12,6 +12,8 @@
     "AI Engineering",
     "Code Review",
     "Recommended Rules",
+    "Technology Rules",
+    "Accessibility Standards",
     "Advanced Productivity",
     "Labs"
   ],
@@ -70,7 +72,10 @@
         "profile": "https://www.linkedin.com/in/mohamedosama96/",
         "scope": "CRUX Conductor concept, orchestration design, and skill workflow"
       },
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -103,7 +108,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -136,7 +144,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -169,7 +180,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -202,7 +216,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -235,7 +252,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -268,7 +288,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -301,7 +324,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -334,7 +360,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -367,7 +396,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -400,7 +432,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -433,7 +468,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -466,7 +504,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -499,7 +540,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -532,7 +576,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -565,7 +612,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -598,7 +648,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -631,7 +684,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -664,7 +720,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -697,7 +756,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -730,7 +792,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -763,7 +828,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -796,7 +864,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -829,7 +900,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -862,7 +936,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -895,7 +972,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -928,7 +1008,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -961,7 +1044,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -994,7 +1080,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1027,7 +1116,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1060,7 +1152,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1093,7 +1188,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1126,7 +1224,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1159,7 +1260,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1192,7 +1296,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1225,7 +1332,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1258,7 +1368,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1291,7 +1404,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1324,7 +1440,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1357,7 +1476,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1390,7 +1512,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1423,7 +1548,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1456,7 +1584,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1489,7 +1620,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1522,7 +1656,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1555,7 +1692,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1588,7 +1728,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1621,7 +1764,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1654,7 +1800,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1687,7 +1836,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1720,7 +1872,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1753,7 +1908,10 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
       "license": "MIT"
     },
     {
@@ -1786,7 +1944,1212 @@
       "tags": [],
       "required": false,
       "explicitOnly": false,
-      "version": "1.0.0",
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-solution-architecture-rules",
+      "name": "CRUX Solution Architecture Rules",
+      "category": "Technology Rules",
+      "description": "Senior solution-architecture rules for quality attributes, boundaries, integration, data, resilience, security, and operability.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Senior solution-architecture rules for quality attributes, boundaries, integration, data, resilience, security, and operability."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "architecture",
+        "enterprise"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://learn.microsoft.com/en-us/azure/architecture/framework/"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-technical-lead-rules",
+      "name": "CRUX Senior Technical Lead Rules",
+      "category": "Technology Rules",
+      "description": "Senior technical-lead rules for scope, engineering decisions, delivery, review, evidence, and team maintainability.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Senior technical-lead rules for scope, engineering decisions, delivery, review, evidence, and team maintainability."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "leadership",
+        "delivery",
+        "review"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-typescript-javascript-rules",
+      "name": "CRUX TypeScript & JavaScript Rules",
+      "category": "Technology Rules",
+      "description": "Version-aware TypeScript and JavaScript rules for strict contracts, modules, async behavior, and safe runtime boundaries.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Version-aware TypeScript and JavaScript rules for strict contracts, modules, async behavior, and safe runtime boundaries."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "typescript",
+        "javascript"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://www.typescriptlang.org/docs/handbook/2/basic-types.html",
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-web-platform-rules",
+      "name": "CRUX Web Platform Rules",
+      "category": "Technology Rules",
+      "description": "HTML, CSS, browser security, accessibility, responsive, and internationalization rules for production web interfaces.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "HTML, CSS, browser security, accessibility, responsive, and internationalization rules for production web interfaces."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "html",
+        "css",
+        "accessibility"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://html.spec.whatwg.org/",
+        "https://www.w3.org/WAI/WCAG22/quickref/"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-angular-rules",
+      "name": "CRUX Angular Rules",
+      "category": "Technology Rules",
+      "description": "Modern, version-aware Angular rules for standalone APIs, signals, RxJS, DI, templates, and enterprise boundaries.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Modern, version-aware Angular rules for standalone APIs, signals, RxJS, DI, templates, and enterprise boundaries."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "angular",
+        "typescript"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://angular.dev/ai/develop-with-ai",
+        "https://angular.dev/guide/signals",
+        "https://angular.dev/reference/migrations/standalone"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-react-rules",
+      "name": "CRUX React Rules",
+      "category": "Technology Rules",
+      "description": "Modern React rules for pure rendering, hooks, state ownership, effects, boundaries, accessibility, and measured performance.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Modern React rules for pure rendering, hooks, state ownership, effects, boundaries, accessibility, and measured performance."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "react",
+        "typescript"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://react.dev/reference/rules",
+        "https://react.dev/learn/you-might-not-need-an-effect"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-nextjs-rules",
+      "name": "CRUX Next.js Rules",
+      "category": "Technology Rules",
+      "description": "Version-aware Next.js App Router rules for server/client boundaries, caching, mutations, routing, security, and deployment.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Version-aware Next.js App Router rules for server/client boundaries, caching, mutations, routing, security, and deployment."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "nextjs",
+        "react"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://nextjs.org/docs/app/getting-started/server-and-client-components",
+        "https://nextjs.org/docs/app/getting-started/caching"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-react-native-rules",
+      "name": "CRUX React Native & Expo Rules",
+      "category": "Technology Rules",
+      "description": "React Native and Expo rules for native boundaries, navigation, security, offline behavior, accessibility, and device performance.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "React Native and Expo rules for native boundaries, navigation, security, offline behavior, accessibility, and device performance."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "react-native",
+        "expo"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://reactnative.dev/docs/performance",
+        "https://docs.expo.dev/guides/security/"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-kotlin-android-rules",
+      "name": "CRUX Kotlin & Android Rules",
+      "category": "Technology Rules",
+      "description": "Kotlin, coroutines, Android, and Compose rules for lifecycle-aware state, modular architecture, security, and quality.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Kotlin, coroutines, Android, and Compose rules for lifecycle-aware state, modular architecture, security, and quality."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "kotlin",
+        "android",
+        "compose"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://developer.android.com/topic/architecture/recommendations",
+        "https://kotlinlang.org/docs/coroutines-guide.html"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-swift-ios-rules",
+      "name": "CRUX Swift & iOS Rules",
+      "category": "Technology Rules",
+      "description": "Swift, SwiftUI, structured-concurrency, platform-security, accessibility, and release-quality rules.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Swift, SwiftUI, structured-concurrency, platform-security, accessibility, and release-quality rules."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "swift",
+        "ios",
+        "swiftui"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://developer.apple.com/documentation/swift/adoptingswift6",
+        "https://developer.apple.com/documentation/swift"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-dart-flutter-rules",
+      "name": "CRUX Dart & Flutter Rules",
+      "category": "Technology Rules",
+      "description": "Dart and Flutter rules for layered architecture, state, navigation, rendering, accessibility, and multi-platform delivery.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Dart and Flutter rules for layered architecture, state, navigation, rendering, accessibility, and multi-platform delivery."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "dart",
+        "flutter"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://docs.flutter.dev/app-architecture/recommendations",
+        "https://docs.flutter.dev/testing/overview"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-nodejs-rules",
+      "name": "CRUX Node.js Rules",
+      "category": "Technology Rules",
+      "description": "Node.js runtime rules for event-loop safety, async ownership, lifecycle, security, observability, and production reliability.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Node.js runtime rules for event-loop safety, async ownership, lifecycle, security, observability, and production reliability."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "nodejs",
+        "javascript"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://nodejs.org/api/process.html",
+        "https://nodejs.org/api/test.html"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-express-rules",
+      "name": "CRUX Express Rules",
+      "category": "Technology Rules",
+      "description": "Express rules for middleware order, boundary validation, secure HTTP behavior, errors, sessions, and graceful operations.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Express rules for middleware order, boundary validation, secure HTTP behavior, errors, sessions, and graceful operations."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "express",
+        "nodejs"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://expressjs.com/en/advanced/best-practice-security/",
+        "https://expressjs.com/en/advanced/healthcheck-graceful-shutdown/"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-nestjs-rules",
+      "name": "CRUX NestJS Rules",
+      "category": "Technology Rules",
+      "description": "NestJS rules for business modules, DI, request lifecycle, validation, authorization, transports, and operations.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "NestJS rules for business modules, DI, request lifecycle, validation, authorization, transports, and operations."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "nestjs",
+        "nodejs"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://docs.nestjs.com/faq/request-lifecycle",
+        "https://docs.nestjs.com/fundamentals/lifecycle-events"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-php-rules",
+      "name": "CRUX PHP Rules",
+      "category": "Technology Rules",
+      "description": "Supported-PHP rules for types, Composer, boundaries, security, errors, static analysis, and production behavior.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Supported-PHP rules for types, Composer, boundaries, security, errors, static analysis, and production behavior."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "php"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://www.php.net/supported-versions.php",
+        "https://www.php.net/manual/en/security.php"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-laravel-rules",
+      "name": "CRUX Laravel Rules",
+      "category": "Technology Rules",
+      "description": "Laravel rules for validation, resource authorization, Eloquent, queues, transactions, configuration, and production testing.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Laravel rules for validation, resource authorization, Eloquent, queues, transactions, configuration, and production testing."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "laravel",
+        "php"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://laravel.com/docs/authorization",
+        "https://laravel.com/docs/queues"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-csharp-dotnet-rules",
+      "name": "CRUX C# & .NET Rules",
+      "category": "Technology Rules",
+      "description": "C# and .NET rules for nullable safety, async I/O, DI lifetimes, ASP.NET Core, EF Core, security, and operations.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "C# and .NET rules for nullable safety, async I/O, DI lifetimes, ASP.NET Core, EF Core, security, and operations."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "csharp",
+        "dotnet",
+        "aspnet"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/best-practices?view=aspnetcore-10.0"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-java-spring-rules",
+      "name": "CRUX Java & Spring Boot Rules",
+      "category": "Technology Rules",
+      "description": "Java and Spring Boot rules for modules, DI, nullability, transactions, persistence, security, testing, and production operations.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Java and Spring Boot rules for modules, DI, nullability, transactions, persistence, security, testing, and production operations."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "java",
+        "spring-boot"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://docs.spring.io/spring-boot/reference/",
+        "https://docs.spring.io/spring-boot/reference/actuator/index.html"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-go-rules",
+      "name": "CRUX Go Rules",
+      "category": "Technology Rules",
+      "description": "Go rules for simple packages, context cancellation, concurrency ownership, errors, resources, testing, and production services.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Go rules for simple packages, context cancellation, concurrency ownership, errors, resources, testing, and production services."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "go"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://go.dev/doc/effective_go",
+        "https://go.dev/doc/security/fuzz/"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-rust-rules",
+      "name": "CRUX Rust Rules",
+      "category": "Technology Rules",
+      "description": "Rust rules for ownership, explicit errors, safe concurrency, unsafe boundaries, Cargo integrity, and production verification.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Rust rules for ownership, explicit errors, safe concurrency, unsafe boundaries, Cargo integrity, and production verification."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "rust"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://doc.rust-lang.org/book/",
+        "https://doc.rust-lang.org/book/appendix-04-useful-development-tools.html"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-python-rules",
+      "name": "CRUX Python Rules",
+      "category": "Technology Rules",
+      "description": "Python rules for supported interpreters, typing, environments, async behavior, security, packaging, and production testing.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Python rules for supported interpreters, typing, environments, async behavior, security, packaging, and production testing."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "python"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://docs.python.org/3/library/typing.html",
+        "https://docs.python.org/3/library/asyncio-dev.html"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-sql-database-rules",
+      "name": "CRUX SQL & Database Rules",
+      "category": "Technology Rules",
+      "description": "Database rules for schema invariants, safe SQL, transactions, migrations, indexing, authorization, resilience, and operations.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Database rules for schema invariants, safe SQL, transactions, migrations, indexing, authorization, resilience, and operations."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "sql",
+        "database"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://www.postgresql.org/docs/current/sql.html",
+        "https://www.postgresql.org/docs/current/ddl-rowsecurity.html"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-container-cicd-rules",
+      "name": "CRUX Containers & CI/CD Rules",
+      "category": "Technology Rules",
+      "description": "Container and delivery rules for reproducibility, least privilege, provenance, environment promotion, and safe rollback.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Container and delivery rules for reproducibility, least privilege, provenance, environment promotion, and safe rollback."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "docker",
+        "ci",
+        "cd"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://docs.docker.com/build/building/best-practices/",
+        "https://docs.github.com/actions/reference/security/secure-use"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-ai-rag-production-rules",
+      "name": "CRUX AI, Agents & RAG Production Rules",
+      "category": "Technology Rules",
+      "description": "Production AI rules for evaluations, permissions, retrieval, prompt injection, tools, privacy, cost, observability, and human control.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Production AI rules for evaluations, permissions, retrieval, prompt injection, tools, privacy, cost, observability, and human control."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "ai",
+        "rag",
+        "agents"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://genai.owasp.org/llm-top-10/",
+        "https://www.nist.gov/itl/ai-risk-management-framework"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-wcag-22-rules",
+      "name": "CRUX WCAG 2.2 Rules",
+      "category": "Accessibility Standards",
+      "description": "Standalone WCAG 2.2 implementation and verification rules covering Levels A, AA, and AAA without treating automated scans as proof of conformance.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Standalone WCAG 2.2 implementation and verification rules covering Levels A, AA, and AAA without treating automated scans as proof of conformance."
+      ],
+      "useCases": [],
+      "tags": [
+        "accessibility-standard",
+        "a11y",
+        "independently-selectable",
+        "wcag",
+        "wcag-2.2",
+        "web"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Confirm the project or contractual WCAG target before applying this pack. Prefer WCAG 2.2 Level AA for new work when no target is declared, while preserving any mandated older version and testing its additional reporting requirements separately.",
+      "references": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/quickref/",
+        "https://www.w3.org/WAI/test-evaluate/"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-bitv-20-rules",
+      "name": "CRUX BITV 2.0 Rules",
+      "category": "Accessibility Standards",
+      "description": "Standalone BITV 2.0 rules for German federal public-sector websites, mobile applications, software, documents, statements, feedback, and required accessibility information.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Standalone BITV 2.0 rules for German federal public-sector websites, mobile applications, software, documents, statements, feedback, and required accessibility information."
+      ],
+      "useCases": [],
+      "tags": [
+        "accessibility-standard",
+        "a11y",
+        "independently-selectable",
+        "bitv",
+        "bitv-2.0",
+        "germany",
+        "public-sector"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Confirm BITV 2.0 applicability and resolve the currently referenced harmonized EN 301 549 edition at review time. Repository guidance may be stricter, but it must not replace statutory scope, required statements, feedback, communication, or enforcement obligations.",
+      "references": [
+        "https://www.gesetze-im-internet.de/bitv_2_0/",
+        "https://www.gesetze-im-internet.de/bitv_2_0/__3.html",
+        "https://www.gesetze-im-internet.de/bitv_2_0/__4.html",
+        "https://www.gesetze-im-internet.de/bitv_2_0/__7.html",
+        "https://www.bundesfachstelle-barrierefreiheit.de/DE/Fachwissen/Informationstechnik/EU-Webseitenrichtlinie/BGG-und-BITV-2-0/Die-neue-BITV-2-0/die-neue-bitv-2-0_node"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-bfsg-rules",
+      "name": "CRUX BFSG Rules",
+      "category": "Accessibility Standards",
+      "description": "Standalone BFSG rules for in-scope consumer products and services, complete customer journeys, accessibility information, operational evidence, and human legal review.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Standalone BFSG rules for in-scope consumer products and services, complete customer journeys, accessibility information, operational evidence, and human legal review."
+      ],
+      "useCases": [],
+      "tags": [
+        "accessibility-standard",
+        "a11y",
+        "independently-selectable",
+        "bfsg",
+        "germany",
+        "consumer",
+        "european-accessibility-act"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Confirm BFSG and BFSGV applicability, operator role, sector, dates, exemptions, and currently applicable standards with an authorized legal owner. Treat this pack as engineering and evidence guidance, never as automated legal advice or a conformity certificate.",
+      "references": [
+        "https://www.gesetze-im-internet.de/bfsg/",
+        "https://www.gesetze-im-internet.de/bfsgv/",
+        "https://www.bundesfachstelle-barrierefreiheit.de/DE/Barrierefreiheitsstaerkungsgesetz/FAQ/faq_node",
+        "https://www.bundesfachstelle-barrierefreiheit.de/DE/Barrierefreiheitsstaerkungsgesetz/Normen-und-Standards/normen-und-standards_node",
+        "https://www.bundesfachstelle-barrierefreiheit.de/DE/Barrierefreiheitsstaerkungsgesetz/E-Commerce/online-shops_node"
+      ],
       "license": "MIT"
     },
     {

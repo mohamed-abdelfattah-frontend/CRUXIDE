@@ -9,6 +9,12 @@ description: Guide React applications with clear component, state, server-data, 
 
 Guide React applications with clear component, state, server-data, routing, and error boundaries.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Separate server state, client state, form state, and URL state instead of placing all data in one store.

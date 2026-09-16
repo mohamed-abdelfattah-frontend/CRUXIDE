@@ -9,6 +9,12 @@ description: Select proportionate unit, integration, contract, component, and en
 
 Select proportionate unit, integration, contract, component, and end-to-end testing.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Map changed behavior and failure modes to the cheapest test layer that can prove them reliably.

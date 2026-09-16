@@ -9,6 +9,12 @@ description: Design production Node.js services around bounded concurrency, erro
 
 Design production Node.js services around bounded concurrency, errors, observability, and graceful lifecycle.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Keep request orchestration, domain logic, persistence, integrations, and runtime concerns separated.

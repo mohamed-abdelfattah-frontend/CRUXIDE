@@ -9,6 +9,12 @@ description: Guide NestJS modules, dependency injection, guards, pipes, intercep
 
 Guide NestJS modules, dependency injection, guards, pipes, interceptors, persistence, and distributed patterns.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Design modules around business capabilities and avoid a global shared module that owns unrelated concerns.

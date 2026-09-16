@@ -20,7 +20,12 @@ Automate browser validation, screenshots, flows, and end-to-end tests.
 - Invocation: automatic or explicit when supported
 - Source: external
 - Version: provider-managed
+- Last reviewed: Provider-managed
 - License: See provider
+
+## Version policy
+
+Follow the provider-supported compatibility policy for the installed version.
 
 ## Permissions
 

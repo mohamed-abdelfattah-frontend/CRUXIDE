@@ -9,6 +9,12 @@ description: Build and govern token-driven design systems from foundations throu
 
 Build and govern token-driven design systems from foundations through reusable components and patterns.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Start from color, typography, spacing, radius, elevation, motion, breakpoint, and accessibility tokens.

@@ -39,6 +39,9 @@ export interface SkillCatalogEntry {
   readonly sourceUrl?: string;
   readonly installCommand?: string;
   readonly version: string;
+  readonly lastReviewed?: string;
+  readonly versionPolicy?: string;
+  readonly references?: readonly string[];
   readonly license: string;
 }
 

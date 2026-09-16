@@ -22,7 +22,7 @@ Profile essentials, portable project guidance, spelling, YAML, Markdown, and the
 
 **Mapped skills:** `crux-conductor`, `crux-architecture-guardrails`, `crux-solution-architecture`, `crux-planning-adr`, `crux-testing-strategy`, `crux-performance-audit`, `crux-documentation`, `crux-secure-coding`, `crux-threat-modeling`, `crux-secrets-dependency-audit`
 
-**Mapped rules:** `crux-base-quality-rules`, `crux-clean-architecture-rules`, `crux-git-workflow-rules`, `crux-security-rules`, `crux-testing-rules`
+**Mapped rules:** `crux-base-quality-rules`, `crux-clean-architecture-rules`, `crux-git-workflow-rules`, `crux-security-rules`, `crux-testing-rules`, `crux-solution-architecture-rules`, `crux-technical-lead-rules`
 
 **Prerequisites**
 
@@ -53,6 +53,22 @@ Formatting, linting, browser testing, code metrics, TODOs, and focused developer
 
 - No additional runtime prerequisite declared.
 
+## Accessibility Standards
+
+Independent WCAG 2.2, BITV 2.0, and BFSG rule packs that can be installed alone, in any pair, or together.
+
+| Marketplace ID | Tool | Platforms | Note |
+| --- | --- | --- | --- |
+| — | No extension | — | — |
+
+**Mapped skills:** `crux-accessibility-i18n`
+
+**Mapped rules:** `crux-accessibility-rules`, `crux-wcag-22-rules`, `crux-bitv-20-rules`, `crux-bfsg-rules`
+
+**Prerequisites**
+
+- Qualified human accessibility and legal review is required for formal conformance or statutory compliance claims
+
 ## Frontend Shared
 
 Shared HTML, CSS, SCSS, Tailwind, shadcn/ui, imports, paths, snippets, and design-system tooling.
@@ -73,7 +89,7 @@ Shared HTML, CSS, SCSS, Tailwind, shadcn/ui, imports, paths, snippets, and desig
 
 **Mapped skills:** `crux-frontend-architecture`, `crux-tailwind-shadcn`, `crux-design-system`, `crux-accessibility-i18n`, `frontend-design`, `web-design-guidelines`, `building-components`, `build-web-apps`
 
-**Mapped rules:** `crux-accessibility-rules`, `crux-performance-rules`
+**Mapped rules:** `crux-accessibility-rules`, `crux-performance-rules`, `crux-web-platform-rules`, `crux-typescript-javascript-rules`
 
 **Prerequisites**
 
@@ -90,7 +106,7 @@ Official Angular language tooling plus Angular-oriented snippets and architectur
 
 **Mapped skills:** `crux-angular-architecture`
 
-**Mapped rules:** `crux-eslint-rules`
+**Mapped rules:** `crux-eslint-rules`, `crux-typescript-javascript-rules`, `crux-angular-rules`
 
 **Prerequisites**
 
@@ -106,7 +122,7 @@ React snippets, composition patterns, architecture, testing, and production best
 
 **Mapped skills:** `crux-react-architecture`, `vercel-react-best-practices`, `vercel-composition-patterns`
 
-**Mapped rules:** `crux-eslint-rules`
+**Mapped rules:** `crux-eslint-rules`, `crux-typescript-javascript-rules`, `crux-react-rules`
 
 **Prerequisites**
 
@@ -122,7 +138,7 @@ Next.js App Router guidance, snippets, server/client boundaries, and Vercel-main
 
 **Mapped skills:** `crux-nextjs-architecture`, `vercel-nextjs-best-practices`
 
-**Mapped rules:** `crux-eslint-rules`, `crux-security-rules`
+**Mapped rules:** `crux-eslint-rules`, `crux-security-rules`, `crux-typescript-javascript-rules`, `crux-react-rules`, `crux-nextjs-rules`
 
 **Prerequisites**
 
@@ -139,7 +155,7 @@ Microsoft React Native runtime tooling, snippets, native-boundary guidance, and 
 
 **Mapped skills:** `crux-react-native-architecture`, `crux-mobile-quality`, `vercel-react-native-skills`, `expo-development`
 
-**Mapped rules:** `crux-security-rules`, `crux-accessibility-rules`
+**Mapped rules:** `crux-security-rules`, `crux-accessibility-rules`, `crux-typescript-javascript-rules`, `crux-react-rules`, `crux-react-native-rules`
 
 **Prerequisites**
 
@@ -158,7 +174,7 @@ Official JetBrains Kotlin language support with Gradle and CRUX Android/Compose 
 
 **Mapped skills:** `crux-android-kotlin`, `crux-mobile-quality`, `test-android-apps`
 
-**Mapped rules:** `crux-security-rules`, `crux-testing-rules`, `crux-accessibility-rules`
+**Mapped rules:** `crux-security-rules`, `crux-testing-rules`, `crux-accessibility-rules`, `crux-kotlin-android-rules`
 
 **Prerequisites**
 
@@ -177,7 +193,7 @@ Official Swift language tooling plus optional macOS-only Xcode project integrati
 
 **Mapped skills:** `crux-ios-swift`, `crux-mobile-quality`, `build-ios-apps`
 
-**Mapped rules:** `crux-security-rules`, `crux-testing-rules`, `crux-accessibility-rules`
+**Mapped rules:** `crux-security-rules`, `crux-testing-rules`, `crux-accessibility-rules`, `crux-swift-ios-rules`
 
 **Prerequisites**
 
@@ -194,7 +210,7 @@ Flutter editing, refactoring, run/debug support, Dart dependency, and CRUX mobil
 
 **Mapped skills:** `crux-flutter-architecture`, `crux-mobile-quality`
 
-**Mapped rules:** `crux-security-rules`, `crux-testing-rules`, `crux-accessibility-rules`
+**Mapped rules:** `crux-security-rules`, `crux-testing-rules`, `crux-accessibility-rules`, `crux-dart-flutter-rules`
 
 **Prerequisites**
 
@@ -212,7 +228,7 @@ Node.js snippets, API workflows, runtime architecture, testing, and production l
 
 **Mapped skills:** `crux-nodejs-architecture`, `crux-api-design`, `crux-backend-testing`, `crux-distributed-systems`
 
-**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-testing-rules`
+**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-testing-rules`, `crux-typescript-javascript-rules`, `crux-nodejs-rules`
 
 **Prerequisites**
 
@@ -228,7 +244,7 @@ Express snippets and secure middleware, validation, lifecycle, and service-bound
 
 **Mapped skills:** `crux-express-architecture`
 
-**Mapped rules:** `crux-api-rules`, `crux-security-rules`
+**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-typescript-javascript-rules`, `crux-nodejs-rules`, `crux-express-rules`
 
 **Prerequisites**
 
@@ -245,7 +261,7 @@ NestJS snippets and generators with module, DI, guard, pipe, and interceptor gui
 
 **Mapped skills:** `crux-nestjs-architecture`
 
-**Mapped rules:** `crux-api-rules`, `crux-security-rules`
+**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-typescript-javascript-rules`, `crux-nodejs-rules`, `crux-nestjs-rules`
 
 **Prerequisites**
 
@@ -263,7 +279,7 @@ PHP language intelligence, the official Laravel extension, debugging, and produc
 
 **Mapped skills:** `crux-php-architecture`, `crux-laravel-architecture`, `crux-api-design`, `crux-backend-testing`
 
-**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-testing-rules`
+**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-testing-rules`, `crux-php-rules`, `crux-laravel-rules`
 
 **Prerequisites**
 
@@ -282,7 +298,7 @@ Microsoft C# Dev Kit with .NET/ASP.NET Core architecture, testing, and API guida
 
 **Mapped skills:** `crux-dotnet-architecture`, `crux-api-design`, `crux-backend-testing`
 
-**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-testing-rules`
+**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-testing-rules`, `crux-csharp-dotnet-rules`
 
 **Prerequisites**
 
@@ -299,7 +315,7 @@ Microsoft Java pack and Spring Tools with JVM service architecture and API guida
 
 **Mapped skills:** `crux-java-spring-architecture`, `crux-api-design`, `crux-backend-testing`
 
-**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-testing-rules`
+**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-testing-rules`, `crux-java-spring-rules`
 
 **Prerequisites**
 
@@ -317,7 +333,7 @@ Official Go and rust-analyzer language tooling with production service guidance.
 
 **Mapped skills:** `crux-go-rust-backend`, `crux-api-design`, `crux-backend-testing`
 
-**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-testing-rules`
+**Mapped rules:** `crux-api-rules`, `crux-security-rules`, `crux-testing-rules`, `crux-go-rules`, `crux-rust-rules`
 
 **Prerequisites**
 
@@ -337,7 +353,7 @@ Microsoft Python/Jupyter tooling, Ruff, Data Wrangler, and CRUX AI/backend engin
 
 **Mapped skills:** `crux-python-ai-engineering`, `crux-python-backend`, `crux-rag-architecture`, `crux-agentic-ai`, `crux-langchain-langgraph`
 
-**Mapped rules:** `crux-ai-rules`, `crux-security-rules`, `crux-testing-rules`
+**Mapped rules:** `crux-ai-rules`, `crux-security-rules`, `crux-testing-rules`, `crux-python-rules`, `crux-ai-rag-production-rules`
 
 **Prerequisites**
 
@@ -358,7 +374,7 @@ SQL clients and drivers for common backend data workflows plus database engineer
 
 **Mapped skills:** `crux-database-engineering`, `supabase-postgres-best-practices`
 
-**Mapped rules:** `crux-security-rules`, `crux-performance-rules`
+**Mapped rules:** `crux-security-rules`, `crux-performance-rules`, `crux-sql-database-rules`
 
 **Prerequisites**
 
@@ -376,7 +392,7 @@ Containers, dev containers, CI/CD, GitHub Actions, and secure delivery guidance.
 
 **Mapped skills:** `crux-docker-containers`, `crux-cicd`, `github-actions`, `turborepo`, `sentry-observability`, `vercel-deployment`, `cloudflare`
 
-**Mapped rules:** `crux-security-rules`, `crux-testing-rules`
+**Mapped rules:** `crux-security-rules`, `crux-testing-rules`, `crux-container-cicd-rules`
 
 **Prerequisites**
 
@@ -441,7 +457,7 @@ Agent clients, orchestration, security review, context, review, planning, and ad
 
 **Mapped skills:** `crux-conductor`, `crux-review-standard`, `security-guidance`, `codex-security`, `trail-of-bits-differential-review`, `supply-chain-risk-auditor`, `coderabbit`, `claude-code-review`, `code-simplifier`, `superpowers`, `planning-with-files`, `grill-me`, `context7`, `mcp-builder`, `skill-creator`, `skill-seekers`, `agensi-ai-code-reviewer`, `claude-mem`
 
-**Mapped rules:** `crux-base-quality-rules`, `crux-security-rules`, `crux-testing-rules`
+**Mapped rules:** `crux-base-quality-rules`, `crux-security-rules`, `crux-testing-rules`, `crux-technical-lead-rules`, `crux-ai-rag-production-rules`
 
 **Prerequisites**
 

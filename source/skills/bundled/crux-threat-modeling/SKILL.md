@@ -9,6 +9,12 @@ description: Build practical threat models tied to concrete system components an
 
 Build practical threat models tied to concrete system components and mitigations.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Inventory assets, actors, privileges, entry points, trust boundaries, and sensitive data flows.

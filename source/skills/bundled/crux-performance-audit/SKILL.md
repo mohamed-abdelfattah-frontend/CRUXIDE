@@ -9,6 +9,12 @@ description: Find measurable frontend, backend, mobile, database, and delivery p
 
 Find measurable frontend, backend, mobile, database, and delivery performance bottlenecks.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Define the user-visible or system metric first and capture a baseline before recommending optimization.

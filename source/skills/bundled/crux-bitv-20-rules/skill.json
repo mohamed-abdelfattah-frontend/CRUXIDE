@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "crux-bitv-20-rules",
+  "displayName": "CRUX BITV 2.0 Rules",
+  "category": "Accessibility Standards",
+  "kind": "rule-pack",
+  "version": "1.1.0",
+  "lastReviewed": "2026-09-16",
+  "versionPolicy": "Confirm BITV 2.0 applicability and resolve the currently referenced harmonized EN 301 549 edition at review time. Repository guidance may be stricter, but it must not replace statutory scope, required statements, feedback, communication, or enforcement obligations.",
+  "references": [
+    "https://www.gesetze-im-internet.de/bitv_2_0/",
+    "https://www.gesetze-im-internet.de/bitv_2_0/__3.html",
+    "https://www.gesetze-im-internet.de/bitv_2_0/__4.html",
+    "https://www.gesetze-im-internet.de/bitv_2_0/__7.html",
+    "https://www.bundesfachstelle-barrierefreiheit.de/DE/Fachwissen/Informationstechnik/EU-Webseitenrichtlinie/BGG-und-BITV-2-0/Die-neue-BITV-2-0/die-neue-bitv-2-0_node"
+  ],
+  "agents": [
+    "codex",
+    "claude-code",
+    "copilot",
+    "cursor",
+    "gemini",
+    "generic"
+  ],
+  "permissions": {
+    "filesystem": "read",
+    "network": false,
+    "scripts": false,
+    "hooks": false,
+    "authentication": false
+  },
+  "license": "MIT",
+  "required": false,
+  "explicitOnly": false
+}

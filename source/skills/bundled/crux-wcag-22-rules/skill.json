@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "crux-wcag-22-rules",
+  "displayName": "CRUX WCAG 2.2 Rules",
+  "category": "Accessibility Standards",
+  "kind": "rule-pack",
+  "version": "1.1.0",
+  "lastReviewed": "2026-09-16",
+  "versionPolicy": "Confirm the project or contractual WCAG target before applying this pack. Prefer WCAG 2.2 Level AA for new work when no target is declared, while preserving any mandated older version and testing its additional reporting requirements separately.",
+  "references": [
+    "https://www.w3.org/TR/WCAG22/",
+    "https://www.w3.org/WAI/WCAG22/quickref/",
+    "https://www.w3.org/WAI/test-evaluate/"
+  ],
+  "agents": [
+    "codex",
+    "claude-code",
+    "copilot",
+    "cursor",
+    "gemini",
+    "generic"
+  ],
+  "permissions": {
+    "filesystem": "read",
+    "network": false,
+    "scripts": false,
+    "hooks": false,
+    "authentication": false
+  },
+  "license": "MIT",
+  "required": false,
+  "explicitOnly": false
+}

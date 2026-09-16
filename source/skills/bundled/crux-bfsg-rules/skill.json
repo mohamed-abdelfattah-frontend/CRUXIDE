@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "crux-bfsg-rules",
+  "displayName": "CRUX BFSG Rules",
+  "category": "Accessibility Standards",
+  "kind": "rule-pack",
+  "version": "1.1.0",
+  "lastReviewed": "2026-09-16",
+  "versionPolicy": "Confirm BFSG and BFSGV applicability, operator role, sector, dates, exemptions, and currently applicable standards with an authorized legal owner. Treat this pack as engineering and evidence guidance, never as automated legal advice or a conformity certificate.",
+  "references": [
+    "https://www.gesetze-im-internet.de/bfsg/",
+    "https://www.gesetze-im-internet.de/bfsgv/",
+    "https://www.bundesfachstelle-barrierefreiheit.de/DE/Barrierefreiheitsstaerkungsgesetz/FAQ/faq_node",
+    "https://www.bundesfachstelle-barrierefreiheit.de/DE/Barrierefreiheitsstaerkungsgesetz/Normen-und-Standards/normen-und-standards_node",
+    "https://www.bundesfachstelle-barrierefreiheit.de/DE/Barrierefreiheitsstaerkungsgesetz/E-Commerce/online-shops_node"
+  ],
+  "agents": [
+    "codex",
+    "claude-code",
+    "copilot",
+    "cursor",
+    "gemini",
+    "generic"
+  ],
+  "permissions": {
+    "filesystem": "read",
+    "network": false,
+    "scripts": false,
+    "hooks": false,
+    "authentication": false
+  },
+  "license": "MIT",
+  "required": false,
+  "explicitOnly": false
+}

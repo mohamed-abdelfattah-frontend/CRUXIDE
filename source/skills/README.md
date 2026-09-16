@@ -57,6 +57,33 @@ CRUXIDE exposes optional Agent Skills and Recommended Rules. Nothing is installe
 | CRUX Accessibility Rules | Recommended Rules | crux | recommended |
 | CRUX API Rules | Recommended Rules | crux | recommended |
 | CRUX AI & RAG Rules | Recommended Rules | crux | recommended |
+| CRUX Solution Architecture Rules | Technology Rules | crux | recommended |
+| CRUX Senior Technical Lead Rules | Technology Rules | crux | recommended |
+| CRUX TypeScript & JavaScript Rules | Technology Rules | crux | recommended |
+| CRUX Web Platform Rules | Technology Rules | crux | recommended |
+| CRUX Angular Rules | Technology Rules | crux | recommended |
+| CRUX React Rules | Technology Rules | crux | recommended |
+| CRUX Next.js Rules | Technology Rules | crux | recommended |
+| CRUX React Native & Expo Rules | Technology Rules | crux | recommended |
+| CRUX Kotlin & Android Rules | Technology Rules | crux | recommended |
+| CRUX Swift & iOS Rules | Technology Rules | crux | recommended |
+| CRUX Dart & Flutter Rules | Technology Rules | crux | recommended |
+| CRUX Node.js Rules | Technology Rules | crux | recommended |
+| CRUX Express Rules | Technology Rules | crux | recommended |
+| CRUX NestJS Rules | Technology Rules | crux | recommended |
+| CRUX PHP Rules | Technology Rules | crux | recommended |
+| CRUX Laravel Rules | Technology Rules | crux | recommended |
+| CRUX C# & .NET Rules | Technology Rules | crux | recommended |
+| CRUX Java & Spring Boot Rules | Technology Rules | crux | recommended |
+| CRUX Go Rules | Technology Rules | crux | recommended |
+| CRUX Rust Rules | Technology Rules | crux | recommended |
+| CRUX Python Rules | Technology Rules | crux | recommended |
+| CRUX SQL & Database Rules | Technology Rules | crux | recommended |
+| CRUX Containers & CI/CD Rules | Technology Rules | crux | recommended |
+| CRUX AI, Agents & RAG Production Rules | Technology Rules | crux | recommended |
+| CRUX WCAG 2.2 Rules | Accessibility Standards | crux | recommended |
+| CRUX BITV 2.0 Rules | Accessibility Standards | crux | recommended |
+| CRUX BFSG Rules | Accessibility Standards | crux | recommended |
 | Archify | Architecture & Core | external | recommended |
 | Security Guidance | Security | external | recommended |
 | Codex Security | Security | external | recommended |

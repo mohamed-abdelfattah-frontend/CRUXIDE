@@ -9,6 +9,12 @@ description: Create secure, reproducible, minimal container builds and local com
 
 Create secure, reproducible, minimal container builds and local compositions.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Use pinned base images, multi-stage builds, non-root runtime users, and minimal production artifacts.

@@ -9,6 +9,12 @@ description: Optional secure-coding rules for authentication, validation, secret
 
 Optional secure-coding rules for authentication, validation, secrets, dependencies, and unsafe execution.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Do not store browser session tokens in localStorage or sessionStorage; prefer HttpOnly Secure SameSite cookies.

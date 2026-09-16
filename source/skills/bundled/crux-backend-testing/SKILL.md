@@ -9,6 +9,12 @@ description: Build proportionate backend test suites across domain, services, da
 
 Build proportionate backend test suites across domain, services, databases, queues, and APIs.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Keep domain tests fast and deterministic, then add integration tests where infrastructure behavior matters.

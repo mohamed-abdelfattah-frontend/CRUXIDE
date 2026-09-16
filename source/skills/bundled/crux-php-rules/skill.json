@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "crux-php-rules",
+  "displayName": "CRUX PHP Rules",
+  "category": "Technology Rules",
+  "kind": "rule-pack",
+  "version": "1.1.0",
+  "lastReviewed": "2026-09-16",
+  "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+  "references": [
+    "https://www.php.net/supported-versions.php",
+    "https://www.php.net/manual/en/security.php"
+  ],
+  "agents": [
+    "codex",
+    "claude-code",
+    "copilot",
+    "cursor",
+    "gemini",
+    "generic"
+  ],
+  "permissions": {
+    "filesystem": "read",
+    "network": false,
+    "scripts": false,
+    "hooks": false,
+    "authentication": false
+  },
+  "license": "MIT",
+  "required": false,
+  "explicitOnly": false
+}

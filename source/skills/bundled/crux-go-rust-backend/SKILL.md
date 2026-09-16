@@ -9,6 +9,12 @@ description: Guide production Go and Rust services with explicit ownership, canc
 
 Guide production Go and Rust services with explicit ownership, cancellation, concurrency, errors, and operational boundaries.
 
+## Version policy
+
+Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.
+
+Last reviewed: 2026-09-16.
+
 ## Workflow
 
 1. Follow the selected language toolchain, module or workspace layout, formatter, linter, and dependency policy.
