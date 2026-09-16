@@ -13,6 +13,10 @@ test('manifest keeps the release security invariants', async () => {
 
   assert.equal(manifest.name, 'cruxide');
   assert.equal(manifest.publisher, 'cruxcode');
+  assert.equal(manifest.private, true);
+  assert.equal(manifest.repository.url, 'https://github.com/mohamed-abdelfattah-frontend/CRUXIDE.git');
+  assert.equal(manifest.homepage, 'https://www.cruxcode.dev');
+  assert.equal(manifest.bugs.url, 'https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/issues');
   assert.match(manifest.version, /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/);
   assert.equal(lockfile.version, manifest.version);
   assert.equal(lockfile.packages[''].version, manifest.version);
@@ -65,6 +69,33 @@ test('manifest keeps the release security invariants', async () => {
   assert.equal(manifest.qna, false);
 });
 
+test('release publication is version-gated, secret-gated, and publishes an existing VSIX', async () => {
+  const [manifest, verifier, publisher, releaseWorkflow, publishWorkflow, policy] = await Promise.all([
+    readText('package.json').then(JSON.parse),
+    readText('scripts/verify-release.mjs'),
+    readText('scripts/publish-marketplace.mjs'),
+    readText('.github/workflows/release.yml'),
+    readText('.github/workflows/publish-marketplace.yml'),
+    readText('SECURITY.md'),
+  ]);
+
+  assert.match(verifier, /`v\$\{manifest\.version\}`/);
+  assert.match(verifier, /GITHUB_REF_TYPE === 'tag'/);
+  assert.match(verifier, /lockfile\.packages\[''\]\.version/);
+  assert.match(publisher, /process\.env\.VSCE_PAT/);
+  assert.match(publisher, /publishVSIX/);
+  assert.match(publisher, /release directory/);
+  assert.doesNotMatch(publisher, /spawnSync|execSync|shell:\s*true/);
+  assert.match(releaseWorkflow, /npm run verify:release/);
+  assert.match(releaseWorkflow, /sha256sum \.\/\*\.vsix \.\/\*\.zip/);
+  assert.match(publishWorkflow, /environment: vscode-marketplace/);
+  assert.match(publishWorkflow, /secrets\.VSCE_PAT/);
+  assert.match(publishWorkflow, /gh release download/);
+  assert.match(publishWorkflow, /sha256sum --check --strict/);
+  assert.match(policy, /security\/advisories\/new/);
+  assert.equal(manifest.scripts['publish:marketplace'], 'node scripts/publish-marketplace.mjs');
+});
+
 test('webview has no inline executable content or remote asset loads', async () => {
   const [panel, script, style] = await Promise.all([
     readText('src/home-panel.ts'),
@@ -106,6 +137,11 @@ test('profile experience applies the Figma code typography', async () => {
   assert.match(extension, /'Roboto Mono'/);
   assert.match(extension, /'fontFamily'/);
   assert.match(extension, /terminal\.integrated/);
+  assert.match(extension, /cruxide\.setupPrompted\.v2/);
+  assert.match(extension, /setupOpened = await openFirstRunSetup/);
+  assert.match(extension, /SetupPanel\.show\(context, output\)/);
+  assert.match(extension, /No tools are installed until the user confirms/);
+  assert.doesNotMatch(extension, /'Not now'/);
 });
 
 test('production compilation omits source maps', async () => {

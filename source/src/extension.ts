@@ -2,11 +2,12 @@ import * as vscode from 'vscode';
 import { ActionsProvider } from './actions-provider.js';
 import { hasCodeFiles } from './code-files.js';
 import { HomePanel } from './home-panel.js';
+import { getSetupState } from './setup-installer.js';
 import { SetupPanel } from './setup-panel.js';
 import { SkillsPanel } from './skills-panel.js';
 
 const EXPERIENCE_PROMPTED_KEY = 'cruxide.experiencePrompted.v3';
-const SETUP_PROMPTED_KEY = 'cruxide.setupPrompted.v1';
+const SETUP_PROMPTED_KEY = 'cruxide.setupPrompted.v2';
 const CODE_FONT_STACK = "'Roboto Mono', Consolas, 'Courier New', monospace";
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
@@ -49,40 +50,36 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     }),
   );
 
-  void promptForFirstRunSetup(context, output).catch((error: unknown) => {
-    output.appendLine(`First-run prompt failed: ${formatError(error)}`);
-  });
-
+  let setupOpened = false;
   try {
-    await openHomeWhenEmpty(context, extensionVersion);
+    setupOpened = await openFirstRunSetup(context, output);
   } catch (error: unknown) {
-    output.appendLine(`Home detection failed: ${formatError(error)}`);
+    output.appendLine(`First-run setup failed: ${formatError(error)}`);
+  }
+
+  if (!setupOpened) {
+    try {
+      await openHomeWhenEmpty(context, extensionVersion);
+    } catch (error: unknown) {
+      output.appendLine(`Home detection failed: ${formatError(error)}`);
+    }
   }
 }
 
-async function promptForFirstRunSetup(
+async function openFirstRunSetup(
   context: vscode.ExtensionContext,
   output: vscode.OutputChannel,
-): Promise<void> {
+): Promise<boolean> {
   const alreadyPrompted = context.globalState.get<boolean>(SETUP_PROMPTED_KEY, false);
   const shouldPrompt = vscode.workspace
     .getConfiguration('cruxide')
     .get<boolean>('promptToOpenSetupOnFirstRun', true);
-  if (alreadyPrompted || !shouldPrompt) return;
+  if (alreadyPrompted || !shouldPrompt || getSetupState(context)) return false;
 
-  const selection = await vscode.window.showInformationMessage(
-    'Choose the CRUXIDE tracks, extensions, skills, agents, and project rules for this profile.',
-    'Open CRUXIDE Setup',
-    'Not now',
-  );
   await context.globalState.update(SETUP_PROMPTED_KEY, true);
-  if (selection !== 'Open CRUXIDE Setup') return;
-
-  await runUserAction(
-    output,
-    'Open first-run setup',
-    () => Promise.resolve(SetupPanel.show(context, output)),
-  );
+  SetupPanel.show(context, output);
+  output.appendLine('Opened first-run track selection. No tools are installed until the user confirms the plan.');
+  return true;
 }
 
 export async function applyExperience(): Promise<void> {

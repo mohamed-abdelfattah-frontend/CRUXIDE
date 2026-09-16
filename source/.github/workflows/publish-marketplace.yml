@@ -1,0 +1,51 @@
+name: Publish VS Code Marketplace
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing GitHub Release tag, for example v1.1.0
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vscode-marketplace-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    environment: vscode-marketplace
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ inputs.release_tag }}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate release tag
+        run: npm run verify:release -- "${{ inputs.release_tag }}"
+      - name: Download immutable release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          mkdir -p release
+          gh release download "$RELEASE_TAG" --pattern '*.vsix' --pattern 'SHA256SUMS.txt' --dir release
+      - name: Verify VSIX checksum
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          cd release
+          grep "  cruxide-${VERSION}.vsix$" SHA256SUMS.txt | sha256sum --check --strict -
+      - name: Publish exact GitHub Release VSIX
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          npm run publish:marketplace -- "release/cruxide-${VERSION}.vsix"

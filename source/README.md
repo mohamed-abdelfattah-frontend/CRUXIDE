@@ -2,6 +2,9 @@
 
 The CRUXCODE developer experience for Visual Studio Code.
 
+> [!IMPORTANT]
+> Install CRUXIDE from the versioned ZIP attached to a [GitHub Release](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/releases), not from GitHub's **Code → Download ZIP** source archive. Source archives do not contain the current release-built VSIX.
+
 CRUXIDE adds a track-based VS Code setup, CRUX themes, a branded 4K Home experience, curated developer tooling, Roboto Mono code typography, and CRUX Skills: a portable capability and rules layer for AI coding agents. It does not replace or patch Microsoft VS Code binaries.
 
 ## Highlights
@@ -27,7 +30,7 @@ CRUXIDE adds a track-based VS Code setup, CRUX themes, a branded 4K Home experie
 
 ## Windows installation
 
-1. Extract `CRUXIDE-v1.0.1.zip` completely.
+1. Extract `CRUXIDE-v1.1.0.zip` completely.
 2. Open PowerShell inside the extracted folder.
 3. Run:
 
@@ -42,7 +45,7 @@ The installer validates the VSIX, icon, and font SHA-256 checksums; binds `code.
 
 ## macOS installation
 
-In VS Code, run **Shell Command: Install 'code' command in PATH** once. Extract `CRUXIDE-v1.0.1.zip`, open Terminal in the folder, and run:
+In VS Code, run **Shell Command: Install 'code' command in PATH** once. Extract `CRUXIDE-v1.1.0.zip`, open Terminal in the folder, and run:
 
 ```bash
 chmod +x ./install-macos.sh
@@ -55,7 +58,7 @@ This validates the checksum and creates `~/Applications/CRUXIDE.app`.
 
 ```bash
 code --profile "CRUXIDE" --new-window
-code --profile "CRUXIDE" --install-extension ./cruxide-1.0.1.vsix --force
+code --profile "CRUXIDE" --install-extension ./cruxide-1.1.0.vsix --force
 code --profile "CRUXIDE" --new-window
 ```
 
@@ -127,7 +130,9 @@ npm run verify
 npm run package:release
 ```
 
-`npm run verify` runs strict TypeScript checks, ESLint, tests, a high-severity dependency audit, and npm registry signature verification. `npm run package:release` additionally validates every curated ID against the Visual Studio Marketplace and produces `release/CRUXIDE-v1.0.1.zip` with the installers, VSIX, skills catalog, checksums, fonts, icon, and complete source.
+`npm run verify` runs strict TypeScript checks, ESLint, tests, a high-severity dependency audit, and npm registry signature verification. `npm run smoke:test` activates the extension in a real VS Code Extension Host. `npm run package:release` additionally validates every curated ID against the Visual Studio Marketplace and produces `release/CRUXIDE-v1.1.0.zip` with the installers, VSIX, skills catalog, checksums, fonts, icon, and complete source.
+
+Release maintainers should follow [PUBLISHING.md](PUBLISHING.md). Marketplace publication is deliberately separated from build and release creation so the exact checksum-verified GitHub Release asset is published only after environment approval.
 
 ## Security and privacy
 
