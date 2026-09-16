@@ -6,9 +6,10 @@ CRUXIDE uses two separate release gates: GitHub Release creation and Visual Stud
 
 1. Confirm the `cruxcode` Visual Studio Marketplace publisher is controlled by the CRUXCODE release owner.
 2. Enable GitHub private vulnerability reporting for this repository.
-3. Create a Marketplace token with only the permissions required to manage extensions for the `cruxcode` publisher.
-4. Create a protected GitHub Environment named `vscode-marketplace`, add the token as the `VSCE_PAT` environment secret, and require an authorized reviewer.
-5. Configure branch protection for `main` so the CI and CodeQL checks must pass before merge.
+3. Enable GitHub code scanning before relying on the Security tab. Until it is enabled, CI still runs CodeQL and retains the SARIF report as a workflow artifact.
+4. Create a Marketplace token with only the permissions required to manage extensions for the `cruxcode` publisher.
+5. Create a protected GitHub Environment named `vscode-marketplace`, add the token as the `VSCE_PAT` environment secret, and require an authorized reviewer.
+6. Configure branch protection for `main` so the CI and CodeQL checks must pass before merge.
 
 Never paste the token into a terminal transcript, issue, pull request, repository file, or chat message. Rotate it immediately if it is exposed.
 

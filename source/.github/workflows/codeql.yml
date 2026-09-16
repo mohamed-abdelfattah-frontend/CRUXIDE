@@ -10,7 +10,6 @@ on:
 permissions:
   actions: read
   contents: read
-  security-events: write
 
 jobs:
   analyze:
@@ -22,3 +21,11 @@ jobs:
         with:
           languages: javascript-typescript
       - uses: github/codeql-action/analyze@c20e34f438d671fc35777cc9820dd7adf8252874 # v3
+        with:
+          upload: never
+          output: ${{ runner.temp }}/codeql-results
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: codeql-sarif
+          path: ${{ runner.temp }}/codeql-results/*.sarif
+          if-no-files-found: error
