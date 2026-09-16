@@ -9,6 +9,7 @@ interface CruxAction {
 
 const ACTIONS: readonly CruxAction[] = [
   { command: 'cruxide.openHome', description: 'Open the developer launchpad', icon: 'home', label: 'CRUXIDE Home' },
+  { command: 'cruxide.openSetup', description: 'Choose profile tracks and developer tools', icon: 'settings-gear', label: 'Setup & Tracks' },
   { command: 'cruxide.openSkills', description: 'Choose portable agent capabilities', icon: 'tools', label: 'CRUX Skills' },
   { command: 'cruxide.openFolder', description: 'Open a workspace folder', icon: 'folder-opened', label: 'Open Project' },
   { command: 'cruxide.newFile', description: 'Start from an empty editor', icon: 'new-file', label: 'New Code File' },

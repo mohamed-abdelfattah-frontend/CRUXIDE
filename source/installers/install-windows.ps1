@@ -18,70 +18,6 @@ $ItalicFontPath = Join-Path $FontRoot 'RobotoMono-Italic-Variable.ttf'
 $ChecksumPath = Join-Path $PackageRoot 'SHA256SUMS.txt'
 $InstallRoot = Join-Path $env:LOCALAPPDATA 'CRUXIDE'
 $InstalledIconPath = Join-Path $InstallRoot 'cruxide.ico'
-$ExtensionPackIds = @(
-    'dbaeumer.vscode-eslint',
-    'esbenp.prettier-vscode',
-    'editorconfig.editorconfig',
-    'stylelint.vscode-stylelint',
-    'davidanson.vscode-markdownlint',
-    'angular.ng-template',
-    'johnpapa.angular2',
-    'bradlc.vscode-tailwindcss',
-    'dsznajder.es7-react-js-snippets',
-    'jundat95.react-native-snippet',
-    'pulkitgangwar.nextjs-snippets',
-    'suhelmakkad.shadcn-ui',
-    'anbuselvanrocky.bootstrap5-vscode',
-    'p-de-jong.vscode-html-scss',
-    'mrmlnc.vscode-scss',
-    'xabikos.javascriptsnippets',
-    'steoates.autoimport',
-    'formulahendry.auto-rename-tag',
-    'naumovs.color-highlight',
-    'imgildev.vscode-nestjs-snippets-extension',
-    'imgildev.vscode-nestjs-generator',
-    'Compulim.vscode-express',
-    'chris-noring.node-snippets',
-    'humao.rest-client',
-    'ms-playwright.playwright',
-    'ms-azuretools.vscode-containers',
-    'ms-vscode-remote.remote-containers',
-    'redhat.vscode-yaml',
-    'github.vscode-github-actions',
-    'github.vscode-pull-request-github',
-    'github.copilot-chat',
-    'eamodio.gitlens',
-    'donjayamanne.git-extension-pack',
-    'mhutchie.git-graph',
-    'donjayamanne.githistory',
-    'ms-vsliveshare.vsliveshare',
-    'figma.figma-vscode-extension',
-    'openai.chatgpt',
-    'anthropic.claude-code',
-    'aaron-bond.better-comments',
-    'streetsidesoftware.code-spell-checker',
-    'nhoizey.gremlins',
-    'christian-kohler.npm-intellisense',
-    'christian-kohler.path-intellisense',
-    'quicktype.quicktype',
-    'mariusalchimavicius.json-to-ts',
-    'aykutsarac.jsoncrack-vscode',
-    'mechatroner.rainbow-csv',
-    'alefragnani.separators',
-    'cpmcgrath.codealignment-vscode',
-    'kisstkondoros.vscode-codemetrics',
-    'bracketpaircolordlw.bracket-pair-color-dlw',
-    'alefragnani.project-manager',
-    'jmkrivocapich.drawfolderstructure',
-    'adpyke.codesnap',
-    'simonsiefke.svg-preview',
-    'wayou.vscode-todo-highlight',
-    'gruntfuggly.todo-tree',
-    'UltraByteSoftwares.markdown-tree',
-    'shd101wyy.markdown-preview-enhanced',
-    'pkief.material-icon-theme'
-)
-
 function Resolve-CodeCli {
     $candidates = New-Object 'System.Collections.Generic.List[string]'
     if ($env:LOCALAPPDATA) {
@@ -420,39 +356,10 @@ if ($installResult.ExitCode -ne 0) {
 }
 
 $installedIds = Get-InstalledExtensionIds -CodeCli $codeCli
-$missingIds = @($ExtensionPackIds | Where-Object { $installedIds -notcontains $_ })
-$platformProvidedIds = New-Object 'System.Collections.Generic.List[string]'
-foreach ($missingId in $missingIds) {
-    if (Test-ExtensionAvailable -CodeCli $codeCli -ExtensionId $missingId -InstalledIds $installedIds) {
-        Write-Host "Using application-provided developer tool: $missingId" -ForegroundColor DarkCyan
-        $platformProvidedIds.Add($missingId.ToLowerInvariant())
-        continue
-    }
-
-    Write-Host "Installing required developer tool: $missingId" -ForegroundColor DarkCyan
-    $toolResult = Invoke-CodeCli -CodeCli $codeCli -Arguments @(
-        '--profile', $ProfileName, '--install-extension', $missingId
-    )
-    $toolResult.Output | ForEach-Object { Write-Host $_ }
-    if ($toolResult.ExitCode -ne 0) {
-        $toolOutput = @($toolResult.Output) -join [Environment]::NewLine
-        if ($missingId -eq 'github.copilot-chat' -and
-            $toolOutput -match 'is a built-in extension with version' -and
-            $toolOutput -match 'cannot be downgraded') {
-            Write-Host 'Using the newer GitHub Copilot Chat bundled with VS Code.' -ForegroundColor DarkCyan
-            $platformProvidedIds.Add($missingId.ToLowerInvariant())
-            continue
-        }
-        throw "Required extension $missingId failed to install (exit code $($toolResult.ExitCode))."
-    }
-}
-
-$installedIds = Get-InstalledExtensionIds -CodeCli $codeCli
-$requiredIds = @($ExtensionId) + $ExtensionPackIds
+$requiredIds = @($ExtensionId)
 $unverifiedIds = @($requiredIds | Where-Object {
     $normalizedId = $_.ToLowerInvariant()
     $installedIds -notcontains $normalizedId -and
-        $platformProvidedIds -notcontains $normalizedId -and
         -not (Test-ExtensionAvailable -CodeCli $codeCli -ExtensionId $_ -InstalledIds $installedIds)
 })
 if ($unverifiedIds.Count -gt 0) {
@@ -474,6 +381,7 @@ New-CruxShortcut -ShortcutPath $startMenuShortcut -CodeExecutable $codeExecutabl
 
 Write-Host 'CRUXIDE installed and verified successfully.' -ForegroundColor Green
 Write-Host "Verified extension count: $($requiredIds.Count)"
+Write-Host 'Open CRUXIDE Setup in the profile to review and install track-specific developer tools.' -ForegroundColor Cyan
 Write-Host "Desktop shortcut: $desktopShortcut"
 Write-Host 'Your normal VS Code profile was not replaced.'
 

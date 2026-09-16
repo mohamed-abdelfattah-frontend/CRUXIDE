@@ -8,6 +8,7 @@
     'linkedin',
     'newFile',
     'openFolder',
+    'setup',
     'skills',
     'website',
   ]);

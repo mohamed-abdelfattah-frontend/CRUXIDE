@@ -2,10 +2,11 @@ import * as vscode from 'vscode';
 import { ActionsProvider } from './actions-provider.js';
 import { hasCodeFiles } from './code-files.js';
 import { HomePanel } from './home-panel.js';
+import { SetupPanel } from './setup-panel.js';
 import { SkillsPanel } from './skills-panel.js';
 
 const EXPERIENCE_PROMPTED_KEY = 'cruxide.experiencePrompted.v3';
-const APPLY_LABEL = 'Apply CRUXIDE';
+const SETUP_PROMPTED_KEY = 'cruxide.setupPrompted.v1';
 const CODE_FONT_STACK = "'Roboto Mono', Consolas, 'Courier New', monospace";
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
@@ -20,6 +21,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       HomePanel.show(context.extensionUri, extensionVersion)),
     vscode.commands.registerCommand('cruxide.openSkills', async () => {
       await runUserAction(output, 'Open Skills Manager', () => SkillsPanel.show(context, output));
+    }),
+    vscode.commands.registerCommand('cruxide.openSetup', async () => {
+      await runUserAction(output, 'Open Setup', () => Promise.resolve(SetupPanel.show(context, output)));
     }),
     vscode.commands.registerCommand('cruxide.applyExperience', async () => {
       await runUserAction(output, 'Apply experience', async () => {
@@ -45,7 +49,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     }),
   );
 
-  void promptForFirstRunExperience(context, output).catch((error: unknown) => {
+  void promptForFirstRunSetup(context, output).catch((error: unknown) => {
     output.appendLine(`First-run prompt failed: ${formatError(error)}`);
   });
 
@@ -56,37 +60,32 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   }
 }
 
-async function promptForFirstRunExperience(
+async function promptForFirstRunSetup(
   context: vscode.ExtensionContext,
   output: vscode.OutputChannel,
 ): Promise<void> {
+  const alreadyPrompted = context.globalState.get<boolean>(SETUP_PROMPTED_KEY, false);
   const shouldPrompt = vscode.workspace
     .getConfiguration('cruxide')
-    .get<boolean>('promptToApplyExperienceOnFirstRun', true);
-  const alreadyPrompted = context.globalState.get<boolean>(EXPERIENCE_PROMPTED_KEY, false);
-
-  if (!shouldPrompt || alreadyPrompted) {
-    return;
-  }
+    .get<boolean>('promptToOpenSetupOnFirstRun', true);
+  if (alreadyPrompted || !shouldPrompt) return;
 
   const selection = await vscode.window.showInformationMessage(
-    'Apply the CRUXIDE theme, profile title, Roboto Mono, and editor defaults?',
-    APPLY_LABEL,
+    'Choose the CRUXIDE tracks, extensions, skills, agents, and project rules for this profile.',
+    'Open CRUXIDE Setup',
     'Not now',
   );
-  await context.globalState.update(EXPERIENCE_PROMPTED_KEY, true);
+  await context.globalState.update(SETUP_PROMPTED_KEY, true);
+  if (selection !== 'Open CRUXIDE Setup') return;
 
-  if (selection !== APPLY_LABEL) {
-    return;
-  }
-
-  await runUserAction(output, 'Apply first-run experience', async () => {
-    await applyExperience();
-    void vscode.window.showInformationMessage('CRUXIDE experience applied to this profile.');
-  });
+  await runUserAction(
+    output,
+    'Open first-run setup',
+    () => Promise.resolve(SetupPanel.show(context, output)),
+  );
 }
 
-async function applyExperience(): Promise<void> {
+export async function applyExperience(): Promise<void> {
   await Promise.all([
     vscode.workspace.getConfiguration('workbench').update(
       'colorTheme', 'CRUXIDE Dark', vscode.ConfigurationTarget.Global,

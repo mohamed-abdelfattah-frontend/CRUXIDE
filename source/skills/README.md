@@ -30,11 +30,19 @@ CRUXIDE exposes optional Agent Skills and Recommended Rules. Nothing is installe
 | CRUX Node.js Architecture | Backend & APIs | crux | recommended |
 | CRUX Express Architecture | Backend & APIs | crux | recommended |
 | CRUX NestJS Architecture | Backend & APIs | crux | recommended |
+| CRUX PHP Architecture | Backend & APIs | crux | recommended |
+| CRUX Laravel Architecture | Backend & APIs | crux | recommended |
+| CRUX .NET & ASP.NET Core | Backend & APIs | crux | recommended |
+| CRUX Java & Spring Boot | Backend & APIs | crux | recommended |
+| CRUX Go & Rust Backend | Backend & APIs | crux | recommended |
 | CRUX API Design | Backend & APIs | crux | recommended |
 | CRUX Backend Testing | Backend & APIs | crux | recommended |
 | CRUX Distributed Systems | Backend & APIs | crux | recommended |
 | CRUX Docker & Containers | DevOps & Data | crux | recommended |
 | CRUX CI/CD | DevOps & Data | crux | recommended |
+| CRUX Database Engineering | DevOps & Data | crux | recommended |
+| CRUX Python AI Engineering | AI Engineering | crux | recommended |
+| CRUX Python Backend | Backend & APIs | crux | recommended |
 | CRUX RAG Architecture | AI Engineering | crux | recommended |
 | CRUX Agentic AI | AI Engineering | crux | recommended |
 | CRUX LangChain & LangGraph | AI Engineering | crux | recommended |

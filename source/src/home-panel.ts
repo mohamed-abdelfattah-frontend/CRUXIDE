@@ -113,14 +113,14 @@ export class HomePanel {
           <button type="button" data-command="openFolder">Open Project</button>
           <button type="button" class="secondary" data-command="newFile">New Code File</button>
           <button type="button" class="secondary" data-command="commands">Command Palette</button>
-          <button type="button" class="secondary" data-command="extensions">Developer Tools</button>
+          <button type="button" class="secondary" data-command="setup">Setup & Tracks</button>
         </div>
       </section>
       <section class="skills-intro" aria-labelledby="skills-title">
         <div>
           <p class="section-label">One catalog • Every agent</p>
           <h2 id="skills-title">CRUX Skills</h2>
-          <p>Choose focused skills for security, architecture, frontend, UI, native mobile, backend, DevOps, AI, code review, and optional engineering rules. Install them for Codex, Claude Code, GitHub Copilot, Cursor, Gemini, or another agent—without adding application runtime dependencies.</p>
+          <p>Choose profile tracks for frontend, native mobile, backend, Python/AI, data, DevOps, design, testing, and review. CRUXIDE maps each track to focused extensions, skills, and optional engineering rules—without adding application runtime dependencies.</p>
         </div>
         <button type="button" data-command="skills">Open Skills Manager</button>
       </section>
@@ -187,6 +187,9 @@ async function executeHomeCommand(command: HomeCommand): Promise<void> {
       break;
     case 'skills':
       await vscode.commands.executeCommand('cruxide.openSkills');
+      break;
+    case 'setup':
+      await vscode.commands.executeCommand('cruxide.openSetup');
       break;
     case 'website':
       await vscode.env.openExternal(CRUXCODE_URL);

@@ -20,15 +20,16 @@ test('manifest keeps the release security invariants', async () => {
   assert.equal(manifest.capabilities.virtualWorkspaces.supported, true);
   assert.deepEqual(manifest.extensionKind, ['ui']);
   assert.equal(manifest.dependencies, undefined);
-  assert.equal(manifest.extensionPack.length, 61);
-  assert.ok(manifest.extensionPack.includes('dbaeumer.vscode-eslint'));
+  assert.equal(manifest.extensionPack, undefined);
   assert.ok(manifest.files.includes('skills/**'));
   assert.ok(manifest.activationEvents.includes('onCommand:cruxide.openSkills'));
+  assert.ok(manifest.activationEvents.includes('onCommand:cruxide.openSetup'));
   assert.ok(manifest.contributes.commands.some(({ command }) => command === 'cruxide.openSkills'));
-  assert.equal(
-    new Set(manifest.extensionPack.map((id) => id.toLowerCase())).size,
-    manifest.extensionPack.length,
-  );
+  assert.ok(manifest.contributes.commands.some(({ command }) => command === 'cruxide.openSetup'));
+  const tracksSource = await readText('src/tracks-catalog.ts');
+  const trackExtensionIds = [...tracksSource.matchAll(/extension\('([^']+)'/g)].map((match) => match[1]);
+  assert.ok(trackExtensionIds.length >= 75);
+  assert.equal(new Set(trackExtensionIds.map((id) => id.toLowerCase())).size, trackExtensionIds.length);
   for (const requiredId of [
     'angular.ng-template',
     'bradlc.vscode-tailwindcss',
@@ -46,8 +47,21 @@ test('manifest keeps the release security invariants', async () => {
     'UltraByteSoftwares.markdown-tree',
     'shd101wyy.markdown-preview-enhanced',
   ]) {
-    assert.ok(manifest.extensionPack.includes(requiredId), `${requiredId} must be curated`);
+    assert.ok(trackExtensionIds.includes(requiredId), `${requiredId} must be curated`);
   }
+  for (const requiredId of [
+    'JetBrains.kotlin-server',
+    'swiftlang.swift-vscode',
+    'Dart-Code.flutter',
+    'msjsdiag.vscode-react-native',
+    'ms-python.python',
+    'ms-toolsai.jupyter',
+    'charliermarsh.ruff',
+    'laravel.vscode-laravel',
+    'ms-dotnettools.csdevkit',
+    'vscjava.vscode-java-pack',
+    'vmware.vscode-boot-dev-pack',
+  ]) assert.ok(trackExtensionIds.includes(requiredId), `${requiredId} must be curated`);
   assert.equal(manifest.qna, false);
 });
 
@@ -72,6 +86,19 @@ test('webview has no inline executable content or remote asset loads', async () 
   assert.match(panel, /Developed by CRUX Team/);
   assert.match(panel, /Open Skills Manager/);
   assert.ok(panel.indexOf('class="brand-visual"') > panel.indexOf('class="about"'));
+});
+
+test('setup webview is local, consent-based, and does not auto-install on ready', async () => {
+  const [panel, script] = await Promise.all([
+    readText('src/setup-panel.ts'),
+    readText('media/setup.js'),
+  ]);
+  assert.match(panel, /default-src 'none'/);
+  assert.match(panel, /Apply setup/);
+  assert.match(panel, /No language runtime, SDK, project package, or dependency is installed/);
+  assert.match(script, /Everything is selected by default|state\.catalog\.tracks\.map/);
+  assert.doesNotMatch(script, /innerHTML|insertAdjacentHTML|eval\(/);
+  assert.doesNotMatch(script, /https?:\/\//i);
 });
 
 test('profile experience applies the Figma code typography', async () => {

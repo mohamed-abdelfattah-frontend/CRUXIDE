@@ -1,18 +1,19 @@
 import { readFile } from 'node:fs/promises';
 
 const manifest = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
-const extensionIds = manifest.extensionPack;
+const tracksSource = await readFile(new URL('../src/tracks-catalog.ts', import.meta.url), 'utf8');
+const extensionIds = [...tracksSource.matchAll(/extension\('([^']+)'/g)].map((match) => match[1]);
 const endpoint = 'https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery';
 const concurrency = 4;
 const maxAttempts = 3;
 
-if (!Array.isArray(extensionIds) || extensionIds.length === 0) {
-  throw new Error('package.json extensionPack must be a non-empty array.');
+if (extensionIds.length === 0) {
+  throw new Error('No track extension IDs were found in src/tracks-catalog.ts.');
 }
 
 const normalizedIds = extensionIds.map((id) => String(id).toLowerCase());
 if (new Set(normalizedIds).size !== extensionIds.length) {
-  throw new Error('package.json extensionPack contains duplicate extension IDs.');
+  throw new Error('The track catalog contains duplicate extension IDs.');
 }
 
 const results = [];

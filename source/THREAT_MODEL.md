@@ -11,7 +11,7 @@
 
 1. The extracted release archive and local installer.
 2. VS Code's extension host and profile APIs.
-3. The CRUXIDE Home webview.
+3. The CRUXIDE Home, Setup, and Skills webviews.
 4. Workspace files, including untrusted workspaces.
 5. Optional CRUX Skills destinations and external provider metadata.
 
@@ -20,12 +20,12 @@
 - Installers validate the VSIX against `SHA256SUMS.txt` and verify the exact installed extension ID.
 - The Windows installer never uses the GUI executable for CLI installation.
 - The Home webview has a restrictive local resource root and a default-deny CSP.
-- Webview messages accept exact allowlisted actions and validated structured skill selections; no arbitrary command ID, filesystem path, or URL crosses the boundary. External Home navigation is limited to two fixed HTTPS destinations.
+- Webview messages accept exact allowlisted actions and validated structured track/skill selections; no arbitrary command ID, extension ID, filesystem path, or URL crosses the boundary. External Home navigation is limited to two fixed HTTPS destinations.
 - The extension uses no shell, process, task, terminal, authentication, secret, or network execution API. Project writes occur only after explicit confirmation in a trusted workspace and are confined to fixed skill roots and a managed Git exclude block.
 - Provider-managed skills are documented but never fetched or executed by CRUXIDE. Bundled CRUX skills contain Markdown and metadata only.
 - Settings are changed only after explicit consent or an explicit command.
 - Untrusted and virtual workspaces are supported because CRUXIDE does not execute workspace code.
-- The curated third-party extensions use fixed Marketplace IDs, are installed by the VS Code CLI, and are verified by exact ID after installation.
+- Track extensions use fixed source-controlled Marketplace IDs and are requested only after explicit confirmation. Platform-incompatible entries are filtered and failures are reported without silently broadening the plan.
 - Bundled font and icon files are verified before the installers copy them into user-level locations.
 - The Windows installer verifies the Microsoft Authenticode signature on `Code.exe` before invoking the associated CLI.
 
