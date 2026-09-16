@@ -899,6 +899,171 @@
       "license": "MIT"
     },
     {
+      "id": "crux-php-architecture",
+      "name": "CRUX PHP Architecture",
+      "category": "Backend & APIs",
+      "description": "Guide typed, secure, testable PHP services with explicit domain, application, infrastructure, and delivery boundaries.",
+      "kind": "skill",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Guide typed, secure, testable PHP services with explicit domain, application, infrastructure, and delivery boundaries."
+      ],
+      "useCases": [],
+      "tags": [],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.0.0",
+      "license": "MIT"
+    },
+    {
+      "id": "crux-laravel-architecture",
+      "name": "CRUX Laravel Architecture",
+      "category": "Backend & APIs",
+      "description": "Build maintainable Laravel systems with thin delivery layers, explicit authorization, queues, events, and data boundaries.",
+      "kind": "skill",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Build maintainable Laravel systems with thin delivery layers, explicit authorization, queues, events, and data boundaries."
+      ],
+      "useCases": [],
+      "tags": [],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.0.0",
+      "license": "MIT"
+    },
+    {
+      "id": "crux-dotnet-architecture",
+      "name": "CRUX .NET & ASP.NET Core",
+      "category": "Backend & APIs",
+      "description": "Guide production .NET and ASP.NET Core services with clean boundaries, DI, async flows, security, and observability.",
+      "kind": "skill",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Guide production .NET and ASP.NET Core services with clean boundaries, DI, async flows, security, and observability."
+      ],
+      "useCases": [],
+      "tags": [],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.0.0",
+      "license": "MIT"
+    },
+    {
+      "id": "crux-java-spring-architecture",
+      "name": "CRUX Java & Spring Boot",
+      "category": "Backend & APIs",
+      "description": "Guide Spring Boot services across modules, dependency injection, persistence, transactions, security, and operations.",
+      "kind": "skill",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Guide Spring Boot services across modules, dependency injection, persistence, transactions, security, and operations."
+      ],
+      "useCases": [],
+      "tags": [],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.0.0",
+      "license": "MIT"
+    },
+    {
+      "id": "crux-go-rust-backend",
+      "name": "CRUX Go & Rust Backend",
+      "category": "Backend & APIs",
+      "description": "Guide production Go and Rust services with explicit ownership, cancellation, concurrency, errors, and operational boundaries.",
+      "kind": "skill",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Guide production Go and Rust services with explicit ownership, cancellation, concurrency, errors, and operational boundaries."
+      ],
+      "useCases": [],
+      "tags": [],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.0.0",
+      "license": "MIT"
+    },
+    {
       "id": "crux-api-design",
       "name": "CRUX API Design",
       "category": "Backend & APIs",
@@ -1055,6 +1220,105 @@
       },
       "benefits": [
         "Design secure CI/CD pipelines with quality gates, environments, provenance, and rollback."
+      ],
+      "useCases": [],
+      "tags": [],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.0.0",
+      "license": "MIT"
+    },
+    {
+      "id": "crux-database-engineering",
+      "name": "CRUX Database Engineering",
+      "category": "DevOps & Data",
+      "description": "Design and review relational data models, queries, migrations, indexing, security, and operational safety.",
+      "kind": "skill",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Design and review relational data models, queries, migrations, indexing, security, and operational safety."
+      ],
+      "useCases": [],
+      "tags": [],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.0.0",
+      "license": "MIT"
+    },
+    {
+      "id": "crux-python-ai-engineering",
+      "name": "CRUX Python AI Engineering",
+      "category": "AI Engineering",
+      "description": "Build typed, reproducible, secure Python AI and data workflows with bounded resources, evaluation, and observability.",
+      "kind": "skill",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Build typed, reproducible, secure Python AI and data workflows with bounded resources, evaluation, and observability."
+      ],
+      "useCases": [],
+      "tags": [],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.0.0",
+      "license": "MIT"
+    },
+    {
+      "id": "crux-python-backend",
+      "name": "CRUX Python Backend",
+      "category": "Backend & APIs",
+      "description": "Guide FastAPI, Django, and Python services with explicit contracts, async boundaries, security, persistence, and testing.",
+      "kind": "skill",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Guide FastAPI, Django, and Python services with explicit contracts, async boundaries, security, persistence, and testing."
       ],
       "useCases": [],
       "tags": [],

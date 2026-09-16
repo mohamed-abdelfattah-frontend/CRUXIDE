@@ -1,12 +1,18 @@
 import { cp, mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { homedir } from 'node:os';
-import { dirname, join, relative, resolve, sep } from 'node:path';
+import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import * as vscode from 'vscode';
 import type { AgentId, SkillCatalogEntry, SkillInstallRequest, SkillsCatalog } from './skills-types.js';
 
 const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,78}[a-z0-9])?$/;
 const EXCLUDE_START = '# CRUXIDE local skills — managed block';
 const EXCLUDE_END = '# End CRUXIDE local skills';
+const RULES_CUSTOM_START = '<!-- CRUXIDE:CUSTOM-RULES:START -->';
+const RULES_CUSTOM_END = '<!-- CRUXIDE:CUSTOM-RULES:END -->';
+const PROJECT_LINK_START = '<!-- CRUXIDE:PROJECT-RULES-LINK:START -->';
+const PROJECT_LINK_END = '<!-- CRUXIDE:PROJECT-RULES-LINK:END -->';
+const AGENT_RULES_START = '<!-- CRUXIDE:AGENT-RULES:START -->';
+const AGENT_RULES_END = '<!-- CRUXIDE:AGENT-RULES:END -->';
 const ADAPTER_DIRECTORIES: Readonly<Record<AgentId, string>> = {
   codex: '.agents/skills',
   'claude-code': '.claude/skills',
@@ -45,6 +51,7 @@ export async function installSkills(
   let external = 0;
   let adapters = 0;
   const generatedAdapterPaths: string[] = [];
+  const generatedProjectPaths: string[] = [];
   const writtenAdapterPaths = new Set<string>();
 
   for (const skill of selected) {
@@ -73,7 +80,10 @@ export async function installSkills(
       if (writtenAdapterPaths.has(adapterPath)) continue;
       await mkdir(adapterPath, { recursive: true });
       const canonicalSkill = join(destination, 'SKILL.md');
-      await atomicWrite(join(adapterPath, 'SKILL.md'), adapterDocument(skill, canonicalSkill, adapterPath));
+      await atomicWrite(
+        join(adapterPath, 'SKILL.md'),
+        adapterDocument(skill, canonicalSkill, join(root, 'PROJECT_RULES.md'), adapterPath),
+      );
       if (skill.explicitOnly) {
         await atomicWrite(join(adapterPath, 'agents', 'openai.yaml'), openAiAdapterMetadata(skill));
       }
@@ -83,12 +93,23 @@ export async function installSkills(
     }
   }
 
+  const ruleResult = await writeProjectRules(
+    extensionUri,
+    root,
+    workspaceRoot,
+    selected,
+    request,
+    backupRoot,
+  );
+  generatedProjectPaths.push(...ruleResult.createdProjectPaths);
+
   await atomicWrite(join(root, 'README.md'), rootReadme(request.scope));
   await atomicWrite(join(root, 'config.json'), `${JSON.stringify({
     schemaVersion: 1,
     scope: request.scope,
     ruleMode: request.ruleMode,
     agents: request.agents,
+    projectRules: join(root, 'PROJECT_RULES.md'),
     updatedAt: new Date().toISOString(),
   }, null, 2)}\n`);
   const lockPath = join(root, 'skills.lock.json');
@@ -101,7 +122,7 @@ export async function installSkills(
   await atomicWrite(join(root, '.gitignore'), localArtifactIgnore());
 
   if (workspaceRoot && request.scope === 'project-local') {
-    await updateGitExclude(workspaceRoot);
+    await updateGitExclude(workspaceRoot, generatedProjectPaths);
   } else if (workspaceRoot && request.scope === 'project-shared') {
     await clearGitExclude(workspaceRoot);
   }
@@ -248,10 +269,16 @@ async function exists(path: string): Promise<boolean> {
   }
 }
 
-function adapterDocument(skill: SkillCatalogEntry, canonicalSkill: string, adapterRoot: string): string {
+function adapterDocument(
+  skill: SkillCatalogEntry,
+  canonicalSkill: string,
+  canonicalRules: string,
+  adapterRoot: string,
+): string {
   const displayPath = relative(adapterRoot, canonicalSkill).split(sep).join('/');
   const configPath = relative(adapterRoot, join(dirname(dirname(canonicalSkill)), 'config.json')).split(sep).join('/');
-  return `---\nname: ${skill.id}\ndescription: ${skill.description}${skill.explicitOnly ? '\ndisable-model-invocation: true' : ''}\n---\n\n# ${skill.name}\n\nRead and follow the canonical CRUX skill at \`${displayPath}\`. Before applying a CRUX rule pack, read \`${configPath}\` and honor its \`ruleMode\`.${skill.explicitOnly ? '\n\nRun this skill only after the user explicitly invokes it. Do not activate it automatically.' : ''}\n\nThis adapter contains no executable code and does not install project dependencies. Project instructions and developer overrides take precedence.\n`;
+  const rulesPath = relative(adapterRoot, canonicalRules).split(sep).join('/');
+  return `---\nname: ${skill.id}\ndescription: ${skill.description}${skill.explicitOnly ? '\ndisable-model-invocation: true' : ''}\n---\n\n# ${skill.name}\n\nRead and follow the canonical CRUX skill at \`${displayPath}\`. Read \`${rulesPath}\` before planning, editing, or reviewing code, then read \`${configPath}\` and honor its \`ruleMode\`.${skill.explicitOnly ? '\n\nRun this skill only after the user explicitly invokes it. Do not activate it automatically.' : ''}\n\nThis adapter contains no executable code and does not install project dependencies. Project instructions and developer overrides take precedence.\n`;
 }
 
 function externalGuide(skill: SkillCatalogEntry): string {
@@ -262,7 +289,7 @@ function openAiAdapterMetadata(skill: SkillCatalogEntry): string {
   return `interface:\n  display_name: "${skill.name}"\n  short_description: "Coordinate the right skills for one result"\n  default_prompt: "Use $${skill.id} to analyze this prompt, select and coordinate the minimum relevant installed skills, and verify the result."\npolicy:\n  allow_implicit_invocation: false\n`;
 }
 
-async function updateGitExclude(workspaceRoot: string): Promise<void> {
+async function updateGitExclude(workspaceRoot: string, generatedProjectPaths: readonly string[]): Promise<void> {
   const excludePath = await resolveGitExclude(workspaceRoot);
   if (!excludePath) {
     return;
@@ -272,6 +299,7 @@ async function updateGitExclude(workspaceRoot: string): Promise<void> {
   const patterns = [
     '/.crux/',
     ...new Set(Object.values(ADAPTER_DIRECTORIES).map((path) => `/${path}/crux-*/`)),
+    ...generatedProjectPaths,
   ].sort();
   const block = `${EXCLUDE_START}\n${[...new Set(patterns)].join('\n')}\n${EXCLUDE_END}`;
   await atomicWrite(excludePath, `${withoutManaged.trimEnd()}${withoutManaged.trim() ? '\n\n' : ''}${block}\n`);
@@ -337,7 +365,167 @@ function localArtifactIgnore(): string {
 }
 
 function rootReadme(scope: SkillInstallRequest['scope']): string {
-  return `# CRUX Skills\n\nInstalled scope: **${scope}**. These files guide supported AI agents and do not become application runtime dependencies.\n\nProject Local is hidden through \`.git/info/exclude\` without changing the shared \`.gitignore\`. Project Shared may be committed intentionally; local artifacts remain ignored by this folder's own \`.gitignore\`.\n`;
+  return `# CRUX Skills\n\nInstalled scope: **${scope}**. These files guide supported AI agents and do not become application runtime dependencies.\n\nThe canonical generated rules are in \`PROJECT_RULES.md\`. Add project-specific instructions only inside its preserved **Custom Project Rules** section.\n\nProject Local is hidden through \`.git/info/exclude\` without changing the shared \`.gitignore\`. Project Shared may be committed intentionally; local artifacts remain ignored by this folder's own \`.gitignore\`.\n`;
+}
+
+async function writeProjectRules(
+  extensionUri: vscode.Uri,
+  root: string,
+  workspaceRoot: string | undefined,
+  selected: readonly SkillCatalogEntry[],
+  request: SkillInstallRequest,
+  backupRoot: string,
+): Promise<{ readonly createdProjectPaths: string[] }> {
+  const rulesPath = join(root, 'PROJECT_RULES.md');
+  const existingRules = await readFile(rulesPath, 'utf8').catch(() => '');
+  const customRules = extractCustomRules(existingRules);
+  const rules = selected.filter((skill) => skill.source === 'crux' && skill.kind === 'rule-pack');
+  const sections: string[] = [];
+
+  for (const rule of rules) {
+    const sourcePath = vscode.Uri.joinPath(
+      extensionUri, 'skills', 'bundled', rule.id, 'SKILL.md',
+    ).fsPath;
+    const source = await readFile(sourcePath, 'utf8');
+    const workflow = /## Workflow\s+([^]*?)(?=\n## |$)/.exec(source)?.[1]?.trim()
+      ?? '- Follow the rule pack README and project overrides.';
+    sections.push(`## ${rule.name}\n\n${rule.description}\n\n${workflow}`);
+  }
+
+  const modeText: Readonly<Record<SkillInstallRequest['ruleMode'], string>> = {
+    guidance: 'Recommendations only. Explain material deviations, but do not block work.',
+    warning: 'Flag material deviations before completion and propose a compliant alternative.',
+    strict: 'Request compliance before completion unless the developer explicitly approves an exception.',
+    custom: 'The Custom Project Rules section and project-authored instructions decide enforcement.',
+  };
+  const generated = [
+    '# CRUX Project Rules',
+    '',
+    '> Generated from the selected CRUX rule packs. CRUXIDE replaces generated sections on update and preserves the Custom Project Rules section.',
+    '',
+    `**Rule mode:** ${request.ruleMode} — ${modeText[request.ruleMode]}`,
+    '',
+    '## Precedence',
+    '',
+    '1. Explicit developer instructions and repository-owned policy.',
+    '2. Custom Project Rules below.',
+    '3. Selected CRUX generated rule packs.',
+    '4. General recommendations from optional skills.',
+    '',
+    'Agents must never claim a rule, test, scanner, command, or review ran without evidence.',
+    '',
+    '## Selected Rule Packs',
+    '',
+    ...(rules.length ? rules.map((rule) => `- ${rule.name} (\`${rule.id}\`)`) : ['- No rule packs selected.']),
+    '',
+    ...sections.flatMap((section) => [section, '']),
+    '## Custom Project Rules',
+    '',
+    RULES_CUSTOM_START,
+    customRules,
+    RULES_CUSTOM_END,
+    '',
+  ].join('\n');
+  await backupExistingFile(rulesPath, backupRoot, root);
+  await atomicWrite(rulesPath, generated);
+
+  if (!workspaceRoot) return { createdProjectPaths: [] };
+
+  const createdProjectPaths: string[] = [];
+  const rootLink = join(workspaceRoot, 'PROJECT_RULES.md');
+  if (await writeManagedBlock(
+    rootLink,
+    PROJECT_LINK_START,
+    PROJECT_LINK_END,
+    `${PROJECT_LINK_START}\n## CRUXIDE Project Rules\n\nThe canonical project rules are in [\`.crux/PROJECT_RULES.md\`](.crux/PROJECT_RULES.md). Agents must read that file before planning, editing, generating, or reviewing code. Add custom rules in its preserved **Custom Project Rules** section.\n${PROJECT_LINK_END}`,
+    backupRoot,
+    workspaceRoot,
+  )) createdProjectPaths.push('/PROJECT_RULES.md');
+
+  const adapterSpecs = agentRuleAdapterSpecs(workspaceRoot, request.agents);
+  for (const spec of adapterSpecs) {
+    const created = await writeManagedBlock(
+      spec.path,
+      AGENT_RULES_START,
+      AGENT_RULES_END,
+      spec.content,
+      backupRoot,
+      workspaceRoot,
+      spec.prefix,
+    );
+    if (created) {
+      const relativePath = relative(workspaceRoot, spec.path).split(sep).join('/');
+      createdProjectPaths.push(`/${relativePath}`);
+    }
+  }
+  return { createdProjectPaths };
+}
+
+function extractCustomRules(content: string): string {
+  const start = content.indexOf(RULES_CUSTOM_START);
+  const end = content.indexOf(RULES_CUSTOM_END, start + RULES_CUSTOM_START.length);
+  if (start >= 0 && end > start) {
+    const preserved = content.slice(start + RULES_CUSTOM_START.length, end).trim();
+    if (preserved) return preserved;
+  }
+  if (content.trim() && !content.includes('Generated from the selected CRUX rule packs')) {
+    return `### Preserved pre-existing rules\n\n${content.trim()}`;
+  }
+  return '- Add project-specific architecture, code-review, naming, security, testing, or delivery rules here. CRUXIDE preserves this section on regeneration.';
+}
+
+function agentRuleAdapterSpecs(
+  workspaceRoot: string,
+  agents: readonly AgentId[],
+): Array<{ path: string; content: string; prefix?: string }> {
+  const selected = new Set(agents);
+  const specs: Array<{ path: string; content: string; prefix?: string }> = [];
+  const standard = `${AGENT_RULES_START}\n## CRUXIDE Rules\n\nBefore planning, editing, generating, or reviewing code, read and follow \`.crux/PROJECT_RULES.md\`. Preserve its custom section and follow its configured rule mode. Explicit developer and repository instructions take precedence.\n${AGENT_RULES_END}`;
+  if (selected.has('codex') || selected.has('generic')) specs.push({ path: join(workspaceRoot, 'AGENTS.md'), content: standard });
+  if (selected.has('claude-code')) specs.push({ path: join(workspaceRoot, 'CLAUDE.md'), content: standard });
+  if (selected.has('gemini')) specs.push({ path: join(workspaceRoot, 'GEMINI.md'), content: standard });
+  if (selected.has('copilot')) specs.push({ path: join(workspaceRoot, '.github', 'copilot-instructions.md'), content: standard });
+  if (selected.has('cursor')) specs.push({
+    path: join(workspaceRoot, '.cursor', 'rules', 'crux-project-rules.mdc'),
+    prefix: '---\ndescription: Apply CRUXIDE project rules\nalwaysApply: true\n---\n\n',
+    content: standard,
+  });
+  return specs;
+}
+
+async function writeManagedBlock(
+  path: string,
+  startMarker: string,
+  endMarker: string,
+  block: string,
+  backupRoot: string,
+  workspaceRoot: string,
+  prefix = '',
+): Promise<boolean> {
+  const existed = await exists(path);
+  const current = existed ? await readFile(path, 'utf8') : '';
+  await backupExistingFile(path, backupRoot, workspaceRoot);
+  const start = current.indexOf(startMarker);
+  const end = current.indexOf(endMarker, Math.max(0, start) + startMarker.length);
+  let next: string;
+  if (start >= 0 && end >= start) {
+    next = `${current.slice(0, start)}${block}${current.slice(end + endMarker.length)}`;
+  } else {
+    next = `${current.trimEnd()}${current.trim() ? '\n\n' : prefix}${block}\n`;
+  }
+  await atomicWrite(path, next);
+  return !existed;
+}
+
+async function backupExistingFile(path: string, backupRoot: string, referenceRoot: string): Promise<void> {
+  if (!await exists(path)) return;
+  const relativePath = relative(referenceRoot, path);
+  const safeName = (relativePath && !relativePath.startsWith('..') ? relativePath : basename(path))
+    .split(sep).join('__');
+  const backupPath = join(backupRoot, 'project-files', safeName);
+  if (await exists(backupPath)) return;
+  await mkdir(dirname(backupPath), { recursive: true });
+  await cp(path, backupPath, { force: false });
 }
 
 function safeTimestamp(): string {

@@ -3,69 +3,6 @@ set -euo pipefail
 
 profile_name="CRUXIDE"
 extension_id="cruxcode.cruxide"
-extension_pack_ids=(
-  "dbaeumer.vscode-eslint"
-  "esbenp.prettier-vscode"
-  "editorconfig.editorconfig"
-  "stylelint.vscode-stylelint"
-  "davidanson.vscode-markdownlint"
-  "angular.ng-template"
-  "johnpapa.angular2"
-  "bradlc.vscode-tailwindcss"
-  "dsznajder.es7-react-js-snippets"
-  "jundat95.react-native-snippet"
-  "pulkitgangwar.nextjs-snippets"
-  "suhelmakkad.shadcn-ui"
-  "anbuselvanrocky.bootstrap5-vscode"
-  "p-de-jong.vscode-html-scss"
-  "mrmlnc.vscode-scss"
-  "xabikos.javascriptsnippets"
-  "steoates.autoimport"
-  "formulahendry.auto-rename-tag"
-  "naumovs.color-highlight"
-  "imgildev.vscode-nestjs-snippets-extension"
-  "imgildev.vscode-nestjs-generator"
-  "Compulim.vscode-express"
-  "chris-noring.node-snippets"
-  "humao.rest-client"
-  "ms-playwright.playwright"
-  "ms-azuretools.vscode-containers"
-  "ms-vscode-remote.remote-containers"
-  "redhat.vscode-yaml"
-  "github.vscode-github-actions"
-  "github.vscode-pull-request-github"
-  "github.copilot-chat"
-  "eamodio.gitlens"
-  "donjayamanne.git-extension-pack"
-  "mhutchie.git-graph"
-  "donjayamanne.githistory"
-  "ms-vsliveshare.vsliveshare"
-  "figma.figma-vscode-extension"
-  "openai.chatgpt"
-  "anthropic.claude-code"
-  "aaron-bond.better-comments"
-  "streetsidesoftware.code-spell-checker"
-  "nhoizey.gremlins"
-  "christian-kohler.npm-intellisense"
-  "christian-kohler.path-intellisense"
-  "quicktype.quicktype"
-  "mariusalchimavicius.json-to-ts"
-  "aykutsarac.jsoncrack-vscode"
-  "mechatroner.rainbow-csv"
-  "alefragnani.separators"
-  "cpmcgrath.codealignment-vscode"
-  "kisstkondoros.vscode-codemetrics"
-  "bracketpaircolordlw.bracket-pair-color-dlw"
-  "alefragnani.project-manager"
-  "jmkrivocapich.drawfolderstructure"
-  "adpyke.codesnap"
-  "simonsiefke.svg-preview"
-  "wayou.vscode-todo-highlight"
-  "gruntfuggly.todo-tree"
-  "UltraByteSoftwares.markdown-tree"
-  "shd101wyy.markdown-preview-enhanced"
-  "pkief.material-icon-theme"
-)
 version="1.0.1"
 package_root="$(cd "$(dirname "$0")" && pwd)"
 vsix_path="$package_root/cruxide-$version.vsix"
@@ -132,16 +69,6 @@ extension_is_available() {
   return 1
 }
 
-platform_provided_ids=()
-platform_provides() {
-  local expected="$1"
-  local provided
-  for provided in "${platform_provided_ids[@]}"; do
-    if [[ "$provided" == "$expected" ]]; then return 0; fi
-  done
-  return 1
-}
-
 for required_file in "$vsix_path" "$logo_path" "$regular_font_path" "$italic_font_path" "$checksum_path"; do
   if [[ ! -f "$required_file" ]]; then
     echo "Missing release file: $required_file" >&2
@@ -171,43 +98,16 @@ ensure_profile "$code_cli"
 "$code_cli" --profile "$profile_name" --install-extension "$vsix_path" --force
 
 installed_ids="$("$code_cli" --profile "$profile_name" --list-extensions | tr '[:upper:]' '[:lower:]')"
-for required_id in "${extension_pack_ids[@]}"; do
-  required_id_normalized="$(printf '%s' "$required_id" | tr '[:upper:]' '[:lower:]')"
-  if ! grep -Fqx "$required_id_normalized" <<<"$installed_ids"; then
-    if extension_is_available "$required_id"; then
-      echo "Using application-provided developer tool: $required_id"
-      platform_provided_ids+=("$required_id_normalized")
-      continue
-    fi
-    echo "Installing required developer tool: $required_id"
-    if tool_output="$("$code_cli" --profile "$profile_name" --install-extension "$required_id" 2>&1)"; then
-      printf '%s\n' "$tool_output"
-    else
-      tool_status=$?
-      printf '%s\n' "$tool_output" >&2
-      if [[ "$required_id_normalized" == "github.copilot-chat" &&
-            "$tool_output" == *"is a built-in extension with version"* &&
-            "$tool_output" == *"cannot be downgraded"* ]]; then
-        echo "Using the newer GitHub Copilot Chat bundled with VS Code."
-        platform_provided_ids+=("$required_id_normalized")
-      else
-        echo "Required extension $required_id failed to install (exit code $tool_status)." >&2
-        exit "$tool_status"
-      fi
-    fi
-  fi
-done
-
-installed_ids="$("$code_cli" --profile "$profile_name" --list-extensions | tr '[:upper:]' '[:lower:]')"
-for required_id in "$extension_id" "${extension_pack_ids[@]}"; do
+for required_id in "$extension_id"; do
   required_id_normalized="$(printf '%s' "$required_id" | tr '[:upper:]' '[:lower:]')"
   if ! grep -Fqx "$required_id_normalized" <<<"$installed_ids" &&
-     ! platform_provides "$required_id_normalized" &&
      ! extension_is_available "$required_id"; then
     echo "VS Code completed without error, but $required_id was not found in the $profile_name profile." >&2
     exit 1
   fi
 done
+
+echo "Open CRUXIDE Setup in the profile to review and install track-specific developer tools."
 
 font_destination="$HOME/Library/Fonts"
 mkdir -p "$font_destination"

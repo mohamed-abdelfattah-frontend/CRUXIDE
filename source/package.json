@@ -28,7 +28,6 @@
   },
   "categories": [
     "Themes",
-    "Extension Packs",
     "Other"
   ],
   "keywords": [
@@ -44,6 +43,7 @@
     "onStartupFinished",
     "onCommand:cruxide.openHome",
     "onCommand:cruxide.openSkills",
+    "onCommand:cruxide.openSetup",
     "onCommand:cruxide.applyExperience",
     "onView:cruxide.actions"
   ],
@@ -66,7 +66,8 @@
   "scripts": {
     "clean": "node scripts/clean.mjs",
     "generate:skills": "node scripts/generate-skills.mjs",
-    "compile": "npm run generate:skills && tsc -p tsconfig.json",
+    "generate:extensions-doc": "node scripts/generate-extensions-doc.mjs",
+    "compile": "npm run generate:skills && tsc -p tsconfig.json && npm run generate:extensions-doc",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint src --max-warnings=0",
     "test": "npm run compile && node --test test/*.test.mjs",
@@ -77,69 +78,6 @@
     "package:vsix": "npm run clean && npm run verify && node scripts/package.mjs",
     "package:release": "npm run verify:marketplace && npm run package:vsix && node scripts/release.mjs"
   },
-  "extensionPack": [
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "editorconfig.editorconfig",
-    "stylelint.vscode-stylelint",
-    "davidanson.vscode-markdownlint",
-    "angular.ng-template",
-    "johnpapa.angular2",
-    "bradlc.vscode-tailwindcss",
-    "dsznajder.es7-react-js-snippets",
-    "jundat95.react-native-snippet",
-    "pulkitgangwar.nextjs-snippets",
-    "suhelmakkad.shadcn-ui",
-    "anbuselvanrocky.bootstrap5-vscode",
-    "p-de-jong.vscode-html-scss",
-    "mrmlnc.vscode-scss",
-    "xabikos.javascriptsnippets",
-    "steoates.autoimport",
-    "formulahendry.auto-rename-tag",
-    "naumovs.color-highlight",
-    "imgildev.vscode-nestjs-snippets-extension",
-    "imgildev.vscode-nestjs-generator",
-    "Compulim.vscode-express",
-    "chris-noring.node-snippets",
-    "humao.rest-client",
-    "ms-playwright.playwright",
-    "ms-azuretools.vscode-containers",
-    "ms-vscode-remote.remote-containers",
-    "redhat.vscode-yaml",
-    "github.vscode-github-actions",
-    "github.vscode-pull-request-github",
-    "github.copilot-chat",
-    "eamodio.gitlens",
-    "donjayamanne.git-extension-pack",
-    "mhutchie.git-graph",
-    "donjayamanne.githistory",
-    "ms-vsliveshare.vsliveshare",
-    "figma.figma-vscode-extension",
-    "openai.chatgpt",
-    "anthropic.claude-code",
-    "aaron-bond.better-comments",
-    "streetsidesoftware.code-spell-checker",
-    "nhoizey.gremlins",
-    "christian-kohler.npm-intellisense",
-    "christian-kohler.path-intellisense",
-    "quicktype.quicktype",
-    "mariusalchimavicius.json-to-ts",
-    "aykutsarac.jsoncrack-vscode",
-    "mechatroner.rainbow-csv",
-    "alefragnani.separators",
-    "cpmcgrath.codealignment-vscode",
-    "kisstkondoros.vscode-codemetrics",
-    "bracketpaircolordlw.bracket-pair-color-dlw",
-    "alefragnani.project-manager",
-    "jmkrivocapich.drawfolderstructure",
-    "adpyke.codesnap",
-    "simonsiefke.svg-preview",
-    "wayou.vscode-todo-highlight",
-    "gruntfuggly.todo-tree",
-    "UltraByteSoftwares.markdown-tree",
-    "shd101wyy.markdown-preview-enhanced",
-    "pkief.material-icon-theme"
-  ],
   "contributes": {
     "commands": [
       {
@@ -147,6 +85,12 @@
         "title": "Open Home",
         "category": "CRUXIDE",
         "icon": "$(home)"
+      },
+      {
+        "command": "cruxide.openSetup",
+        "title": "Setup & Manage Tracks",
+        "category": "CRUXIDE",
+        "icon": "$(settings-gear)"
       },
       {
         "command": "cruxide.openSkills",
@@ -183,6 +127,9 @@
       "commandPalette": [
         {
           "command": "cruxide.openHome"
+        },
+        {
+          "command": "cruxide.openSetup"
         },
         {
           "command": "cruxide.openSkills"
@@ -246,10 +193,10 @@
           "default": true,
           "description": "Open CRUXIDE Home when no code files exist in the current workspace."
         },
-        "cruxide.promptToApplyExperienceOnFirstRun": {
+        "cruxide.promptToOpenSetupOnFirstRun": {
           "type": "boolean",
           "default": true,
-          "description": "Ask before applying the CRUXIDE theme, title, Roboto Mono typography, and editor defaults on first run."
+          "description": "Offer the consent-based CRUXIDE track, tooling, skills, and rules setup on first run."
         },
         "cruxide.codeFileExtensions": {
           "type": "array",
@@ -297,6 +244,15 @@
             "media": {
               "image": "media/walkthrough.svg",
               "altText": "CRUXIDE"
+            }
+          },
+          {
+            "id": "cruxide.setupStep",
+            "title": "Choose your tracks",
+            "description": "Select profile-specific extensions, skills, agents, and rules with [CRUXIDE Setup](command:cruxide.openSetup).",
+            "media": {
+              "image": "media/walkthrough.svg",
+              "altText": "CRUXIDE Setup"
             }
           },
           {

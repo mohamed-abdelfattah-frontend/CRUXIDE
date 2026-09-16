@@ -2,6 +2,26 @@
 
 All notable changes follow Keep a Changelog conventions.
 
+## Unreleased
+
+### Added
+
+- Added consent-based first-run **CRUXIDE Setup** with 23 selectable tracks and an all-tracks default that can be reduced before installation.
+- Added native Android/Kotlin, iOS/Swift, Flutter/Dart, React Native/Expo, Python/AI/data, PHP/Laravel, .NET/ASP.NET Core, Java/Spring Boot, Go/Rust, database, DevOps, and review tooling.
+- Added CRUX skills for PHP, Laravel, .NET, Spring Boot, Go/Rust, Python AI/backend engineering, and databases; the all-track preset maps the complete skills catalog.
+- Added generated `.crux/PROJECT_RULES.md`, a root pointer, and managed agent instructions for Codex, Claude Code, GitHub Copilot, Cursor, and Gemini while preserving custom rules and existing project-authored content.
+- Added platform filtering, prerequisite disclosure, setup state, and a generated extension/track reference.
+
+### Changed
+
+- Replaced the static 61-extension manifest with track-specific, deduplicated installation after explicit confirmation.
+- Offline Windows and macOS installers now install and verify CRUXIDE only; track tooling is selected inside the active profile.
+- Deselecting a track never silently removes an extension, and already-installed or application-provided tools are not downgraded.
+
+### Security
+
+- Added strict setup-message validation, fixed source-controlled Marketplace IDs, local-only setup assets, a restrictive CSP, trusted-workspace checks for project rules, and backups before managed project-file updates.
+
 ## 1.0.1 - 2026-09-15
 
 ### Fixed

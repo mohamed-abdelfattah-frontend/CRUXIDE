@@ -28,6 +28,9 @@ test('catalog covers agreed platforms, review, Archify, ESLint, and Git workflow
   for (const expected of ['angular', 'react', 'next.js', 'react native', 'tailwind', 'shadcn', 'kotlin', 'swift', 'flutter', 'express', 'nestjs', 'coderabbit', 'archify', 'eslint', 'code review']) {
     assert.match(text, new RegExp(expected.replace('.', '\\.')));
   }
+  for (const expected of ['php', 'laravel', '.net', 'asp.net core', 'spring boot', 'python ai', 'fastapi', 'django', 'database engineering']) {
+    assert.ok(text.includes(expected), `${expected} must be represented in the skills catalog`);
+  }
   const gitSkill = await readText('skills/bundled/crux-git-workflow-rules/SKILL.md');
   for (const prefix of ['feat/', 'fix/', 'docs/', 'style/', 'refactor/', 'test/', 'chore/', 'perf/', 'ci/', 'build/']) {
     assert.match(gitSkill, new RegExp(prefix.replace('/', '\\/')));
@@ -67,6 +70,13 @@ test('installer avoids application dependencies and uses private Git exclusion',
   assert.doesNotMatch(source, /node_modules/);
   assert.doesNotMatch(source, /package\.json/);
   assert.doesNotMatch(source, /child_process|execFile|execSync|spawnSync/);
+  assert.match(source, /PROJECT_RULES\.md/);
+  assert.match(source, /CRUXIDE:CUSTOM-RULES:START/);
+  assert.match(source, /AGENTS\.md/);
+  assert.match(source, /CLAUDE\.md/);
+  assert.match(source, /copilot-instructions\.md/);
+  assert.match(source, /crux-project-rules\.mdc/);
+  assert.match(source, /GEMINI\.md/);
 });
 
 test('Skills webview keeps scripts local and enforces restrictive CSP', async () => {

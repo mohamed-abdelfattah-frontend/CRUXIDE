@@ -4,6 +4,7 @@ export const HOME_COMMANDS = [
   'linkedin',
   'newFile',
   'openFolder',
+  'setup',
   'skills',
   'website',
 ] as const;

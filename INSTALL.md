@@ -17,7 +17,9 @@ For installation without launching the new window:
 .\install-windows.ps1 -NoLaunch
 ```
 
-The installer uses an isolated `cmd.exe` child process to run `code.cmd`, so harmless Node warnings on stderr cannot become PowerShell `NativeCommandError` exceptions or blank exit codes. It confirms the CLI belongs to the same Microsoft-signed VS Code installation, creates the profile when missing, verifies CRUXIDE and all 61 curated extensions, installs Roboto Mono for the current Windows user, and creates CRUX-branded Desktop and Start Menu shortcuts targeting `Code.exe`.
+The installer uses an isolated `cmd.exe` child process to run `code.cmd`, so harmless Node warnings on stderr cannot become PowerShell `NativeCommandError` exceptions or blank exit codes. It confirms the CLI belongs to the same Microsoft-signed VS Code installation, creates the profile when missing, verifies CRUXIDE, installs Roboto Mono for the current Windows user, and creates CRUX-branded Desktop and Start Menu shortcuts targeting `Code.exe`.
+
+After launch, open **CRUXIDE: Setup & Manage Tracks**. All tracks are selected initially; uncheck anything you do not need, review the plan, and confirm before VS Code downloads track-specific extensions.
 
 ## macOS
 
@@ -39,7 +41,7 @@ code --profile "CRUXIDE" --list-extensions
 code --profile "CRUXIDE" --new-window
 ```
 
-The list must contain `cruxcode.cruxide` and the 61 curated extension IDs documented in `EXTENSIONS.md`.
+The list must contain `cruxcode.cruxide`. Track-specific extensions appear only after they are selected and confirmed in CRUXIDE Setup.
 
 ## Checksum verification
 
