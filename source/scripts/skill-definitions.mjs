@@ -67,6 +67,16 @@ function technologyRules(id, name, description, instructions, references, tags =
   });
 }
 
+function accessibilityStandardRules(id, name, description, instructions, references, tags, versionPolicy) {
+  return crux(id, name, 'Accessibility Standards', description, instructions, {
+    kind: 'rule-pack',
+    version: '1.1.0',
+    tags: ['accessibility-standard', 'a11y', 'independently-selectable', ...tags],
+    references,
+    versionPolicy,
+  });
+}
+
 const technologyRulePacks = [
   technologyRules('crux-solution-architecture-rules', 'CRUX Solution Architecture Rules',
     'Senior solution-architecture rules for quality attributes, boundaries, integration, data, resilience, security, and operability.', [
@@ -312,6 +322,68 @@ const technologyRulePacks = [
       'Log traceable decisions, sources, latency, cost, tool calls, policy outcomes, and user feedback with redaction and retention controls; provide citations and calibrated uncertainty.',
       'Test prompt injection, data poisoning, sensitive disclosure, improper output handling, excessive agency, unavailable tools, stale evidence, conflicting sources, and recovery.',
     ], ['https://genai.owasp.org/llm-top-10/', 'https://www.nist.gov/itl/ai-risk-management-framework'], ['ai', 'rag', 'agents']),
+];
+
+const accessibilityStandardRulePacks = [
+  accessibilityStandardRules('crux-wcag-22-rules', 'CRUX WCAG 2.2 Rules',
+    'Standalone WCAG 2.2 implementation and verification rules covering Levels A, AA, and AAA without treating automated scans as proof of conformance.', [
+      'Confirm the exact WCAG version, target level, product scope, supported user agents, accessibility-supported technologies, exceptions, contractual requirements, and evidence owner before implementation; when no target is declared, recommend WCAG 2.2 Level AA but do not silently replace repository or legal policy.',
+      'Apply the selected level to complete pages and complete user processes, not isolated components; include responsive states, authentication, errors, overlays, embedded content, documents, third-party journeys, and failure or recovery paths that are part of the scoped experience.',
+      'Meet Perceivable requirements with equivalent text alternatives, captions and required media alternatives, semantic information and relationships, meaningful sequence, orientation independence, adaptable presentation, color-independent meaning, sufficient text and non-text contrast, text resizing, reflow, text spacing, and controllable hover or focus content.',
+      'Meet Operable requirements with complete keyboard access and no traps, adjustable timing, pause or stop controls, seizure-safe content, bypass mechanisms, descriptive titles and headings, logical focus order, visible and unobscured focus, multiple navigation methods, pointer cancellation, alternatives to dragging, adequate target size, and motion alternatives.',
+      'Meet Understandable requirements with declared language, predictable navigation and identification, consistent help, persistent labels and instructions, clear error identification and recovery, prevention for consequential submissions, reduced redundant entry, and authentication that does not depend on prohibited cognitive-function tests.',
+      'Meet Robust requirements by preferring native semantics, exposing correct accessible name, role, value, state, relationships, and status messages, maintaining valid platform accessibility mappings, and testing custom controls against the supported browser and assistive-technology matrix.',
+      'Design and content review must cover reading order, landmarks, headings, forms, tables, live regions, dialogs, focus restoration, zoom, high contrast, reduced motion, touch, dynamic content, localization, RTL, cognitive load, plain instructions, and alternatives for sensory-only directions.',
+      'Verify each applicable success criterion with criterion-level evidence using automated checks plus manual keyboard, screen-reader, zoom and reflow, contrast, pointer or touch, and representative-user testing where required; record environment, result, defect severity, owner, remediation, retest, and any scoped exception.',
+      'Never claim WCAG conformance from an automated score, a component-library label, partial-page testing, or passing only selected criteria; formal claims must identify version, level, scope, technologies, date, known limitations, and qualified human approval.',
+      'When BITV 2.0 or BFSG rules are also selected, reuse valid technical evidence but retain each standard\'s separate scope, documentation, reporting, consumer-process, and legal obligations; apply the union of applicable requirements and surface conflicts for human decision.',
+    ], [
+      'https://www.w3.org/TR/WCAG22/',
+      'https://www.w3.org/WAI/WCAG22/quickref/',
+      'https://www.w3.org/WAI/test-evaluate/',
+    ], ['wcag', 'wcag-2.2', 'web'],
+    'Confirm the project or contractual WCAG target before applying this pack. Prefer WCAG 2.2 Level AA for new work when no target is declared, while preserving any mandated older version and testing its additional reporting requirements separately.'),
+  accessibilityStandardRules('crux-bitv-20-rules', 'CRUX BITV 2.0 Rules',
+    'Standalone BITV 2.0 rules for German federal public-sector websites, mobile applications, software, documents, statements, feedback, and required accessibility information.', [
+      'Establish and document whether the organization and asset fall within BITV 2.0 and the Behindertengleichstellungsgesetz scope; identify website, mobile application, intranet or extranet, software, electronic document, content owner, publication date, and any formally approved exception before treating this pack as legally applicable.',
+      'Resolve the current harmonized European standard referenced through BITV 2.0 section 3 at review time, map its applicable EN 301 549 clauses to the product, and keep the exact edition and test baseline in evidence; do not freeze implementation to an assumed WCAG version.',
+      'For web content, implement and test all applicable semantic, keyboard, focus, media, contrast, reflow, form, error, authentication, dynamic-content, and assistive-technology requirements inherited through the referenced standard across complete pages and processes.',
+      'Assess non-web documents, downloadable files, software, native mobile behavior, support content, and other information and communication technology covered by the applicable EN 301 549 clauses rather than limiting review to rendered HTML pages.',
+      'Provide, maintain, and link an accessible accessibility statement with the required status, inaccessible content and reasons, preparation or update method and date, feedback contact, and enforcement or conciliation information; keep statement claims synchronized with current evidence.',
+      'Provide an accessible feedback mechanism and operational response workflow so users can report barriers and request accessible alternatives; define ownership, service levels, escalation, privacy handling, tracking, and closure evidence rather than publishing a dead contact channel.',
+      'Where BITV 2.0 section 4 and its annex apply, make the prescribed information available from the home page in German Sign Language and Easy German, covering essential navigation, key content, the accessibility statement, and how to use the feedback mechanism.',
+      'Test with the applicable BITV and EN 301 549 methodology using automated analysis plus manual keyboard, screen-reader, zoom, reflow, contrast, document, mobile or software, and representative assistive-technology checks; retain clause-level evidence, defects, remediation decisions, retests, and audit dates.',
+      'Do not let an agent invent a disproportionate-burden, archived-content, third-party-content, security, or other exception; require an authorized owner to document legal basis, scope, duration, alternatives, impact assessment, approval, and reassessment date.',
+      'Never describe BITV 2.0 compliance as established solely because WCAG checks passed; obtain qualified accessibility and legal review for formal claims, and when WCAG 2.2 or BFSG is also selected apply the union while keeping BITV scope, statement, feedback, and communication duties separate.',
+    ], [
+      'https://www.gesetze-im-internet.de/bitv_2_0/',
+      'https://www.gesetze-im-internet.de/bitv_2_0/__3.html',
+      'https://www.gesetze-im-internet.de/bitv_2_0/__4.html',
+      'https://www.gesetze-im-internet.de/bitv_2_0/__7.html',
+      'https://www.bundesfachstelle-barrierefreiheit.de/DE/Fachwissen/Informationstechnik/EU-Webseitenrichtlinie/BGG-und-BITV-2-0/Die-neue-BITV-2-0/die-neue-bitv-2-0_node',
+    ], ['bitv', 'bitv-2.0', 'germany', 'public-sector'],
+    'Confirm BITV 2.0 applicability and resolve the currently referenced harmonized EN 301 549 edition at review time. Repository guidance may be stricter, but it must not replace statutory scope, required statements, feedback, communication, or enforcement obligations.'),
+  accessibilityStandardRules('crux-bfsg-rules', 'CRUX BFSG Rules',
+    'Standalone BFSG rules for in-scope consumer products and services, complete customer journeys, accessibility information, operational evidence, and human legal review.', [
+      'Have an authorized product and legal owner determine and document BFSG applicability by product or service type, consumer offering, economic-operator role, market and date, including the 28 June 2025 application boundary, transitional provisions, exclusions, and relevant BFSGV requirements; the agent must not make the final legal determination.',
+      'Map the complete in-scope consumer journey and supporting information, including discovery, registration, identity and authentication, product or service information, consent, ordering, checkout, electronic signature, payment, confirmation, account management, support, cancellation, and complaint or recovery paths.',
+      'Implement perceivable, operable, understandable, and robust interaction across supported devices and assistive technologies, including accessible identification and instructions, alternatives for non-text content, keyboard and focus behavior, adaptable presentation, contrast, forms and errors, authentication, status changes, and real-time or dynamic content.',
+      'Apply the applicable BFSGV functional and sector-specific requirements to the actual product or service, including e-commerce, electronic communications, banking, passenger transport, e-books, or access to audiovisual media where relevant; do not substitute a generic web checklist for sector obligations.',
+      'Make consumer-facing accessibility information, instructions, terms, support channels, and compatibility or interoperability information accessible, accurate, findable, and maintained for the required period; keep public claims consistent with tested behavior and documented limitations.',
+      'Assess integrated third-party content, identity services, payment providers, widgets, documents, platforms, and support channels as part of the end-to-end service; document responsibility, supplier requirements, evidence, fallback, monitoring, and remediation instead of assuming vendor ownership removes product risk.',
+      'Maintain conformity and market-surveillance evidence appropriate to the operator role, including applicable requirements, evaluation method, test environments, defects, decisions, declarations or documentation, change history, complaints, remediation, release approval, and reassessment triggers.',
+      'Place accessibility gates in design, procurement, development, content, testing, release, incident, supplier, and change-management workflows; re-evaluate after material UI, content, platform, provider, authentication, payment, or journey changes.',
+      'Do not let an agent assert microenterprise treatment, fundamental alteration, disproportionate burden, exemption, or transitional relief; require an authorized owner to document evidence, legal basis, assessment, approval, alternatives, notification duties, and review date.',
+      'Verify using automated tools plus manual keyboard, screen-reader, zoom and reflow, contrast, touch, cognitive, document, device, and complete-process testing; never claim BFSG compliance from WCAG alone, and obtain qualified accessibility and legal approval before external conformity statements.',
+      'When WCAG 2.2 or BITV 2.0 is also selected, reuse technically valid evidence while applying the union of applicable requirements; preserve BFSG consumer-market scope, operator duties, sector requirements, documentation, and market-surveillance obligations as independent controls.',
+    ], [
+      'https://www.gesetze-im-internet.de/bfsg/',
+      'https://www.gesetze-im-internet.de/bfsgv/',
+      'https://www.bundesfachstelle-barrierefreiheit.de/DE/Barrierefreiheitsstaerkungsgesetz/FAQ/faq_node',
+      'https://www.bundesfachstelle-barrierefreiheit.de/DE/Barrierefreiheitsstaerkungsgesetz/Normen-und-Standards/normen-und-standards_node',
+      'https://www.bundesfachstelle-barrierefreiheit.de/DE/Barrierefreiheitsstaerkungsgesetz/E-Commerce/online-shops_node',
+    ], ['bfsg', 'germany', 'consumer', 'european-accessibility-act'],
+    'Confirm BFSG and BFSGV applicability, operator role, sector, dates, exemptions, and currently applicable standards with an authorized legal owner. Treat this pack as engineering and evidence guidance, never as automated legal advice or a conformity certificate.'),
 ];
 
 export const skills = [
@@ -789,6 +861,7 @@ export const skills = [
     ], { kind: 'rule-pack' }),
 
   ...technologyRulePacks,
+  ...accessibilityStandardRulePacks,
 
   external('archify', 'Archify', 'Architecture & Core',
     'Create validated interactive architecture, workflow, sequence, data-flow, and lifecycle maps.',

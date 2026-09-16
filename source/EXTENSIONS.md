@@ -53,6 +53,22 @@ Formatting, linting, browser testing, code metrics, TODOs, and focused developer
 
 - No additional runtime prerequisite declared.
 
+## Accessibility Standards
+
+Independent WCAG 2.2, BITV 2.0, and BFSG rule packs that can be installed alone, in any pair, or together.
+
+| Marketplace ID | Tool | Platforms | Note |
+| --- | --- | --- | --- |
+| — | No extension | — | — |
+
+**Mapped skills:** `crux-accessibility-i18n`
+
+**Mapped rules:** `crux-accessibility-rules`, `crux-wcag-22-rules`, `crux-bitv-20-rules`, `crux-bfsg-rules`
+
+**Prerequisites**
+
+- Qualified human accessibility and legal review is required for formal conformance or statutory compliance claims
+
 ## Frontend Shared
 
 Shared HTML, CSS, SCSS, Tailwind, shadcn/ui, imports, paths, snippets, and design-system tooling.

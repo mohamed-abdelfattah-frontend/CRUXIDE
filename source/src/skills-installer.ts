@@ -13,6 +13,11 @@ const PROJECT_LINK_START = '<!-- CRUXIDE:PROJECT-RULES-LINK:START -->';
 const PROJECT_LINK_END = '<!-- CRUXIDE:PROJECT-RULES-LINK:END -->';
 const AGENT_RULES_START = '<!-- CRUXIDE:AGENT-RULES:START -->';
 const AGENT_RULES_END = '<!-- CRUXIDE:AGENT-RULES:END -->';
+const ACCESSIBILITY_STANDARD_RULE_IDS = new Set([
+  'crux-wcag-22-rules',
+  'crux-bitv-20-rules',
+  'crux-bfsg-rules',
+]);
 const ADAPTER_DIRECTORIES: Readonly<Record<AgentId, string>> = {
   codex: '.agents/skills',
   'claude-code': '.claude/skills',
@@ -380,6 +385,7 @@ async function writeProjectRules(
   const existingRules = await readFile(rulesPath, 'utf8').catch(() => '');
   const customRules = extractCustomRules(existingRules);
   const rules = selected.filter((skill) => skill.source === 'crux' && skill.kind === 'rule-pack');
+  const accessibilityStandards = rules.filter((rule) => ACCESSIBILITY_STANDARD_RULE_IDS.has(rule.id));
   const sections: string[] = [];
 
   for (const rule of rules) {
@@ -423,6 +429,17 @@ async function writeProjectRules(
     '',
     ...(rules.length ? rules.map((rule) => `- ${rule.name} (\`${rule.id}\`)`) : ['- No rule packs selected.']),
     '',
+    ...(accessibilityStandards.length ? [
+      '## Accessibility Standards Composition',
+      '',
+      `Selected standards: ${accessibilityStandards.map((rule) => rule.name).join(', ')}.`,
+      '',
+      '- Each selected accessibility pack remains independently enforceable and must be evaluated against its own scope and evidence requirements.',
+      '- When multiple packs apply, use the union of applicable requirements and the stricter requirement where they overlap; surface genuine conflicts for an authorized human decision.',
+      '- Reuse valid technical test evidence to avoid duplicate work, but do not treat one standard as proof of another or merge their statutory scope, statements, feedback, documentation, or reporting duties.',
+      '- Automated tools identify only part of the risk. Formal conformance or legal compliance claims require qualified human accessibility and, for BITV or BFSG, legal review.',
+      '',
+    ] : []),
     ...sections.flatMap((section) => [section, '']),
     '## Custom Project Rules',
     '',

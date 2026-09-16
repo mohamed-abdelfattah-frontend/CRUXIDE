@@ -27,6 +27,15 @@ test('iOS-only integrations are filtered by platform', () => {
   assert.ok(!extensionPlan(tracks, 'linux').some((item) => item.id === 'sweetpad.sweetpad'));
 });
 
+test('accessibility standards are available as a dedicated independently selectable track', () => {
+  const track = TRACKS_CATALOG.tracks.find((item) => item.id === 'accessibility-compliance');
+  assert.ok(track);
+  assert.equal(track.extensions.length, 0);
+  for (const ruleId of ['crux-wcag-22-rules', 'crux-bitv-20-rules', 'crux-bfsg-rules']) {
+    assert.ok(track.ruleIds.includes(ruleId));
+  }
+});
+
 test('every supported engineering track maps its technology-specific rule packs', () => {
   const expected = new Map([
     ['frontend-shared', ['crux-web-platform-rules', 'crux-typescript-javascript-rules']],

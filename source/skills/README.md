@@ -81,6 +81,9 @@ CRUXIDE exposes optional Agent Skills and Recommended Rules. Nothing is installe
 | CRUX SQL & Database Rules | Technology Rules | crux | recommended |
 | CRUX Containers & CI/CD Rules | Technology Rules | crux | recommended |
 | CRUX AI, Agents & RAG Production Rules | Technology Rules | crux | recommended |
+| CRUX WCAG 2.2 Rules | Accessibility Standards | crux | recommended |
+| CRUX BITV 2.0 Rules | Accessibility Standards | crux | recommended |
+| CRUX BFSG Rules | Accessibility Standards | crux | recommended |
 | Archify | Architecture & Core | external | recommended |
 | Security Guidance | Security | external | recommended |
 | Codex Security | Security | external | recommended |

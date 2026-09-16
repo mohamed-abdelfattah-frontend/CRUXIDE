@@ -69,6 +69,15 @@ export const TRACKS_CATALOG: TracksCatalog = {
         'crux-eslint-rules', 'crux-testing-rules', 'crux-performance-rules',
       ], [], ['lint', 'testing', 'review']),
 
+    track('accessibility-compliance', 'Accessibility Standards', 'Core',
+      'Independent WCAG 2.2, BITV 2.0, and BFSG rule packs that can be installed alone, in any pair, or together.', [], [
+        'crux-accessibility-i18n',
+      ], [
+        'crux-accessibility-rules', 'crux-wcag-22-rules', 'crux-bitv-20-rules', 'crux-bfsg-rules',
+      ], [
+        'Qualified human accessibility and legal review is required for formal conformance or statutory compliance claims',
+      ], ['accessibility', 'wcag', 'bitv', 'bfsg', 'compliance']),
+
     track('frontend-shared', 'Frontend Shared', 'Frontend',
       'Shared HTML, CSS, SCSS, Tailwind, shadcn/ui, imports, paths, snippets, and design-system tooling.', [
         extension('bradlc.vscode-tailwindcss', 'Tailwind CSS IntelliSense'),

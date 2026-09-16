@@ -12,6 +12,12 @@ All notable changes follow Keep a Changelog conventions.
 - Added production guidance for frontend, native mobile, backend, databases, containers/CI/CD, and AI/RAG/agent systems.
 - Added regression coverage requiring substantial rules and complete track-to-rule mappings.
 
+### Accessibility standards
+
+- Added independently selectable WCAG 2.2, BITV 2.0, and BFSG rule packs with official references and standalone implementation, testing, evidence, and review workflows.
+- Added deterministic composition guidance for selecting one, two, or all three standards: apply the union, reuse valid technical evidence, preserve separate statutory duties, and require qualified human review for formal claims.
+- Added a dedicated Accessibility Standards setup track with no application runtime dependencies or additional editor extensions.
+
 ### Added
 
 - Added consent-based first-run **CRUXIDE Setup** with 23 selectable tracks and an all-tracks default that can be reduced before installation.
