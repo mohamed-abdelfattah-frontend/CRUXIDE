@@ -10,7 +10,8 @@ const [manifest, lockfile, changelog, securityPolicy] = await Promise.all([
   readFile(join(projectRoot, 'SECURITY.md'), 'utf8'),
 ]);
 
-const requestedTag = process.argv[2] ?? process.env.GITHUB_REF_NAME;
+const requestedTag = process.argv[2]
+  ?? (process.env.GITHUB_REF_TYPE === 'tag' ? process.env.GITHUB_REF_NAME : undefined);
 if (requestedTag) {
   assert.equal(requestedTag, `v${manifest.version}`, `Release tag must be v${manifest.version}`);
 }

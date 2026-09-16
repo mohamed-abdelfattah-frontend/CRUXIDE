@@ -80,6 +80,7 @@ test('release publication is version-gated, secret-gated, and publishes an exist
   ]);
 
   assert.match(verifier, /`v\$\{manifest\.version\}`/);
+  assert.match(verifier, /GITHUB_REF_TYPE === 'tag'/);
   assert.match(verifier, /lockfile\.packages\[''\]\.version/);
   assert.match(publisher, /process\.env\.VSCE_PAT/);
   assert.match(publisher, /publishVSIX/);
