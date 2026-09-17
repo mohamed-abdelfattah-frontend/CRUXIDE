@@ -1,60 +1,209 @@
 # CRUXIDE
 
-The CRUXCODE developer experience for Visual Studio Code.
+## Your stack. Your standards. One developer experience.
 
-> [!IMPORTANT]
-> Install CRUXIDE from the versioned ZIP attached to a [GitHub Release](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/releases), not from GitHub's **Code → Download ZIP** source archive. Source archives do not contain the current release-built VSIX.
+CRUXIDE turns Visual Studio Code into a focused, track-based engineering workspace built for modern development and AI-assisted delivery.
 
-CRUXIDE adds a track-based VS Code setup, CRUX themes, a branded 4K Home experience, curated developer tooling, Roboto Mono code typography, and CRUX Skills: a portable capability and rules layer for AI coding agents. It does not replace or patch Microsoft VS Code binaries.
+Choose the technologies you actually use. CRUXIDE prepares the relevant editor tooling, AI skills, engineering rules, and review guidance—without forcing every framework, extension, or workflow into the same profile.
 
-## Highlights
+Whether you build frontend applications, native mobile experiences, backend services, AI systems, data platforms, or cloud infrastructure, CRUXIDE helps you start with the right environment and keep your AI coding agents aligned with the way your project should be engineered.
 
-- CRUXIDE Dark and Light themes.
-- Home opens when there is no workspace or no recognized code file.
-- Responsive 3840×2160 CRUXCODE artwork at the bottom of Home, packaged locally for offline use.
-- CRUXIDE Setup with all tracks selected by default and an explicit review/confirmation step before installation.
-- Frontend, native mobile, backend, Python/AI, data, DevOps, design, collaboration, testing, and agent/review tracks.
-- CRUX Skills Manager with bundled CRUX skills/rules and documented provider integrations.
-- Agent adapters for Codex, Claude Code, GitHub Copilot, Cursor, Gemini, and generic skill-aware agents.
-- Project Local, Project Shared, and User Global scopes; optional Guidance, Warning, Strict, and Custom rule modes.
-- About section for CRUXIDE, CRUX Team, and founder Mohamed Khaled Abdelfattah, with fixed CRUXCODE and LinkedIn links.
-- Exact CRUX symbol exported from Figma master component `21:3` (geometry `21:5`) and favicon component `22:104`.
-- Space Grotesk headings, Inter UI copy, and Roboto Mono code typography from the CRUXCODE brand system.
-- Conditional, deduplicated Marketplace installation based on selected tracks; existing tools are preserved and never intentionally downgraded.
-- CRUXIDE Activity Bar actions and onboarding walkthrough.
-- Windows Desktop/Start Menu launcher with the CRUX icon.
-- macOS user-level `CRUXIDE.app` launcher.
-- No application runtime dependencies, telemetry, background network requests, extension-host child processes, or workspace code execution.
-- Restricted webview resource roots, strict Content Security Policy, and validated messages.
-- Dedicated profile: your normal VS Code profile is not replaced.
+> **Less setup. Less repeated prompting. More consistent engineering.**
 
-## Windows installation
+[Download the latest release](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/releases) · [View the source](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE) · [Visit CRUXCODE](https://www.cruxcode.dev)
 
-1. Extract `CRUXIDE-v1.1.0.zip` completely.
-2. Open PowerShell inside the extracted folder.
-3. Run:
+---
 
-   ```powershell
-   Set-ExecutionPolicy -Scope Process Bypass
-   .\install-windows.ps1
-   ```
+## Why CRUXIDE?
 
-4. Start **CRUXIDE** from the new Desktop or Start Menu shortcut.
+AI can generate code quickly. That does not automatically make the code secure, maintainable, testable, or suitable for your architecture.
 
-The installer validates the VSIX, icon, and font SHA-256 checksums; binds `code.cmd` to the same Microsoft-signed `Code.exe` installation; creates the profile when missing; installs and verifies CRUXIDE; installs Roboto Mono per-user; and creates shortcuts whose target is `Code.exe`. Track-specific tools are selected later inside CRUXIDE with explicit consent. The installer's isolated child-process wrapper prevents harmless Node warnings from becoming `NativeCommandError` failures in Windows PowerShell 5.
+CRUXIDE brings five parts of the development experience together:
 
-## macOS installation
+- **Tooling** — curated VS Code extensions based on your selected tracks.
+- **Skills** — portable capabilities for supported AI coding agents.
+- **Rules** — practical engineering guidance for architecture, security, testing, accessibility, Git, and code quality.
+- **Code Review** — structured review guidance covering correctness, maintainability, performance, security, and project standards.
+- **Orchestration** — CRUX Conductor can identify and coordinate the relevant installed skills for a task when invoked explicitly.
 
-In VS Code, run **Shell Command: Install 'code' command in PATH** once. Extract `CRUXIDE-v1.1.0.zip`, open Terminal in the folder, and run:
+CRUXIDE is not another extension pack that installs everything. It builds a profile around the way you work.
+
+---
+
+## Choose your tracks
+
+On first launch, CRUXIDE opens a guided setup experience. Select only the tracks you need, review the generated plan, and confirm before anything is installed.
+
+Supported areas include:
+
+- **Frontend:** Angular, React, Next.js, React Native, Tailwind CSS, and shadcn/ui.
+- **Mobile:** Android, Kotlin, Jetpack Compose, iOS, Swift, SwiftUI, Flutter, and Dart.
+- **Backend:** Node.js, Express, NestJS, PHP, Laravel, .NET, ASP.NET Core, Java, Spring Boot, Go, and Rust.
+- **AI & Data:** Python, AI engineering, RAG, agent workflows, data science, databases, and notebooks.
+- **Engineering:** architecture, security, testing, accessibility, DevOps, containers, Git/GitHub, documentation, design, and collaboration.
+
+CRUXIDE checks the selected track plan, skips tools that are already available, and installs only the missing editor integrations after your confirmation.
+
+It does **not** silently install language runtimes, SDKs, project packages, Git hooks, or application dependencies.
+
+---
+
+## AI agents that understand your engineering standards
+
+CRUX Skills provide reusable Markdown-based instructions for:
+
+- solution and software architecture;
+- frontend, mobile, backend, AI, and data engineering;
+- secure coding and security review;
+- testing and browser automation;
+- code review and maintainability;
+- performance and accessibility;
+- ESLint and engineering conventions;
+- Git branches and Conventional Commits;
+- planning, documentation, context, and agent workflows.
+
+Agent adapters are available for:
+
+- Codex;
+- Claude Code;
+- GitHub Copilot;
+- Cursor;
+- Gemini;
+- generic skill-aware agents.
+
+Instead of repeating the same project expectations in every prompt, you can install the relevant guidance once and let the agent reference a consistent source of truth.
+
+### CRUX Conductor
+
+When you are unsure which skills a task needs, invoke:
+
+```text
+/crux-conductor
+```
+
+CRUX Conductor analyzes the request, selects the relevant installed skills, orders their work, detects obvious conflicts, and coordinates the result. In environments that support delegation, it can structure work across specialized agents while keeping one coordinated outcome.
+
+> **One prompt. The right skills. One coordinated result.**
+
+CRUX Conductor is explicit-only. It does not activate itself or silently change how your agent handles a request.
+
+---
+
+## Track-based setup and advanced skill control
+
+Selected tracks automatically include their mapped skills and rule packs. Most developers can configure everything from **CRUXIDE: Setup & Manage Tracks**.
+
+Use **CRUXIDE: Skills Manager** when you want advanced control:
+
+- add or remove individual skills independently of a track;
+- inspect the README for every skill or rule pack;
+- choose one or more target agents;
+- install at project or user scope;
+- generate an installation guide for manual review;
+- manage recommended and custom selections.
+
+Provider-managed integrations—including Archify, CodeRabbit, Trail of Bits, Superpowers, and Context7—are never downloaded or executed silently. CRUXIDE provides review documentation and links to the original provider source.
+
+---
+
+## Project rules that remain yours
+
+CRUXIDE can generate a canonical `.crux/PROJECT_RULES.md` from the selected rule packs.
+
+The generated guidance can cover:
+
+- architecture and dependency boundaries;
+- security and secure API integration;
+- testing strategy and quality gates;
+- performance and maintainability;
+- accessibility standards;
+- naming and code conventions;
+- branch naming and commit standards;
+- technology-specific practices.
+
+Rules are not a locked policy engine. You can use them as provided, adjust them for your project, extend them with team conventions, or add custom code-review instructions. CRUXIDE preserves the **Custom Project Rules** section when regenerating managed content.
+
+Available modes:
+
+- **Guidance** — recommendations for the agent.
+- **Warning** — highlight deviations before proceeding.
+- **Strict** — request compliance with the selected rules.
+- **Custom** — let the project define the behavior.
+
+---
+
+## Accessibility by design
+
+Accessibility guidance is available as independent, composable rule packs:
+
+- **WCAG 2.2**;
+- **BITV 2.0**;
+- **BFSG**.
+
+Use one standard, combine two, or apply all three. CRUXIDE keeps their requirements explicit and never treats automated scans as proof of legal or formal conformance. Qualified human review remains essential.
+
+---
+
+## A clean project by default
+
+Choose where CRUX Skills and rules should live:
+
+- **Project Local** — stores files in `.crux` and keeps them private through a managed `.git/info/exclude` block.
+- **Project Shared** — makes portable rules and skills available for team review and commit.
+- **User Global** — stores canonical skills under `~/.cruxide` for reuse across projects.
+
+Project Local is the default. CRUXIDE does not modify the repository's shared `.gitignore`, package manifests, or application dependencies.
+
+If no trusted local folder is open, extension setup can continue, but project skills and rules are deferred until you open and trust a workspace.
+
+---
+
+## Built for trust
+
+CRUXIDE is designed to be inspectable and consent-based:
+
+- no telemetry;
+- no background network requests from the extension host;
+- no workspace code execution;
+- no extension-host child processes;
+- no silent runtime, SDK, package, or Git-hook installation;
+- local webview assets with a restrictive Content Security Policy;
+- validated messages and restricted resource roots;
+- checksum-verified release assets;
+- existing extensions are preserved and never intentionally downgraded;
+- your normal VS Code profile is not replaced.
+
+See `SECURITY.md`, `PRIVACY.md`, and `THREAT_MODEL.md` for the complete policies.
+
+---
+
+## Quick start
+
+> Download the versioned ZIP from [GitHub Releases](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/releases). Do not use GitHub's **Code → Download ZIP** source archive; it does not contain the release-built VSIX.
+
+### Windows
+
+Extract `CRUXIDE-v1.1.0.zip`, open PowerShell inside the extracted folder, and run:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\install-windows.ps1
+```
+
+Start **CRUXIDE** from the Desktop or Start Menu shortcut.
+
+### macOS
+
+In VS Code, first run **Shell Command: Install 'code' command in PATH**. Extract `CRUXIDE-v1.1.0.zip`, open Terminal inside the folder, and run:
 
 ```bash
 chmod +x ./install-macos.sh
 ./install-macos.sh
 ```
 
-This validates the checksum and creates `~/Applications/CRUXIDE.app`.
+CRUXIDE creates a user-level `~/Applications/CRUXIDE.app` launcher.
 
-## Manual VSIX installation
+### Install the VSIX manually
 
 ```bash
 code --profile "CRUXIDE" --new-window
@@ -62,21 +211,27 @@ code --profile "CRUXIDE" --install-extension ./cruxide-1.1.0.vsix --force
 code --profile "CRUXIDE" --new-window
 ```
 
-You can also choose **Extensions → More Actions → Install from VSIX…**.
+You can also use **Extensions → More Actions → Install from VSIX…**.
+
+---
 
 ## First launch
 
-CRUXIDE offers **CRUXIDE Setup** on first launch. All tracks are selected initially, but nothing installs until the developer reviews the plan and confirms VS Code's modal dialog. The user can apply the plan to the active profile or open VS Code Profiles first and create/switch to a dedicated CRUXIDE profile.
+CRUXIDE Setup opens on the first launch. Review the tracks, target profile, AI agents, skill scope, and rules mode before applying the setup.
 
-After setup, the CRUXIDE experience sets:
+After confirmation, CRUXIDE can configure:
 
-- `workbench.colorTheme` to `CRUXIDE Dark`;
-- `workbench.iconTheme` to Material Icon Theme;
-- the window title to begin with `CRUXIDE`;
-- `Roboto Mono` for the editor and integrated terminal;
-- editor font ligatures to enabled.
+- CRUXIDE Dark or Light theme;
+- Material Icon Theme;
+- CRUX-branded window title;
+- Roboto Mono for the editor and terminal;
+- editor font ligatures;
+- selected track integrations;
+- mapped AI skills and project rules.
 
-Run `CRUXIDE: Apply CRUXIDE Experience` at any time to reapply them.
+Nothing is installed until you approve the native VS Code confirmation dialog.
+
+---
 
 ## Commands
 
@@ -94,50 +249,45 @@ Run `CRUXIDE: Apply CRUXIDE Experience` at any time to reapply them.
 - `cruxide.promptToOpenSetupOnFirstRun`
 - `cruxide.codeFileExtensions`
 
-## Curated developer tools
+---
 
-The track catalog covers Angular, React, React Native, Next.js, Tailwind CSS, shadcn/ui, native Android/Kotlin, iOS/Swift, Flutter/Dart, Node.js, Express, NestJS, PHP/Laravel, .NET/ASP.NET Core, Java/Spring Boot, Go, Rust, Python, AI/data science, databases, formatting, linting, Git/GitHub, containers, testing, AI assistants, design, documentation, and productivity. See `EXTENSIONS.md` for the track map. VS Code downloads only the confirmed missing tools; CRUXIDE does not embed or republish their binaries.
-
-CRUXIDE installs editor integrations, not external runtimes or SDKs. Node.js, Python, PHP, Composer, JDK, .NET SDK, Go, Rust, Flutter, Android SDK/Android Studio, Swift, and Xcode remain separate developer prerequisites.
-
-## CRUX Skills
-
-Open **CRUXIDE: Skills Manager**, select skills/rules and one or more agents, then choose a scope:
-
-- **Project Local** (default) stores canonical files in `.crux`, adds only a private managed block to `.git/info/exclude`, and leaves the repository's shared `.gitignore` untouched.
-- **Project Shared** keeps portable skill files available for team review and commit while `.crux/.gitignore` excludes backups, caches, logs, runtime files, local state, and secrets.
-- **User Global** stores canonical skills under `~/.cruxide` and adds small adapter files to the selected agents' user-level skills directories.
-
-Bundled skills are plain Markdown instructions with no executable hooks. Every catalog item has a README describing purpose, compatibility, permissions, installation, impact, source, license, and removal. Provider-managed entries such as Archify, CodeRabbit, Trail of Bits, Superpowers, and Context7 are not downloaded or executed: CRUXIDE creates a review guide and links to the provider's source.
-
-The recommended rule packs include senior solution architecture, technical leadership, security, testing, performance, accessibility, APIs, AI work, ESLint, and Git workflow. Technology-specific packs cover TypeScript/JavaScript, HTML/CSS, Angular, React, Next.js, React Native/Expo, Kotlin/Android/Compose, Swift/iOS/SwiftUI, Dart/Flutter, Node.js, Express, NestJS, PHP, Laravel, C#/.NET/ASP.NET Core, Java/Spring Boot, Go, Rust, Python, SQL/databases, containers/CI/CD, and AI/RAG/agents.
-
-Accessibility standards are available as three independent rule packs: **WCAG 2.2**, **BITV 2.0**, and **BFSG**. A developer can select any one, any pair, or all three. When combined, CRUXIDE applies the union of applicable requirements and reuses valid test evidence without treating one standard as proof of another. Automated scans are never sufficient for a formal conformance claim, and BITV/BFSG scope or legal compliance requires qualified human review.
-
-Every CRUX technology rule pack is version-aware: the agent must inspect the repository's actual language, framework, runtime, and toolchain versions before applying guidance. Each pack records its review date, pack version, compatibility policy, and official references. Project-supported versions and repository policy take precedence; migrations and deprecated-API removal are proposed separately with compatibility, verification, and rollback notes.
-
-Rules are optional and can be extended or overridden by project instructions. Git workflow guidance uses `feat/`, `fix/`, `docs/`, `style/`, `refactor/`, `test/`, `chore/`, `perf/`, `ci/`, and `build/` branch prefixes and Conventional Commits. CRUXIDE never edits `package.json`, installs packages, creates Git hooks, or adds files to the application bundle without explicit developer action.
-
-Every confirmed project installation generates `.crux/PROJECT_RULES.md` from the selected rule packs and preserves its **Custom Project Rules** section on regeneration. A root `PROJECT_RULES.md` link and agent-specific managed instructions point Codex, Claude Code, GitHub Copilot, Cursor, and Gemini to the canonical rules. Existing project-authored files are backed up and preserved outside CRUXIDE-managed blocks.
-
-## Build and verify
+## For contributors
 
 Requirements: Node.js 22 and npm 11.
 
 ```bash
 npm ci
 npm run verify
+npm run smoke:test
 npm run package:release
 ```
 
-`npm run verify` runs strict TypeScript checks, ESLint, tests, a high-severity dependency audit, and npm registry signature verification. `npm run smoke:test` activates the extension in a real VS Code Extension Host. `npm run package:release` additionally validates every curated ID against the Visual Studio Marketplace and produces `release/CRUXIDE-v1.1.0.zip` with the installers, VSIX, skills catalog, checksums, fonts, icon, and complete source.
+`npm run verify` runs TypeScript checks, ESLint, tests, a high-severity dependency audit, and npm registry signature verification.
 
-Release maintainers should follow [PUBLISHING.md](PUBLISHING.md). Marketplace publication is deliberately separated from build and release creation so the exact checksum-verified GitHub Release asset is published only after environment approval.
+`npm run smoke:test` activates CRUXIDE in a real VS Code Extension Host.
 
-## Security and privacy
+`npm run package:release` validates curated Marketplace IDs and creates the release ZIP, VSIX, installers, checksums, fonts, icon, skills catalog, and source package.
 
-See the packaged `SECURITY.md`, `PRIVACY.md`, and `THREAT_MODEL.md` files.
+Release maintainers should follow [`PUBLISHING.md`](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/blob/main/PUBLISHING.md).
 
-## Application identity limitation
+---
 
-A VS Code profile cannot replace Microsoft's executable, process identity, top-left product icon, or guaranteed running taskbar icon. The Windows Desktop/Start shortcuts and macOS launcher use the exact CRUX favicon. A fully independent binary/taskbar identity requires a separately maintained Code-OSS distribution with the applicable product configuration and trademarks.
+## Platform scope
+
+- **Visual Studio Code:** supported through the VSIX and Marketplace release workflow.
+- **Cursor:** manual VSIX compatibility testing is required before making a public compatibility claim.
+- **WebStorm:** requires a separate signed IntelliJ Platform plugin and is not produced by this repository.
+
+A VS Code profile cannot replace Microsoft's executable identity, process name, top-left application icon, or guaranteed running taskbar icon. CRUXIDE launchers use the CRUX favicon, while a completely independent application identity would require a separately maintained Code-OSS distribution.
+
+---
+
+## CRUXIDE by CRUXCODE
+
+CRUX means the essential point—the part of a problem that matters most.
+
+CRUXIDE applies that idea to software development: the goal is not to add more tools, prompts, or complexity. The goal is to give every project the right environment, the right guidance, and a stronger engineering foundation.
+
+> **AI writes the code. You set the rules.**
+
+[www.cruxcode.dev](https://www.cruxcode.dev)
