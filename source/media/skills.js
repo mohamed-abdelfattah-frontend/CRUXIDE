@@ -46,14 +46,26 @@
       const grid = document.createElement('div'); grid.className = 'skill-grid';
       skills.forEach((skill) => grid.append(skillCard(skill))); section.append(grid); list.append(section);
     });
+    updateSummary();
+  }
+
+  function updateSummary() {
+    const term = search.value.trim().toLowerCase();
+    const visible = state.catalog.skills.filter((skill) => (!category.value || skill.category === category.value) && (!term || `${skill.name} ${skill.description} ${skill.tags.join(' ')}`.toLowerCase().includes(term)));
     summary.textContent = `${state.selected.size} selected • ${state.catalog.skills.length} available • ${visible.length} shown`;
+  }
+
+  function syncSkillInputs() {
+    list.querySelectorAll('input[data-skill-id]').forEach((input) => {
+      input.checked = state.selected.has(input.dataset.skillId);
+    });
   }
 
   function skillCard(skill) {
     const label = document.createElement('label'); label.className = `skill-card ${skill.source}`;
-    const input = document.createElement('input'); input.type = 'checkbox'; input.checked = state.selected.has(skill.id);
+    const input = document.createElement('input'); input.type = 'checkbox'; input.checked = state.selected.has(skill.id); input.dataset.skillId = skill.id;
     input.disabled = Boolean(skill.required);
-    input.addEventListener('change', () => { input.checked ? state.selected.add(skill.id) : state.selected.delete(skill.id); render(); });
+    input.addEventListener('change', () => { input.checked ? state.selected.add(skill.id) : state.selected.delete(skill.id); updateSummary(); });
     const copy = document.createElement('span'); copy.className = 'skill-copy';
     const title = document.createElement('strong'); title.textContent = skill.name;
     const description = document.createElement('span'); description.textContent = skill.description;
@@ -73,8 +85,8 @@
   }
 
   search.addEventListener('input', render); category.addEventListener('change', render);
-  document.getElementById('recommended').addEventListener('click', () => { state.catalog?.skills.filter((skill) => skill.status === 'recommended').forEach((skill) => state.selected.add(skill.id)); render(); });
-  document.getElementById('clear').addEventListener('click', () => { state.selected = new Set(state.catalog?.skills.filter((skill) => skill.required).map((skill) => skill.id) || []); render(); });
+  document.getElementById('recommended').addEventListener('click', () => { state.catalog?.skills.filter((skill) => skill.status === 'recommended').forEach((skill) => state.selected.add(skill.id)); syncSkillInputs(); updateSummary(); });
+  document.getElementById('clear').addEventListener('click', () => { state.selected = new Set(state.catalog?.skills.filter((skill) => skill.required).map((skill) => skill.id) || []); syncSkillInputs(); updateSummary(); });
   document.getElementById('install').addEventListener('click', () => { const value = request(); if (value) { status.textContent = 'Waiting for confirmation…'; vscode.postMessage({ command: 'install', request: value }); } });
   document.getElementById('copy').addEventListener('click', () => { const value = request(); if (value) vscode.postMessage({ command: 'copyGuide', request: value }); });
   document.getElementById('uninstall').addEventListener('click', () => { const value = request(); if (value) { status.textContent = 'Waiting for confirmation…'; vscode.postMessage({ command: 'uninstall', request: value }); } });
