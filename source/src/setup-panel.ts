@@ -63,6 +63,11 @@ export class SetupPanel {
         return;
       }
 
+      if (message.command === 'openSkills') {
+        await vscode.commands.executeCommand('cruxide.openSkills');
+        return;
+      }
+
       if (message.request.profileTarget === 'dedicated') {
         const action = await vscode.window.showInformationMessage(
           'VS Code extensions can only configure the active profile. Create or switch to a dedicated CRUXIDE profile, then run CRUXIDE Setup again.',
@@ -162,13 +167,14 @@ export class SetupPanel {
     </section>
 
     <section aria-labelledby="agents-title">
-      <div class="section-heading"><span>03</span><div><h2 id="agents-title">Agents, skills & rules</h2><p>Mapped skills and rules are installed for the agents and scope you choose.</p></div></div>
+      <div class="section-heading"><span>03</span><div><h2 id="agents-title">Agents, skills & rules</h2><p>Each selected track automatically includes its mapped skills and rules. Use CRUX Skills Manager only when you want to add, remove, or install individual skills independently.</p></div></div>
       <h3>Agents</h3><div id="agents" class="check-row"></div>
       <div class="settings-grid">
         <label><span>Skills scope</span><select id="scope"><option value="project-local">Project Local — private by default</option><option value="project-shared">Project Shared — commit for the team</option><option value="user">User Global</option></select></label>
         <label><span>Rules mode</span><select id="rule-mode"><option value="guidance">Guidance — recommendations</option><option value="warning">Warning — flag deviations</option><option value="strict">Strict — request compliance</option><option value="custom">Custom — project decides</option></select></label>
       </div>
       <p id="environment" class="notice"></p>
+      <button id="skills" type="button" class="link-button">Open CRUX Skills Manager — advanced</button>
     </section>
 
     <section aria-labelledby="review-title">

@@ -128,6 +128,11 @@ test('setup webview is local, consent-based, and does not auto-install on ready'
   assert.match(panel, /Apply setup/);
   assert.match(panel, /No language runtime, SDK, project package, or dependency is installed/);
   assert.match(script, /Everything is selected by default|state\.catalog\.tracks\.map/);
+  assert.match(script, /updateSummary\(\)/);
+  assert.match(script, /data-track-id/);
+  assert.doesNotMatch(script, /input\.addEventListener\('change',[^\n]+render\(\)/);
+  assert.match(panel, /Open CRUX Skills Manager — advanced/);
+  assert.match(panel, /automatically includes its mapped skills and rules/);
   assert.doesNotMatch(script, /innerHTML|insertAdjacentHTML|eval\(/);
   assert.doesNotMatch(script, /https?:\/\//i);
 });
