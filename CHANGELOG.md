@@ -57,7 +57,7 @@ All notable changes follow Keep a Changelog conventions.
 
 ### Added
 
-- Added the CRUXIDE branded VS Code experience with Figma-aligned CRUXCODE identity, dark and light themes, exact logo assets, custom application shortcuts, and offline typography.
+- Added the CRUXIDE branded VS Code experience with Figma-aligned CRUXCODE.DEV identity, dark and light themes, exact logo assets, custom application shortcuts, and offline typography.
 - Added a responsive 4K Home experience and About section for CRUXIDE, CRUX Team, founder Mohamed Khaled Abdelfattah, company website, and LinkedIn profile.
 - Added a curated 61-extension developer toolset covering Angular, React, React Native, Next.js, Tailwind CSS, shadcn/ui, NestJS, Express, Git, GitHub, testing, containers, AI assistants, autocomplete, spelling, JSON, documentation, and productivity.
 - Added CRUX Skills Manager with searchable selection across bundled CRUX skills, recommended rule packs, and provider-managed references for Codex, Claude Code, GitHub Copilot, Cursor, Gemini, and generic skill-aware agents.

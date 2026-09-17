@@ -1,0 +1,16 @@
+{
+  "CRUX React component": {
+    "prefix": "crux-component",
+    "body": [
+      "interface ${1:ComponentName}Props {",
+      "  readonly ${2:children}?: React.ReactNode;",
+      "}",
+      "",
+      "export function ${1:ComponentName}({ ${2:children} }: ${1:ComponentName}Props) {",
+      "  return <${3:div}>${2:children}</${3:div}>;",
+      "}",
+      ""
+    ],
+    "description": "Create a typed CRUXCODE.DEV React component"
+  }
+}

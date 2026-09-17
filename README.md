@@ -10,7 +10,7 @@ Whether you build frontend applications, native mobile experiences, backend serv
 
 > **Less setup. Less repeated prompting. More consistent engineering.**
 
-[Download the latest release](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/releases) · [View the source](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE) · [Visit CRUXCODE](https://www.cruxcode.dev)
+[Download the latest release](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/releases) · [View the source](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE) · [Visit CRUXCODE.DEV](https://www.cruxcode.dev)
 
 ---
 
@@ -284,7 +284,7 @@ A VS Code profile cannot replace Microsoft's executable identity, process name, 
 
 ---
 
-## CRUXIDE by CRUXCODE
+## CRUXIDE by CRUXCODE.DEV
 
 CRUX means the essential point—the part of a problem that matters most.
 

@@ -27,4 +27,4 @@ Repository maintainers must keep GitHub private vulnerability reporting enabled 
 - Already-installed and application-scoped extensions are detected before installation; CRUXIDE never intentionally downgrades a newer built-in extension and never silently uninstalls tools when a track is deselected.
 - Fonts are pinned to an immutable Google Fonts source revision and distributed with their OFL licenses.
 - The Windows installer requires the resolved `Code.exe` to have a valid Microsoft Authenticode signature and requires `code.cmd` to belong to that same installation.
-- Public Marketplace publication requires control of the `cruxcode` publisher identity. The release workflow accepts the Marketplace token only from the protected `vscode-marketplace` GitHub Environment, never from source code, logs, pull requests, or release archives.
+- Public Marketplace publication requires control of the `cruxcode` publisher identity owned by CRUXCODE.DEV. The release workflow accepts the Marketplace token only from the protected `vscode-marketplace` GitHub Environment, never from source code, logs, pull requests, or release archives.
