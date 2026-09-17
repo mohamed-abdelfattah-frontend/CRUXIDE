@@ -4,12 +4,18 @@ All notable changes follow Keep a Changelog conventions.
 
 ## Unreleased
 
+## 1.2.0 - 2026-09-17
+
 ### Database and ORM engineering
 
 - Split database setup into independently selectable SQL/relational, NoSQL, and ORM/data-access tracks.
 - Added official MongoDB, Redis, Prisma, and SQLTools SQLite extensions.
 - Added production-grade skills and version-aware rules for NoSQL architecture, ORM data access, and Sequelize models, associations, transactions, migrations, security, and query performance.
 - Added ORM guidance covering Sequelize, Prisma, TypeORM, Mongoose, EF Core, Hibernate/JPA, SQLAlchemy, Django ORM, and Eloquent without forcing application runtime dependencies.
+
+### Branding
+
+- Adopted CRUXCODE.DEV across user-facing product copy, metadata, documentation, installers, snippets, privacy and security notices, and marketing assets while preserving stable Marketplace and extension identifiers.
 
 ## 1.1.0 - 2026-09-16
 
