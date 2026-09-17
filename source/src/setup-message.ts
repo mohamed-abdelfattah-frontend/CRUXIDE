@@ -18,11 +18,12 @@ const profileTargets = new Set<string>(PROFILE_TARGETS);
 export type SetupMessage =
   | { readonly command: 'ready' }
   | { readonly command: 'apply'; readonly request: SetupRequest }
+  | { readonly command: 'openSkills' }
   | { readonly command: 'openProfiles' };
 
 export function isSetupMessage(value: unknown): value is SetupMessage {
   if (!isRecord(value) || typeof value.command !== 'string') return false;
-  if (value.command === 'ready' || value.command === 'openProfiles') {
+  if (value.command === 'ready' || value.command === 'openProfiles' || value.command === 'openSkills') {
     return hasOnlyKeys(value, ['command']);
   }
   return value.command === 'apply'
