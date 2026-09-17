@@ -360,15 +360,16 @@ Microsoft Python/Jupyter tooling, Ruff, Data Wrangler, and CRUX AI/backend engin
 - Python runtime and a project environment manager
 - Jupyter kernel packages when notebooks are used
 
-## Databases & Data Tools
+## SQL & Relational Databases
 
-SQL clients and drivers for common backend data workflows plus database engineering guidance.
+SQL clients and drivers for PostgreSQL, MySQL/MariaDB, SQL Server, and SQLite plus relational database engineering guidance.
 
 | Marketplace ID | Tool | Platforms | Note |
 | --- | --- | --- | --- |
 | `mtxr.sqltools` | SQLTools | Windows, macOS, Linux |  |
 | `mtxr.sqltools-driver-pg` | SQLTools PostgreSQL Driver | Windows, macOS, Linux |  |
 | `mtxr.sqltools-driver-mysql` | SQLTools MySQL/MariaDB Driver | Windows, macOS, Linux |  |
+| `mtxr.sqltools-driver-sqlite` | SQLTools SQLite Driver | Windows, macOS, Linux |  |
 | `ms-mssql.mssql` | SQL Server (mssql) | Windows, macOS, Linux |  |
 | `mechatroner.rainbow-csv` | Rainbow CSV | Windows, macOS, Linux |  |
 
@@ -379,6 +380,39 @@ SQL clients and drivers for common backend data workflows plus database engineer
 **Prerequisites**
 
 - Database clients and credentials supplied by the developer
+
+## NoSQL Databases
+
+Official MongoDB and Redis tooling plus production guidance for document, key-value, cache, consistency, and operational design.
+
+| Marketplace ID | Tool | Platforms | Note |
+| --- | --- | --- | --- |
+| `mongodb.mongodb-vscode` | MongoDB for VS Code | Windows, macOS, Linux |  |
+| `Redis.redis-for-vscode` | Redis for VS Code | Windows, macOS, Linux |  |
+
+**Mapped skills:** `crux-nosql-database-engineering`
+
+**Mapped rules:** `crux-security-rules`, `crux-performance-rules`, `crux-nosql-database-rules`
+
+**Prerequisites**
+
+- MongoDB, Redis, or another project-selected NoSQL service and credentials
+
+## ORMs & Data Access
+
+Prisma editor tooling plus ORM architecture for Sequelize, Prisma, TypeORM, Mongoose, EF Core, Hibernate, SQLAlchemy, Django ORM, and Eloquent.
+
+| Marketplace ID | Tool | Platforms | Note |
+| --- | --- | --- | --- |
+| `Prisma.prisma` | Prisma | Windows, macOS, Linux |  |
+
+**Mapped skills:** `crux-orm-data-access`, `crux-sequelize-architecture`
+
+**Mapped rules:** `crux-security-rules`, `crux-performance-rules`, `crux-testing-rules`, `crux-orm-rules`, `crux-sequelize-rules`
+
+**Prerequisites**
+
+- The project database driver, ORM runtime package, and migration CLI
 
 ## Containers & DevOps
 

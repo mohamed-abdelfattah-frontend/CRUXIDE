@@ -39,7 +39,7 @@ Supported areas include:
 - **Frontend:** Angular, React, Next.js, React Native, Tailwind CSS, and shadcn/ui.
 - **Mobile:** Android, Kotlin, Jetpack Compose, iOS, Swift, SwiftUI, Flutter, and Dart.
 - **Backend:** Node.js, Express, NestJS, PHP, Laravel, .NET, ASP.NET Core, Java, Spring Boot, Go, and Rust.
-- **AI & Data:** Python, AI engineering, RAG, agent workflows, data science, databases, and notebooks.
+- **AI & Data:** Python, AI engineering, RAG, agent workflows, data science, notebooks, SQL/relational databases, MongoDB, Redis, and ORM/data-access workflows.
 - **Engineering:** architecture, security, testing, accessibility, DevOps, containers, Git/GitHub, documentation, design, and collaboration.
 
 CRUXIDE checks the selected track plan, skips tools that are already available, and installs only the missing editor integrations after your confirmation.
@@ -120,6 +120,8 @@ The generated guidance can cover:
 - naming and code conventions;
 - branch naming and commit standards;
 - technology-specific practices.
+
+Database guidance is independently selectable across **SQL & Relational Databases**, **NoSQL Databases**, and **ORMs & Data Access**. It includes official editor tooling for PostgreSQL, MySQL/MariaDB, SQL Server, SQLite, MongoDB, Redis, and Prisma, plus production-grade skills and rules for Sequelize, Prisma, TypeORM, Mongoose, EF Core, Hibernate/JPA, SQLAlchemy, Django ORM, and Eloquent. CRUXIDE installs editor tooling only; your application runtime packages and database credentials remain under project control.
 
 Rules are not a locked policy engine. You can use them as provided, adjust them for your project, extend them with team conventions, or add custom code-review instructions. CRUXIDE preserves the **Custom Project Rules** section when regenerating managed content.
 
