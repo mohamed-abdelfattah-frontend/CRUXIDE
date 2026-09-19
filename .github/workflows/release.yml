@@ -18,6 +18,9 @@ jobs:
   release:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: source
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -28,6 +31,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: source/package-lock.json
       - name: Install locked dependencies
         run: npm ci
       - name: Validate release tag and metadata
@@ -41,20 +45,20 @@ jobs:
       - name: Attest release provenance
         uses: actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d # v4.2.1
         with:
-          subject-path: release/*.vsix
+          subject-path: source/release/*.vsix
       - name: Attest release SBOM
         uses: actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d # v4.2.1
         with:
-          subject-path: release/*.vsix
-          sbom-path: release/cruxide-sbom.cdx.json
+          subject-path: source/release/*.vsix
+          sbom-path: source/release/cruxide-sbom.cdx.json
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: cruxide-${{ github.ref_name }}
           path: |
-            release/*.vsix
-            release/*.zip
-            release/cruxide-sbom.cdx.json
-            release/SHA256SUMS.txt
+            source/release/*.vsix
+            source/release/*.zip
+            source/release/cruxide-sbom.cdx.json
+            source/release/SHA256SUMS.txt
           if-no-files-found: error
           retention-days: 30
       - name: Publish GitHub release
