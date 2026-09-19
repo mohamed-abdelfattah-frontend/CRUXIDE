@@ -2,16 +2,17 @@ name: CodeQL
 
 on:
   pull_request:
-    paths: ['source/**', '.github/workflows/codeql.yml']
+    branches: [main]
   push:
     branches: [main]
-    paths: ['source/**', '.github/workflows/codeql.yml']
   schedule:
-    - cron: '17 3 * * 1'
+    - cron: '23 4 * * 1'
+  workflow_dispatch:
 
 permissions:
   actions: read
   contents: read
+  security-events: write
 
 concurrency:
   group: codeql-${{ github.workflow }}-${{ github.ref }}
@@ -19,19 +20,22 @@ concurrency:
 
 jobs:
   analyze:
+    name: CodeQL analysis
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: github/codeql-action/init@c20e34f438d671fc35777cc9820dd7adf8252874 # v3
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@c20e34f438d671fc35777cc9820dd7adf8252874 # v3
         with:
           languages: javascript-typescript
-      - uses: github/codeql-action/analyze@c20e34f438d671fc35777cc9820dd7adf8252874 # v3
-        with:
-          upload: never
-          output: ${{ runner.temp }}/codeql-results
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: codeql-sarif
-          path: ${{ runner.temp }}/codeql-results/*.sarif
-          if-no-files-found: error
+          queries: security-extended
+      - name: Analyze source
+        uses: github/codeql-action/analyze@c20e34f438d671fc35777cc9820dd7adf8252874 # v3

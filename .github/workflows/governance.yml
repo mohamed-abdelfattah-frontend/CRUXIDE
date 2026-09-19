@@ -1,0 +1,57 @@
+name: Governance
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: governance-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pull-request-policy:
+    name: PR policy
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Validate pull request title and branch
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          node <<'NODE'
+          const title = process.env.PR_TITLE ?? '';
+          const branch = process.env.HEAD_REF ?? '';
+          const titlePattern = /^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9._/-]+\))?!?: .+/;
+          const branchPattern = /^(build|chore|ci|docs|feat|fix|perf|refactor|release|hotfix|revert|style|test|dependabot|renovate|codex)\/.+/;
+
+          if (!titlePattern.test(title)) {
+            console.error(`Invalid PR title: ${title}`);
+            console.error('Expected Conventional Commits format, for example: feat(setup): add database tracks');
+            process.exitCode = 1;
+          }
+          if (!branchPattern.test(branch)) {
+            console.error(`Invalid branch name: ${branch}`);
+            console.error('Use an approved prefix such as feat/, fix/, docs/, chore/, release/, or hotfix/.');
+            process.exitCode = 1;
+          }
+          NODE
+
+  workflow-policy:
+    name: Workflow policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Validate GitHub Actions policy
+        run: node scripts/validate-workflows.mjs
