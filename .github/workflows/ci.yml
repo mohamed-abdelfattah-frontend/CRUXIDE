@@ -25,6 +25,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: source
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -35,10 +38,12 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: source/package-lock.json
       - name: Install locked dependencies
         run: npm ci
       - name: Validate workflow policy
-        run: npm run verify:workflows
+        working-directory: .
+        run: node scripts/validate-workflows.mjs
       - name: Type-check source
         run: npm run typecheck
       - name: Lint source
@@ -63,6 +68,9 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: source
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -73,6 +81,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: source/package-lock.json
       - name: Install locked dependencies
         run: npm ci
       - name: Build release artifacts
@@ -83,8 +92,8 @@ jobs:
         with:
           name: cruxide-release
           path: |
-            release/*.vsix
-            release/*.zip
-            release/SHA256SUMS.txt
+            source/release/*.vsix
+            source/release/*.zip
+            source/release/SHA256SUMS.txt
           if-no-files-found: error
           retention-days: 7
