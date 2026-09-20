@@ -6,7 +6,7 @@ All notable changes follow Keep a Changelog conventions.
 
 ## 1.0.0 - 2026-09-20
 
-The first official public release of CRUXIDE on the Visual Studio Marketplace.
+The first public release of CRUXIDE.
 
 Earlier 1.0.0, 1.0.1, 1.1.0 and 1.2.0 entries were internal iterations that
 were never published. Their work ships together here, so it is recorded as one
