@@ -58,7 +58,7 @@ jobs:
 
   commit-attribution:
     name: Commit attribution
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'dependabot/')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
