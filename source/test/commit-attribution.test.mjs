@@ -20,7 +20,8 @@ test('AI and bot attribution trailers are rejected', () => {
     'CO-AUTHORED-BY: OpenAI ChatGPT <x@openai.com>',
     'Assisted-By: Gemini',
     'Generated-By: GitHub Copilot',
-    'Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>',
+    // Dependabot is deliberately absent: it authors its own commits, and that
+    // attribution is honest. See the automation tests below.
   ];
 
   for (const trailer of rejected) {
@@ -73,10 +74,46 @@ test('tool and bot identities are rejected as author or committer', () => {
   assert.ok(inspectIdentity('author', 'Claude', 'noreply@anthropic.com').length > 0);
   assert.ok(inspectIdentity('committer', 'Claude Opus 5', 'noreply@anthropic.com').length > 0);
   assert.ok(inspectIdentity('author', 'Copilot', 'copilot@github.com').length > 0);
-  assert.ok(
-    inspectIdentity('author', 'dependabot[bot]', '49699333+dependabot[bot]@users.noreply.github.com')
-      .length > 0,
+  // The allowed-automation list is specific, so an unrecognised bot is still
+  // treated as a tool.
+  assert.ok(inspectIdentity('author', 'unknown-tool[bot]', 'x@example.com').length > 0);
+});
+
+test('platform and dependency automation may author its own commits', () => {
+  // Dependabot genuinely writes its own dependency bumps, and
+  // GitHub <noreply@github.com> is the committer for every web-UI merge and
+  // Update branch, including the maintainer's own. Rejecting either blocks
+  // honest attribution and makes a Dependabot pull request unmergeable.
+  for (const [name, email, label] of [
+    ['GitHub', 'noreply@github.com', 'web-UI merge committer'],
+    ['dependabot[bot]', '49699333+dependabot[bot]@users.noreply.github.com', 'dependabot author'],
+    ['dependabot[bot]', 'support@github.com', 'dependabot sign-off address'],
+    ['renovate[bot]', '29139614+renovate[bot]@users.noreply.github.com', 'renovate'],
+    ['github-actions[bot]', '41898282+github-actions[bot]@users.noreply.github.com', 'github-actions'],
+  ]) {
+    assert.deepEqual(inspectIdentity('committer', name, email), [], label);
+  }
+
+  assert.deepEqual(
+    inspectMessage(['fix: x', '', 'Signed-off-by: dependabot[bot] <support@github.com>', ''].join('\n')),
+    [],
+    'a dependabot sign-off is legitimate attribution',
   );
+  assert.deepEqual(inspectSigner('dependabot[bot]', ''), []);
+});
+
+test('the automation exemption is matched on name and address together', () => {
+  // An impostor borrowing an allowed name from a different address is still
+  // rejected, so the carve-out cannot smuggle an AI identity through.
+  for (const [name, email, label] of [
+    ['GitHub', 'noreply@anthropic.com', 'allowed name, foreign address'],
+    ['Claude', 'noreply@github.com', 'AI name claiming the GitHub address'],
+    ['dependabot[bot]', 'evil@example.com', 'dependabot name, wrong address'],
+    ['some-other[bot]', 'x@y.z', 'an unlisted bot'],
+    ['GitHub Copilot', 'copilot@github.com', 'Copilot is not platform automation'],
+  ]) {
+    assert.ok(inspectIdentity('committer', name, email).length > 0, label);
+  }
 });
 
 test('the repository owner identity is accepted', () => {
@@ -163,7 +200,6 @@ test('a tool signing identity is rejected', () => {
   assert.ok(inspectSigner('Claude', '').length > 0, 'a tool signer name must be rejected');
   assert.ok(inspectSigner('GitHub Copilot', '').length > 0);
   assert.ok(inspectSigner('', 'anthropic-signing-key').length > 0, 'a tool signing key must be rejected');
-  assert.ok(inspectSigner('dependabot[bot]', '').length > 0, 'a bot signer must be rejected');
 });
 
 test('a human signer and an unsigned commit are both accepted', () => {
@@ -258,7 +294,9 @@ test('a tool is identified by the whole name or a machine address', () => {
     ['Claude Code', 'x@y.z'],
     ['GitHub Copilot', 'copilot@github.com'],
     ['Codex CLI', 'x@y.z'],
-    ['dependabot[bot]', '49699333+dependabot[bot]@users.noreply.github.com'],
+    // An unrecognised bot: the allowed-automation list is specific, so anything
+    // absent from it is still treated as a tool.
+    ['unknown-tool[bot]', 'x@example.com'],
     // A human-looking name is still caught by the machine address.
     ['Claude Dupont', 'noreply@anthropic.com'],
   ]) {

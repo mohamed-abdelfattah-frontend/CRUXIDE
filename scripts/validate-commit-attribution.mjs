@@ -34,6 +34,37 @@ const TOOL_IDENTITY_PATTERN =
  */
 const ATTRIBUTION_TRAILERS = ['co-authored-by', 'generated-by', 'assisted-by', 'signed-off-by'];
 
+/**
+ * Platform and dependency automation, allowed to author and sign its own
+ * commits.
+ *
+ * The policy exists to stop an AI assistant being credited for work a human
+ * did. Dependabot genuinely authors its own dependency bumps, and
+ * `GitHub <noreply@github.com>` is the committer for every merge and "Update
+ * branch" performed through the web interface, including the maintainer's own.
+ * Rejecting either blocks honest attribution and makes a Dependabot pull
+ * request impossible to merge.
+ *
+ * Matched on name AND address together, so a commit borrowing one of these
+ * names from a different address is still rejected.
+ */
+const ALLOWED_AUTOMATION = [
+  { name: /^github$/i, email: /^noreply@github\.com$/i },
+  { name: /^dependabot(\[bot\])?$/i, email: /^(\d+\+)?dependabot(\[bot\])?@(users\.noreply\.github\.com|github\.com)$/i },
+  { name: /^dependabot(\[bot\])?$/i, email: /^support@github\.com$/i },
+  { name: /^renovate(\[bot\])?$/i, email: /^(\d+\+)?renovate(\[bot\])?@(users\.noreply\.github\.com|whitesourcesoftware\.com)$/i },
+  { name: /^github-actions(\[bot\])?$/i, email: /^(\d+\+)?github-actions(\[bot\])?@(users\.noreply\.)?github\.com$/i },
+];
+
+/** Whether an identity is platform or dependency automation acting as itself. */
+export function isAllowedAutomation(name, email) {
+  const cleanName = String(name ?? '').trim();
+  const cleanEmail = String(email ?? '').trim();
+  return ALLOWED_AUTOMATION.some(
+    (entry) => entry.name.test(cleanName) && entry.email.test(cleanEmail),
+  );
+}
+
 /** Signature phrases that assert AI authorship regardless of trailer form. */
 const SIGNATURE_PATTERNS = [
   /generated\s+(?:with|by)\s+(?:claude|chatgpt|openai|copilot|gemini|cursor|ai\b)/i,
@@ -62,7 +93,10 @@ const ATTRIBUTION_URL_LINE =
  * The whole name must BE a tool identity, optionally with a version or
  * parenthetical suffix, rather than merely containing one.
  */
-const TOOL_TOKEN = 'copilot|claude|anthropic|chatgpt|openai|gemini|cursor|codex|bard|devin|github';
+// "github" is deliberately only matched as part of "GitHub Copilot". On its
+// own it is the platform's own commit identity, used for every merge and
+// "Update branch" performed through the web interface.
+const TOOL_TOKEN = '(?:github\\s+)?copilot|claude|anthropic|chatgpt|openai|gemini|cursor|codex|bard|devin';
 const VERSION_TOKEN = 'code|cli|bot|ai|opus|sonnet|haiku|pro|max|mini|turbo|preview|v?\\d[\\w.]*';
 
 /**
@@ -163,6 +197,9 @@ export function isToolIdentity(name, email) {
   const cleanEmail = String(email ?? '').replace(CONTROL_CHARACTERS, '').trim();
   CONTROL_CHARACTERS.lastIndex = 0;
 
+  // Automation acting as itself is honest attribution, not a violation.
+  if (isAllowedAutomation(cleanName, cleanEmail)) return false;
+
   if (/\[bot\]/i.test(cleanName) || /\[bot\]/i.test(cleanEmail)) return true;
   if (FORBIDDEN_IDENTITY_EMAILS.some((pattern) => pattern.test(cleanEmail))) return true;
   return TOOL_NAME_PATTERN.test(cleanName);
@@ -204,7 +241,13 @@ export function inspectSigner(signerName, signingKey) {
     }
     CONTROL_CHARACTERS.lastIndex = 0;
   }
-  if (signerName && isToolIdentity(signerName, '')) {
+  // Automation signing its own commits is allowed, as with authoring them.
+  const bareSigner = String(signerName ?? '').replace(/\s*<[^>]*>\s*$/, '').trim();
+  const signerEmail = (String(signerName ?? '').match(/<([^>]*)>/) ?? [])[1] ?? '';
+  const signerIsAutomation = isAllowedAutomation(bareSigner, signerEmail)
+    || /^(dependabot|renovate|github-actions)(\[bot\])?$/i.test(bareSigner);
+
+  if (signerName && !signerIsAutomation && isToolIdentity(signerName, '')) {
     problems.push(`signed by a tool identity: ${signerName}`);
   }
   if (signingKey && namesToolIdentity(signingKey)) {
