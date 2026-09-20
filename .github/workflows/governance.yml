@@ -101,6 +101,11 @@ jobs:
             # characters rejected outright rather than merely stripped.
             IDENTITIES='claude|anthropic|chatgpt|openai|copilot|gemini|cursor|codex|bard|devin|\[bot\]|\bbot\b'
             TRAILERS='co-authored-by|generated-by|assisted-by|signed-off-by'
+            # Platform and dependency automation acting as itself is honest
+            # attribution: Dependabot authors its own bumps, and
+            # GitHub <noreply@github.com> commits every web-UI merge and
+            # "Update branch", including the maintainer's own.
+            ALLOWED_AUTOMATION='(github <noreply@github\.com>|dependabot\[bot\]|renovate\[bot\]|github-actions\[bot\])'
             FOUND=0
             while IFS= read -r sha; do
               RAW=$(git show -s --format=%B "$sha")
@@ -114,7 +119,8 @@ jobs:
               IDENTITY=$(git show -s --format='%an %ae %cn %ce %GS %GK' "$sha")
 
               if printf '%s\n' "$MESSAGE" \
-                 | grep -qiE "^[[:space:]]*($TRAILERS)[[:space:]]*:.*($IDENTITIES)"; then
+                 | grep -iE "^[[:space:]]*($TRAILERS)[[:space:]]*:.*($IDENTITIES)" \
+                 | grep -qivE "$ALLOWED_AUTOMATION"; then
                 echo "::error::$sha carries a forbidden attribution trailer."
                 FOUND=1
               fi
@@ -136,7 +142,11 @@ jobs:
                 echo "::error::$sha carries an AI attribution emoji."
                 FOUND=1
               fi
-              if printf '%s\n' "$IDENTITY" | grep -qiE "($IDENTITIES)"; then
+              # Remove the allowed automation identities first, so what remains
+              # is only a genuine AI or tool identity.
+              if printf '%s\n' "$IDENTITY" \
+                 | sed -E 's/(GitHub <noreply@github\.com>|noreply@github\.com|support@github\.com|[0-9]*\+?(dependabot|renovate|github-actions)(\[bot\])?@[^ ]*|(dependabot|renovate|github-actions)\[bot\])//gI' \
+                 | grep -qiE "($IDENTITIES)"; then
                 echo "::error::$sha has a tool or bot identity as author, committer, or signer."
                 FOUND=1
               fi
