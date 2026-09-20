@@ -89,18 +89,16 @@ jobs:
             CHECKED=0
             while IFS= read -r sha; do
               [ -n "$sha" ] || continue
-              AUTHOR_IDENTITY="$(git show -s --format='%an <%ae>' "$sha")"
-              COMMITTER_IDENTITY="$(git show -s --format='%cn <%ce>' "$sha")"
-              if printf '%s\n%s\n' "$AUTHOR_IDENTITY" "$COMMITTER_IDENTITY" | grep -qi '\[bot\]'; then
-                echo "Skipping bot-authored commit $sha ($AUTHOR_IDENTITY / $COMMITTER_IDENTITY)."
-                continue
-              fi
-              if [ "$AUTHOR_IDENTITY" = "GitHub <noreply@github.com>" ] || [ "$COMMITTER_IDENTITY" = "GitHub <noreply@github.com>" ]; then
-                echo "Skipping GitHub-managed commit $sha ($AUTHOR_IDENTITY / $COMMITTER_IDENTITY)."
+              AUTHOR_NAME="$(git show -s --format='%an' "$sha")"
+              AUTHOR_EMAIL="$(git show -s --format='%ae' "$sha")"
+              COMMITTER_NAME="$(git show -s --format='%cn' "$sha")"
+              COMMITTER_EMAIL="$(git show -s --format='%ce' "$sha")"
+              if node --input-type=module -e "import { pathToFileURL } from 'node:url'; const validatorPath = process.argv[2]; const authorName = process.argv[3]; const authorEmail = process.argv[4]; const committerName = process.argv[5]; const committerEmail = process.argv[6]; const { isToolIdentity } = await import(pathToFileURL(validatorPath).href); process.exit(isToolIdentity(authorName, authorEmail) || isToolIdentity(committerName, committerEmail) ? 0 : 1);" _ "$VALIDATOR" "$AUTHOR_NAME" "$AUTHOR_EMAIL" "$COMMITTER_NAME" "$COMMITTER_EMAIL"; then
+                echo "Skipping tool-managed commit $sha."
                 continue
               fi
               CHECKED=1
-              node "$VALIDATOR" --range "$sha^..$sha"
+              node "$VALIDATOR" --range "$sha^!"
             done < <(git log --format=%H "$BASE_SHA..$HEAD_SHA")
             if [ "$CHECKED" -eq 0 ]; then
               echo "No human-authored commits in range; nothing to validate."
