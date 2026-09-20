@@ -8,7 +8,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $ProfileName = 'CRUXIDE'
 $ExtensionId = 'cruxcode.cruxide'
-$Version = '1.1.0'
+$Version = '1.2.0'
 $PackageRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $VsixPath = Join-Path $PackageRoot "cruxide-$Version.vsix"
 $IconPath = Join-Path $PackageRoot 'cruxide.ico'
@@ -324,7 +324,7 @@ function New-CruxShortcut {
         $shortcut.Arguments = '--profile "CRUXIDE"'
         $shortcut.WorkingDirectory = Split-Path $CodeExecutable -Parent
         $shortcut.IconLocation = "$ShortcutIconPath,0"
-        $shortcut.Description = 'CRUXIDE - The CRUXCODE developer experience'
+        $shortcut.Description = 'CRUXIDE - The CRUXCODE.DEV developer experience'
         $shortcut.Save()
     }
     finally {

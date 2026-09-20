@@ -3,7 +3,7 @@ set -euo pipefail
 
 profile_name="CRUXIDE"
 extension_id="cruxcode.cruxide"
-version="1.1.0"
+version="1.2.0"
 package_root="$(cd "$(dirname "$0")" && pwd)"
 vsix_path="$package_root/cruxide-$version.vsix"
 logo_path="$package_root/crux-logo.png"
@@ -144,7 +144,7 @@ cat > "$app_path/Contents/Info.plist" <<'PLIST'
   <key>CFBundleIdentifier</key><string>com.cruxcode.cruxide.launcher</string>
   <key>CFBundleName</key><string>CRUXIDE</string>
   <key>CFBundlePackageType</key><string>APPL</string>
-  <key>CFBundleShortVersionString</key><string>1.1.0</string>
+  <key>CFBundleShortVersionString</key><string>1.2.0</string>
 </dict>
 </plist>
 PLIST

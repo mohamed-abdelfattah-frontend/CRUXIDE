@@ -142,10 +142,15 @@ test('setup webview is local, consent-based, and does not auto-install on ready'
 });
 
 test('profile experience applies the Figma code typography', async () => {
-  const extension = await readText('src/extension.ts');
-  assert.match(extension, /'Roboto Mono'/);
-  assert.match(extension, /'fontFamily'/);
-  assert.match(extension, /terminal\.integrated/);
+  // The owned-settings table lives in src/experience.ts so both the manual
+  // command and the confirmed setup apply the same values.
+  const [extension, experience] = await Promise.all([
+    readText('src/extension.ts'),
+    readText('src/experience.ts'),
+  ]);
+  assert.match(experience, /'Roboto Mono'/);
+  assert.match(experience, /'fontFamily'/);
+  assert.match(experience, /terminal\.integrated/);
   assert.match(extension, /cruxide\.setupPrompted\.v2/);
   assert.match(extension, /setupOpened = await openFirstRunSetup/);
   assert.match(extension, /SetupPanel\.show\(context, output\)/);
