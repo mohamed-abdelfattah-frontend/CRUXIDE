@@ -98,7 +98,11 @@ jobs:
                 continue
               fi
               CHECKED=1
-              node "$VALIDATOR" --range "$sha^!"
+              if git rev-parse --verify "$sha^" >/dev/null 2>&1; then
+                node "$VALIDATOR" --range "$sha^..$sha"
+              else
+                node "$VALIDATOR" --range "$sha"
+              fi
             done < <(git log --format=%H "$BASE_SHA..$HEAD_SHA")
             if [ "$CHECKED" -eq 0 ]; then
               echo "No human-authored commits in range; nothing to validate."
