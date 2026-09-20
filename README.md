@@ -26,7 +26,7 @@ CRUXIDE brings five parts of the development experience together:
 - **Code Review** — structured review guidance covering correctness, maintainability, performance, security, and project standards.
 - **Orchestration** — CRUX Conductor can identify and coordinate the relevant installed skills for a task when invoked explicitly.
 
-CRUXIDE is not another extension pack that installs everything. It builds a profile around the way you work.
+CRUXIDE is not another extension pack that installs everything. It configures your active VS Code profile around the way you work.
 
 ---
 
@@ -181,11 +181,23 @@ See `SECURITY.md`, `PRIVACY.md`, and `THREAT_MODEL.md` for the complete policies
 
 ## Quick start
 
+### From the Visual Studio Code Marketplace
+
+Search for **CRUXIDE** in the Extensions view, or run:
+
+```bash
+code --install-extension cruxcode.cruxide
+```
+
+CRUXIDE Setup opens on first launch. Nothing is installed until you confirm.
+
+### From a release ZIP
+
 > Download the versioned ZIP from [GitHub Releases](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/releases). Do not use GitHub's **Code → Download ZIP** source archive; it does not contain the release-built VSIX.
 
-### Windows
+#### Windows
 
-Extract `CRUXIDE-v1.1.0.zip`, open PowerShell inside the extracted folder, and run:
+Extract `CRUXIDE-v1.2.0.zip`, open PowerShell inside the extracted folder, and run:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
@@ -194,9 +206,9 @@ Set-ExecutionPolicy -Scope Process Bypass
 
 Start **CRUXIDE** from the Desktop or Start Menu shortcut.
 
-### macOS
+#### macOS
 
-In VS Code, first run **Shell Command: Install 'code' command in PATH**. Extract `CRUXIDE-v1.1.0.zip`, open Terminal inside the folder, and run:
+In VS Code, first run **Shell Command: Install 'code' command in PATH**. Extract `CRUXIDE-v1.2.0.zip`, open Terminal inside the folder, and run:
 
 ```bash
 chmod +x ./install-macos.sh
@@ -205,11 +217,11 @@ chmod +x ./install-macos.sh
 
 CRUXIDE creates a user-level `~/Applications/CRUXIDE.app` launcher.
 
-### Install the VSIX manually
+#### Install the VSIX manually
 
 ```bash
 code --profile "CRUXIDE" --new-window
-code --profile "CRUXIDE" --install-extension ./cruxide-1.1.0.vsix --force
+code --profile "CRUXIDE" --install-extension ./cruxide-1.2.0.vsix --force
 code --profile "CRUXIDE" --new-window
 ```
 
@@ -221,7 +233,7 @@ You can also use **Extensions → More Actions → Install from VSIX…**.
 
 CRUXIDE Setup opens on the first launch. Review the tracks, target profile, AI agents, skill scope, and rules mode before applying the setup.
 
-After confirmation, CRUXIDE can configure:
+After you confirm, CRUXIDE configures the active profile:
 
 - CRUXIDE Dark or Light theme;
 - Material Icon Theme;
@@ -231,7 +243,9 @@ After confirmation, CRUXIDE can configure:
 - selected track integrations;
 - mapped AI skills and project rules.
 
-Nothing is installed until you approve the native VS Code confirmation dialog.
+Nothing is installed until you approve the native VS Code confirmation dialog. If a tool or a setting cannot be applied, CRUXIDE reports exactly what failed instead of showing a success state.
+
+CRUXIDE applies to the **active** VS Code profile and cannot create or switch profiles for you. To keep it isolated, run **Profiles: Create Profile**, switch to the new profile, then run **CRUXIDE: Setup & Manage Tracks**.
 
 ---
 
@@ -277,7 +291,7 @@ Release maintainers should follow [`PUBLISHING.md`](https://github.com/mohamed-a
 ## Platform scope
 
 - **Visual Studio Code:** supported through the VSIX and Marketplace release workflow.
-- **Cursor:** manual VSIX compatibility testing is required before making a public compatibility claim.
+- **Cursor:** the same VSIX installs manually through **Extensions → Install from VSIX…**. CRUXIDE is not published on the Cursor Marketplace.
 - **WebStorm:** requires a separate signed IntelliJ Platform plugin and is not produced by this repository.
 
 A VS Code profile cannot replace Microsoft's executable identity, process name, top-left application icon, or guaranteed running taskbar icon. CRUXIDE launchers use the CRUX favicon, while a completely independent application identity would require a separately maintained Code-OSS distribution.
