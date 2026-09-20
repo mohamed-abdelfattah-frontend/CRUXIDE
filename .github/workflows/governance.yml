@@ -86,11 +86,40 @@ jobs:
           if git cat-file -e "$BASE_SHA:scripts/validate-commit-attribution.mjs" 2>/dev/null; then
             git show "$BASE_SHA:scripts/validate-commit-attribution.mjs" > "$VALIDATOR"
             echo "Using the validator from base $BASE_SHA."
+            node "$VALIDATOR" --range "$BASE_SHA..$HEAD_SHA"
           else
             # Only reachable while the validator is first being introduced, when
-            # the base revision has no copy to trust yet. Every later run uses
-            # the merged, trusted one.
-            cp scripts/validate-commit-attribution.mjs "$VALIDATOR"
-            echo "::warning::No validator at base $BASE_SHA; using this pull request's copy for the first introduction only."
+            # the base revision has no copy to trust yet. The pull request's own
+            # copy is NOT executed here: running contributor-supplied code as the
+            # gate that judges it would let a change approve itself. Use a
+            # self-contained check written inline in this step instead.
+            echo "::warning::No validator at base $BASE_SHA; applying the inline bootstrap check."
+            FOUND=0
+            while IFS= read -r sha; do
+              # NUL is the only byte a commit message cannot contain, and
+              # tr -d strips control characters used to hide a trailer from
+              # line-anchored matching.
+              MESSAGE=$(git show -s --format=%B "$sha" | tr -d '\000-\010\013\014\016-\037')
+              IDENTITY=$(git show -s --format='%an %ae %cn %ce %GS %GK' "$sha")
+              if printf '%s\n' "$MESSAGE" \
+                 | grep -qiE '^[[:space:]]*(co-authored-by|generated-by|assisted-by)[[:space:]]*:.*(claude|anthropic|chatgpt|openai|copilot|gemini|cursor|codex|\[bot\])'; then
+                echo "::error::$sha carries a forbidden attribution trailer."
+                FOUND=1
+              fi
+              if printf '%s\n' "$MESSAGE" \
+                 | grep -qiE 'generated (with|by) (claude|chatgpt|openai|copilot|gemini|cursor|ai)|created by ai|co-authored with ai'; then
+                echo "::error::$sha carries a forbidden AI signature."
+                FOUND=1
+              fi
+              if printf '%s\n' "$IDENTITY" \
+                 | grep -qiE '(claude|anthropic|chatgpt|openai|copilot|gemini|codex|\[bot\])'; then
+                echo "::error::$sha has a tool or bot identity as author, committer, or signer."
+                FOUND=1
+              fi
+            done < <(git log --format=%H "$BASE_SHA..$HEAD_SHA")
+            if [ "$FOUND" -ne 0 ]; then
+              echo "See PROJECT_RULES.md -> Git Authorship and AI Attribution Policy." >&2
+              exit 1
+            fi
+            echo "Inline bootstrap attribution check passed."
           fi
-          node "$VALIDATOR" --range "$BASE_SHA..$HEAD_SHA"

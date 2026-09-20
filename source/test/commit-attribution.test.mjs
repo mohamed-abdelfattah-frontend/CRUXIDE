@@ -189,3 +189,40 @@ test('CI runs the validator from the base revision, not the pull request copy', 
     'the workflow must not execute the checked-out pull request copy directly',
   );
 });
+
+test('control characters cannot hide a trailer from the line anchors', () => {
+  // A commit message is contributor-controlled. U+001F is not matched by \s,
+  // so a trailer prefixed with one slipped past a ^\s* anchored pattern while
+  // still reading as attribution. Demonstrated against a real crafted commit.
+  const unitSeparator = String.fromCharCode(0x1f);
+
+  const hiddenTrailer = `fix: innocuous subject
+
+Body.
+${unitSeparator}Co-Authored-By: Claude <noreply@anthropic.com>
+`;
+  const problems = inspectMessage(hiddenTrailer);
+  assert.ok(problems.length > 0, 'a control-prefixed trailer must be rejected');
+  assert.ok(problems.some((p) => /control characters/.test(p)), 'the control characters must be reported');
+  assert.ok(problems.some((p) => /attribution trailer/.test(p)), 'the trailer itself must be reported');
+
+  const hiddenSignature = `fix: another
+
+Body.
+${unitSeparator}Generated with Claude Code
+`;
+  assert.ok(inspectMessage(hiddenSignature).some((p) => /AI signature/.test(p)));
+});
+
+test('ordinary messages are unaffected by the control-character check', () => {
+  // Tab, newline, and carriage return are legitimate and must not be flagged.
+  const ordinary = [
+    'feat(setup): add a track',
+    '',
+    '\tIndented body line.',
+    '',
+    'Refs #12',
+    '',
+  ].join('\n');
+  assert.deepEqual(inspectMessage(ordinary), []);
+});

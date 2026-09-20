@@ -126,38 +126,72 @@ for (const ref of desiredIncluded) {
   if (!included.includes(ref)) problems.push(`does not target ${ref} (includes: ${included.join(', ') || 'none'})`);
 }
 
-// Every rule type the policy declares must still be present.
-const desiredRules = new Map(desired.rules.map((rule) => [rule.type, rule.parameters ?? {}]));
-for (const type of desiredRules.keys()) {
-  if (!rules.has(type)) problems.push(`missing rule: ${type}`);
+// An exclusion is as effective as removing the include: a ruleset can list
+// ~DEFAULT_BRANCH and then exclude it, leaving main unprotected while every
+// other check still passes. Only declared exclusions are acceptable.
+const desiredExcluded = new Set(desired.conditions?.ref_name?.exclude ?? []);
+for (const ref of detail.conditions?.ref_name?.exclude ?? []) {
+  if (!desiredExcluded.has(ref)) problems.push(`undeclared branch exclusion: ${ref}`);
 }
 
-// Pull-request parameters, compared value by value.
-const desiredPullRequest = desiredRules.get('pull_request') ?? {};
-for (const key of [
-  'required_approving_review_count',
-  'require_code_owner_review',
-  'dismiss_stale_reviews_on_push',
-  'required_review_thread_resolution',
-]) {
-  if (key in desiredPullRequest && pullRequest[key] !== desiredPullRequest[key]) {
-    problems.push(`pull_request.${key} is ${JSON.stringify(pullRequest[key])}, expected ${JSON.stringify(desiredPullRequest[key])}`);
+/**
+ * Compare every declared parameter, not a hand-picked subset. Listing keys by
+ * hand meant a remotely changed parameter that nobody remembered to add here
+ * passed silently: update_allows_fetch_and_merge, allowed_merge_methods,
+ * require_last_push_approval and do_not_enforce_on_create were all unchecked.
+ *
+ * Arrays of required status checks are compared as a subset, because adding a
+ * check strengthens protection. Every other value must match exactly.
+ */
+function compareParameters(ruleType, desiredParameters, liveParameters) {
+  for (const [key, expected] of Object.entries(desiredParameters)) {
+    const actual = liveParameters?.[key];
+
+    if (key === 'required_status_checks') {
+      const live = new Set((actual ?? []).map((check) => check.context));
+      for (const { context } of expected) {
+        if (!live.has(context)) problems.push(`required status check missing: "${context}"`);
+      }
+      continue;
+    }
+
+    if (Array.isArray(expected)) {
+      // Order is not meaningful for these lists, but membership is: a live list
+      // that drops or adds an entry changes what the rule permits.
+      const same = Array.isArray(actual)
+        && expected.length === actual.length
+        && [...expected].sort().every((value, index) => value === [...actual].sort()[index]);
+      if (!same) {
+        problems.push(`${ruleType}.${key} is ${JSON.stringify(actual)}, expected ${JSON.stringify(expected)}`);
+      }
+      continue;
+    }
+
+    // GitHub omits a boolean parameter from the response when it holds the
+    // default of false, so an absent value satisfies a declared false. An
+    // absent value against a declared true is still a mismatch, which is the
+    // direction that matters: that would be a real weakening.
+    if (expected === false && actual === undefined) continue;
+
+    if (actual !== expected) {
+      problems.push(`${ruleType}.${key} is ${JSON.stringify(actual)}, expected ${JSON.stringify(expected)}`);
+    }
   }
 }
 
-// Every declared status check must still be required. Extra checks are allowed:
-// adding one strengthens protection.
-const desiredChecksRule = desiredRules.get('required_status_checks') ?? {};
-const desiredChecks = (desiredChecksRule.required_status_checks ?? []).map((check) => check.context);
-const liveChecks = new Set(statusChecks.map((check) => check.context));
-for (const context of desiredChecks) {
-  if (!liveChecks.has(context)) problems.push(`required status check missing: "${context}"`);
+// Every rule type the policy declares must still be present, with matching
+// parameters.
+const desiredRules = new Map(desired.rules.map((rule) => [rule.type, rule.parameters ?? {}]));
+for (const [type, parameters] of desiredRules) {
+  if (!rules.has(type)) {
+    problems.push(`missing rule: ${type}`);
+    continue;
+  }
+  compareParameters(type, parameters, rules.get(type));
 }
-if ('strict_required_status_checks_policy' in desiredChecksRule
-  && (rules.get('required_status_checks') ?? {}).strict_required_status_checks_policy
-     !== desiredChecksRule.strict_required_status_checks_policy) {
-  problems.push('strict_required_status_checks_policy does not match the declared policy');
-}
+
+const desiredChecks = (desiredRules.get('required_status_checks')?.required_status_checks ?? [])
+  .map((check) => check.context);
 
 // Bypass actors are the one place where a difference is always a weakening:
 // an actor present remotely but absent from the policy can skip these rules.

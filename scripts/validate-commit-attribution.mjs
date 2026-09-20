@@ -63,11 +63,30 @@ function namesToolIdentity(text) {
   return TOOL_IDENTITY_PATTERN.test(text);
 }
 
+/**
+ * C0 control characters other than tab, newline, and carriage return. A commit
+ * message has no legitimate use for these, and they defeat naive line matching:
+ * `\s` does not match U+001F, so a trailer prefixed with one slips past a
+ * `^\s*` anchored pattern while still reading as attribution to a human.
+ */
+const CONTROL_CHARACTERS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
+
 /** @returns {string[]} one message per problem found */
 export function inspectMessage(message) {
   const problems = [];
 
-  for (const line of message.split(/\r?\n/)) {
+  // Match against a normalised copy so control characters cannot be used to
+  // hide a trailer from the line anchors.
+  const normalised = message.replace(CONTROL_CHARACTERS, '');
+
+  if (CONTROL_CHARACTERS.test(message)) {
+    // Reset lastIndex: the regex is global and test() advances it.
+    CONTROL_CHARACTERS.lastIndex = 0;
+    problems.push('commit message contains control characters, which are used to hide attribution');
+  }
+  CONTROL_CHARACTERS.lastIndex = 0;
+
+  for (const line of normalised.split(/\r?\n/)) {
     const trailer = line.match(/^\s*([A-Za-z-]+)\s*:\s*(.+)$/);
     if (trailer && ATTRIBUTION_TRAILERS.includes(trailer[1].toLowerCase())) {
       if (namesToolIdentity(trailer[2])) {
@@ -115,32 +134,42 @@ export function inspectSigner(signerName, signingKey) {
 }
 
 function checkRange(range) {
-  const format = ['%H', '%an', '%ae', '%cn', '%ce', '%GS', '%GK', '%B'].join(UNIT) + RECORD;
-  const raw = git(['log', `--format=${format}`, range]);
-
-  const commits = raw
-    .split(RECORD)
-    .map((entry) => entry.replace(/^\r?\n/, ''))
-    .filter((entry) => entry.trim().length > 0);
+  // Commit messages, author names, and emails are all contributor-controlled.
+  // Any printable delimiter can therefore be forged: placing one inside a
+  // message would shift the field boundaries and push a forbidden trailer out
+  // of the part that gets inspected, silently passing the gate.
+  //
+  // NUL is the only byte git cannot store in a commit message or identity, so
+  // it is the only delimiter a contributor cannot inject. Commits are listed by
+  // SHA first, which is plain hex and unambiguous, then read one at a time.
+  const shas = git(['log', '--format=%H', range])
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => /^[0-9a-f]{40}$/.test(line));
 
   const failures = [];
-  for (const entry of commits) {
-    const [
-      sha, authorName, authorEmail, committerName, committerEmail,
-      signerName, signingKey, body,
-    ] = entry.split(UNIT);
+  for (const sha of shas) {
+    const fields = ['%an', '%ae', '%cn', '%ce', '%GS', '%GK', '%B'].join('%x00');
+    const raw = git(['show', '-s', `--format=${fields}`, sha]);
+
+    const parts = raw.split('\0');
+    const [authorName, authorEmail, committerName, committerEmail, signerName, signingKey] = parts;
+    // The body is last, so anything after the sixth delimiter belongs to it.
+    // Rejoining is belt and braces: NUL cannot occur inside a message.
+    const body = parts.slice(6).join('\0');
+
     const problems = [
-      ...inspectIdentity('author', authorName, authorEmail),
-      ...inspectIdentity('committer', committerName, committerEmail),
+      ...inspectIdentity('author', authorName ?? '', authorEmail ?? ''),
+      ...inspectIdentity('committer', committerName ?? '', committerEmail ?? ''),
       ...inspectSigner(signerName ?? '', signingKey ?? ''),
-      ...inspectMessage(body ?? ''),
+      ...inspectMessage(body),
     ];
     if (problems.length > 0) {
-      failures.push({ sha: sha.slice(0, 8), subject: (body ?? '').split('\n')[0], problems });
+      failures.push({ sha: sha.slice(0, 8), subject: body.split('\n')[0], problems });
     }
   }
 
-  return { inspected: commits.length, failures };
+  return { inspected: shas.length, failures };
 }
 
 function main() {

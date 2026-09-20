@@ -9,7 +9,7 @@ const readText = (path) => readFile(new URL(path, root), 'utf8');
 
 // The release script imports this module, so the tests exercise the same
 // implementation rather than a copy of the algorithm.
-const { deriveIgnoredEntries, shouldCopyEntry, isIgnored, copyFiltered } =
+const { deriveIgnoredEntries, shouldCopyEntry, isIgnored, isSensitive, copyFiltered } =
   await import(new URL('scripts/release-exclusions.mjs', root).href);
 
 /**
@@ -177,4 +177,34 @@ test('the ignore rules are applied at every level, not only the top', async (t) 
   // And the directories themselves must not have been created at all.
   await assert.rejects(readdir(join(bundle, 'src', 'nested', 'node_modules')));
   await assert.rejects(readdir(join(bundle, 'test', 'fixtures', 'dist')));
+});
+
+test('nested .gitignore paths are honoured, not discarded', () => {
+  // Once the copy became recursive, a rule naming a nested path mattered:
+  // discarding it let the named directory through under a kept folder.
+  const rules = deriveIgnoredEntries(
+    ['node_modules/', 'build/output', '/rooted', '*.vsix'].join('\n'),
+  );
+
+  assert.equal(isIgnored(rules, 'output', 'build/output'), true, 'a nested rule must apply');
+  assert.equal(isIgnored(rules, 'output', 'other/output'), false, 'a nested rule is anchored to the root');
+  assert.equal(isIgnored(rules, 'rooted', 'rooted'), true, 'a leading slash is stripped');
+  assert.equal(isIgnored(rules, 'a.vsix', 'media/a.vsix'), true, 'a glob applies at any depth');
+  assert.equal(isIgnored(rules, 'index.ts', 'src/index.ts'), false, 'ordinary source survives');
+});
+
+test('credentials are refused whatever .gitignore lists', () => {
+  // The bundle copies the working tree, so a developer's local secret would
+  // otherwise be published by a local package:release.
+  for (const name of ['.env', '.env.local', '.npmrc', '.netrc', 'id_rsa', 'server.pem', 'app.p12', 'secrets.json']) {
+    assert.equal(isSensitive(name), true, `${name} must never reach the archive`);
+  }
+  for (const name of ['index.ts', 'package.json', 'README.md', 'environment.ts']) {
+    assert.equal(isSensitive(name), false, `${name} must not be treated as a secret`);
+  }
+
+  // Even with an empty .gitignore, the safety net still applies.
+  const empty = deriveIgnoredEntries('');
+  assert.equal(isIgnored(empty, '.env', 'src/.env'), true);
+  assert.equal(shouldCopyEntry(empty, 'index.ts', 'src/index.ts'), true);
 });
