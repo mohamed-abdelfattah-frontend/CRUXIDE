@@ -1,0 +1,149 @@
+name: Governance
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: governance-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pull-request-policy:
+    name: PR policy
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Validate pull request title and branch
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          node <<'NODE'
+          const title = process.env.PR_TITLE ?? '';
+          const branch = process.env.HEAD_REF ?? '';
+          const titlePattern = /^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9._/-]+\))?!?: .+/;
+          const branchPattern = /^(build|chore|ci|docs|feat|fix|perf|refactor|release|hotfix|revert|style|test|dependabot|renovate|codex)\/.+/;
+
+          if (!titlePattern.test(title)) {
+            console.error(`Invalid PR title: ${title}`);
+            console.error('Expected Conventional Commits format, for example: feat(setup): add database tracks');
+            process.exitCode = 1;
+          }
+          if (!branchPattern.test(branch)) {
+            console.error(`Invalid branch name: ${branch}`);
+            console.error('Use an approved prefix such as feat/, fix/, docs/, chore/, release/, or hotfix/.');
+            process.exitCode = 1;
+          }
+          NODE
+
+  workflow-policy:
+    name: Workflow policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Validate GitHub Actions policy
+        run: node scripts/validate-workflows.mjs
+
+  commit-attribution:
+    name: Commit attribution
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      # Reads the commit range only; writes nothing back to the pull request.
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The full range of the pull request, plus the base, so every commit
+          # can be inspected rather than only the tip.
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reject AI, bot, and tool attribution
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          # Run the validator from the BASE revision, not the pull request's own
+          # copy. Executing the checked-out PR copy would let a change edit the
+          # checker and add forbidden trailers in the same commit, so the gate
+          # would approve itself.
+          VALIDATOR="$RUNNER_TEMP/validate-commit-attribution.mjs"
+          if git cat-file -e "$BASE_SHA:scripts/validate-commit-attribution.mjs" 2>/dev/null; then
+            git show "$BASE_SHA:scripts/validate-commit-attribution.mjs" > "$VALIDATOR"
+            echo "Using the validator from base $BASE_SHA."
+            node "$VALIDATOR" --range "$BASE_SHA..$HEAD_SHA"
+          else
+            # Only reachable while the validator is first being introduced, when
+            # the base revision has no copy to trust yet. The pull request's own
+            # copy is NOT executed here: running contributor-supplied code as the
+            # gate that judges it would let a change approve itself. Use a
+            # self-contained check written inline in this step instead.
+            echo "::warning::No validator at base $BASE_SHA; applying the inline bootstrap check."
+            # This path is the only enforcement while the validator is being
+            # introduced, so it applies the same rules as the script rather
+            # than a weaker subset: the same trailer set, the same identity
+            # list, signatures, attribution URLs and emoji, and control
+            # characters rejected outright rather than merely stripped.
+            IDENTITIES='claude|anthropic|chatgpt|openai|copilot|gemini|cursor|codex|bard|devin|\[bot\]|\bbot\b'
+            TRAILERS='co-authored-by|generated-by|assisted-by|signed-off-by'
+            FOUND=0
+            while IFS= read -r sha; do
+              RAW=$(git show -s --format=%B "$sha")
+              # C0 controls other than tab, newline and carriage return have no
+              # legitimate use and are how a trailer is hidden from ^ anchors.
+              if printf '%s' "$RAW" | LC_ALL=C grep -qP '[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]'; then
+                echo "::error::$sha message contains control characters, which are used to hide attribution."
+                FOUND=1
+              fi
+              MESSAGE=$(printf '%s' "$RAW" | tr -d '\000-\010\013\014\016-\037\177')
+              IDENTITY=$(git show -s --format='%an %ae %cn %ce %GS %GK' "$sha")
+
+              if printf '%s\n' "$MESSAGE" \
+                 | grep -qiE "^[[:space:]]*($TRAILERS)[[:space:]]*:.*($IDENTITIES)"; then
+                echo "::error::$sha carries a forbidden attribution trailer."
+                FOUND=1
+              fi
+              if printf '%s\n' "$MESSAGE" \
+                 | grep -qiE 'generated (with|by) (claude|chatgpt|openai|copilot|gemini|cursor|ai)|created by ai|co-authored with ai|written by (claude|chatgpt|an? ai)'; then
+                echo "::error::$sha carries a forbidden AI signature."
+                FOUND=1
+              fi
+              # A vendor URL alone on its line is the shape an attribution
+              # signature takes. The same URL inside a sentence is ordinary
+              # documentation and must not be rejected, matching the rule in
+              # scripts/validate-commit-attribution.mjs.
+              if printf '%s\n' "$MESSAGE" \
+                 | grep -qiE '^[[:space:]]*[-*>[:space:]]*https?://(claude\.ai|claude\.com|www\.anthropic\.com|chatgpt\.com|openai\.com)/[^[:space:]]*[[:space:]]*$'; then
+                echo "::error::$sha carries an attribution URL."
+                FOUND=1
+              fi
+              if printf '%s\n' "$MESSAGE" | grep -qF '🤖'; then
+                echo "::error::$sha carries an AI attribution emoji."
+                FOUND=1
+              fi
+              if printf '%s\n' "$IDENTITY" | grep -qiE "($IDENTITIES)"; then
+                echo "::error::$sha has a tool or bot identity as author, committer, or signer."
+                FOUND=1
+              fi
+            done < <(git log --format=%H "$BASE_SHA..$HEAD_SHA")
+            if [ "$FOUND" -ne 0 ]; then
+              echo "See PROJECT_RULES.md -> Git Authorship and AI Attribution Policy." >&2
+              exit 1
+            fi
+            echo "Inline bootstrap attribution check passed."
+          fi

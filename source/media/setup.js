@@ -34,7 +34,13 @@
       render();
     } else if (message.command === 'applied') {
       const result = message.result;
-      status.textContent = `Applied ${result.tracks} tracks. Installed ${result.installedExtensions.length} extensions; ${result.alreadyInstalledExtensions.length} were already available.${result.failedExtensions.length ? ` ${result.failedExtensions.length} need manual review.` : ''}${result.skillsDeferred ? ' Project skills and rules are deferred until a trusted local folder is open.' : ' Skills and PROJECT_RULES are ready.'}`;
+      const experience = message.experience;
+      const experienceText = !experience
+        ? ''
+        : experience.applied
+          ? ' CRUXIDE theme, fonts, and window title applied.'
+          : ` ${experience.failed.length} CRUXIDE experience setting(s) could not be written; run CRUXIDE: Apply CRUXIDE Experience to retry.`;
+      status.textContent = `Applied ${result.tracks} tracks. Installed ${result.installedExtensions.length} extensions; ${result.alreadyInstalledExtensions.length} were already available.${result.failedExtensions.length ? ` ${result.failedExtensions.length} need manual review.` : ''}${result.skillsDeferred ? ' Project skills and rules are deferred until a trusted local folder is open.' : ' Skills and PROJECT_RULES are ready.'}${experienceText}`;
     } else if (message.command === 'profileRequired') {
       status.textContent = 'Create or switch to the dedicated profile, then reopen this setup. Nothing was installed.';
     } else if (message.command === 'error') {
@@ -55,16 +61,26 @@
       const grid = document.createElement('div'); grid.className = 'track-grid';
       tracks.forEach((track) => grid.append(trackCard(track))); section.append(grid); list.append(section);
     });
+    updateSummary();
+  }
+
+  function updateSummary() {
     const selectedTracks = state.catalog.tracks.filter((track) => state.selected.has(track.id));
     const extensionIds = new Set(selectedTracks.flatMap((track) => track.extensions.map((item) => item.id.toLowerCase())));
     const skillIds = new Set(selectedTracks.flatMap((track) => [...track.skillIds, ...track.ruleIds]));
     summary.textContent = `${state.selected.size} tracks • ${extensionIds.size} unique extension entries • ${skillIds.size} mapped skills and rules`;
   }
 
+  function syncTrackInputs() {
+    list.querySelectorAll('input[data-track-id]').forEach((input) => {
+      input.checked = state.selected.has(input.dataset.trackId);
+    });
+  }
+
   function trackCard(track) {
     const label = document.createElement('label'); label.className = 'track-card';
-    const input = document.createElement('input'); input.type = 'checkbox'; input.checked = state.selected.has(track.id); input.disabled = Boolean(track.required);
-    input.addEventListener('change', () => { input.checked ? state.selected.add(track.id) : state.selected.delete(track.id); render(); });
+    const input = document.createElement('input'); input.type = 'checkbox'; input.checked = state.selected.has(track.id); input.disabled = Boolean(track.required); input.dataset.trackId = track.id;
+    input.addEventListener('change', () => { input.checked ? state.selected.add(track.id) : state.selected.delete(track.id); updateSummary(); });
     const copy = document.createElement('span'); copy.className = 'track-copy';
     const title = document.createElement('strong'); title.textContent = track.name;
     const description = document.createElement('span'); description.textContent = track.description;
@@ -90,9 +106,10 @@
   }
 
   search.addEventListener('input', render);
-  document.getElementById('all').addEventListener('click', () => { state.catalog?.tracks.forEach((track) => state.selected.add(track.id)); render(); });
-  document.getElementById('core').addEventListener('click', () => { state.selected = new Set(state.catalog?.tracks.filter((track) => track.required).map((track) => track.id) || []); render(); });
+  document.getElementById('all').addEventListener('click', () => { state.catalog?.tracks.forEach((track) => state.selected.add(track.id)); syncTrackInputs(); updateSummary(); });
+  document.getElementById('core').addEventListener('click', () => { state.selected = new Set(state.catalog?.tracks.filter((track) => track.required).map((track) => track.id) || []); syncTrackInputs(); updateSummary(); });
   document.getElementById('profiles').addEventListener('click', () => vscode.postMessage({ command: 'openProfiles' }));
+  document.getElementById('skills').addEventListener('click', () => vscode.postMessage({ command: 'openSkills' }));
   document.getElementById('apply').addEventListener('click', () => { const value = request(); if (value) { status.textContent = 'Waiting for your confirmation…'; vscode.postMessage({ command: 'apply', request: value }); } });
   vscode.postMessage({ command: 'ready' });
 })();

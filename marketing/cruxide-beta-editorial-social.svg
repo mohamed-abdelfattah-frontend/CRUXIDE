@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="2700" viewBox="0 0 2160 2700">
+  <defs>
+    <style>
+      @font-face { font-family: 'Space Grotesk'; src: url('../media/fonts/SpaceGrotesk-Variable.ttf'); }
+      @font-face { font-family: 'Inter'; src: url('../media/fonts/Inter-Variable.ttf'); }
+      .display { font-family: 'Space Grotesk', 'Arial Narrow', sans-serif; }
+      .body { font-family: 'Inter', Arial, sans-serif; }
+    </style>
+    <pattern id="grid" width="72" height="72" patternUnits="userSpaceOnUse">
+      <path d="M72 0H0V72" fill="none" stroke="#1D222C" stroke-width="2"/>
+    </pattern>
+  </defs>
+
+  <rect width="2160" height="2700" fill="#090B10"/>
+  <rect width="2160" height="2700" fill="url(#grid)" opacity=".52"/>
+  <rect x="0" y="0" width="28" height="980" fill="#245CFF"/>
+  <rect x="0" y="980" width="28" height="480" fill="#F3F0E9"/>
+  <rect x="0" y="1460" width="28" height="1240" fill="#FF4A38"/>
+
+  <!-- Brand header -->
+  <g transform="translate(118 112) scale(1.2794117647)">
+    <rect width="136" height="136" rx="31" fill="#15171A"/>
+    <path d="M0 0H40L64 24L50 38L32 20H20V36L42 58L28 72L0 44V0Z" transform="translate(20 20) scale(.705882)" fill="#F3F0E9"/>
+    <path d="M136 0V40L112 64L98 50L116 32V20H100L78 42L64 28L92 0H136Z" transform="translate(20 20) scale(.705882)" fill="#F3F0E9"/>
+    <path d="M136 136H96L72 112L86 98L104 116H116V100L94 78L108 64L136 92V136Z" transform="translate(20 20) scale(.705882)" fill="#F3F0E9"/>
+    <path d="M0 136V96L24 72L38 86L20 104V116H36L58 94L72 108L44 136H0Z" transform="translate(20 20) scale(.705882)" fill="#F3F0E9"/>
+    <path d="M53 46H93V60H68V76H93V90H53L43 80V56L53 46Z" transform="translate(20 20) scale(.705882)" fill="#F3F0E9"/>
+  </g>
+  <text x="340" y="176" class="display" fill="#F3F0E9" font-size="52" font-weight="650" letter-spacing="8">CRUXCODE.DEV</text>
+  <text x="340" y="238" class="body" fill="#8E96A7" font-size="28" font-weight="600" letter-spacing="7">A CRUXCODE.DEV ORIGINAL</text>
+  <rect x="1714" y="122" width="326" height="120" fill="none" stroke="#F3F0E9" stroke-width="3"/>
+  <text x="1877" y="199" text-anchor="middle" class="body" fill="#F3F0E9" font-size="32" font-weight="700" letter-spacing="8">BETA 01</text>
+
+  <!-- Launch statement -->
+  <text x="118" y="510" class="display" fill="#8E96A7" font-size="42" font-weight="600" letter-spacing="9">INTRODUCING</text>
+  <text x="108" y="820" class="display" fill="#F3F0E9" font-size="280" font-weight="650" letter-spacing="-14">CRUXIDE</text>
+  <rect x="118" y="892" width="1922" height="5" fill="#303743"/>
+
+  <text x="118" y="1090" class="display" fill="#F3F0E9" font-size="118" font-weight="620" letter-spacing="-4">AI CODING,</text>
+  <rect x="106" y="1152" width="1428" height="166" fill="#245CFF"/>
+  <text x="118" y="1271" class="display" fill="#FFFFFF" font-size="118" font-weight="700" letter-spacing="-4">ENGINEERED.</text>
+  <rect x="1534" y="1152" width="506" height="166" fill="#FF4A38"/>
+  <path d="M1672 1200h122l54 35-54 35h-122l54-35-54-35Zm176 0h44v70h-44z" fill="#090B10"/>
+
+  <!-- Human-designed modular system -->
+  <text x="118" y="1497" class="body" fill="#8E96A7" font-size="28" font-weight="650" letter-spacing="7">ONE COORDINATED ENGINEERING SYSTEM</text>
+
+  <g transform="translate(118 1570)">
+    <rect width="448" height="390" fill="#10141C" stroke="#343B49" stroke-width="3"/>
+    <rect width="448" height="12" fill="#245CFF"/>
+    <text x="34" y="74" class="body" fill="#6F7A91" font-size="25" font-weight="700" letter-spacing="5">01</text>
+    <circle cx="82" cy="164" r="36" fill="none" stroke="#F3F0E9" stroke-width="7"/>
+    <path d="M82 114v100M32 164h100" stroke="#F3F0E9" stroke-width="7"/>
+    <text x="34" y="292" class="display" fill="#F3F0E9" font-size="55" font-weight="650">SKILLS</text>
+    <text x="34" y="347" class="body" fill="#8E96A7" font-size="25">The right capability.</text>
+  </g>
+
+  <g transform="translate(608 1570)">
+    <rect width="448" height="390" fill="#10141C" stroke="#343B49" stroke-width="3"/>
+    <rect width="448" height="12" fill="#F3F0E9"/>
+    <text x="34" y="74" class="body" fill="#6F7A91" font-size="25" font-weight="700" letter-spacing="5">02</text>
+    <path d="M42 112h148v22H42zm0 47h106v22H42zm0 47h132v22H42z" fill="#F3F0E9"/>
+    <text x="34" y="292" class="display" fill="#F3F0E9" font-size="55" font-weight="650">RULES</text>
+    <text x="34" y="347" class="body" fill="#8E96A7" font-size="25">Your standards.</text>
+  </g>
+
+  <g transform="translate(1098 1570)">
+    <rect width="448" height="390" fill="#10141C" stroke="#343B49" stroke-width="3"/>
+    <rect width="448" height="12" fill="#FF4A38"/>
+    <text x="34" y="74" class="body" fill="#6F7A91" font-size="25" font-weight="700" letter-spacing="5">03</text>
+    <path d="M44 214l50-50 42 42 82-92" fill="none" stroke="#F3F0E9" stroke-width="8"/>
+    <circle cx="94" cy="164" r="12" fill="#245CFF"/><circle cx="136" cy="206" r="12" fill="#FF4A38"/>
+    <text x="34" y="292" class="display" fill="#F3F0E9" font-size="48" font-weight="650">CODE REVIEW</text>
+    <text x="34" y="347" class="body" fill="#8E96A7" font-size="25">Evidence over approval.</text>
+  </g>
+
+  <g transform="translate(1588 1570)">
+    <rect width="452" height="390" fill="#F3F0E9"/>
+    <rect width="452" height="12" fill="#245CFF"/>
+    <text x="34" y="74" class="body" fill="#687083" font-size="25" font-weight="700" letter-spacing="5">04</text>
+    <circle cx="78" cy="174" r="25" fill="#090B10"/>
+    <circle cx="174" cy="125" r="25" fill="#245CFF"/>
+    <circle cx="174" cy="223" r="25" fill="#FF4A38"/>
+    <path d="M100 162l50-25m-50 49 50 25" stroke="#090B10" stroke-width="7"/>
+    <text x="34" y="292" class="display" fill="#090B10" font-size="39" font-weight="700">ORCHESTRATION</text>
+    <text x="34" y="347" class="body" fill="#4E5665" font-size="25">One coherent result.</text>
+  </g>
+
+  <!-- Flow spine -->
+  <path d="M342 2016H1814" stroke="#343B49" stroke-width="4"/>
+  <circle cx="342" cy="2016" r="11" fill="#245CFF"/>
+  <circle cx="832" cy="2016" r="11" fill="#F3F0E9"/>
+  <circle cx="1322" cy="2016" r="11" fill="#FF4A38"/>
+  <path d="M1814 1995l38 21-38 21z" fill="#F3F0E9"/>
+
+  <!-- Product truth -->
+  <text x="118" y="2228" class="display" fill="#F3F0E9" font-size="72" font-weight="600">One prompt. The right skills.</text>
+  <text x="118" y="2320" class="display" fill="#F3F0E9" font-size="72" font-weight="600">One coordinated result.</text>
+
+  <text x="118" y="2488" class="body" fill="#2BCBFF" font-size="29" font-weight="700" letter-spacing="5">CLAUDE CODE  /  CODEX  /  GITHUB COPILOT</text>
+  <text x="118" y="2560" class="body" fill="#8E96A7" font-size="27" letter-spacing="3">SKILLS  ·  RULES  ·  REVIEW  ·  CONTROL</text>
+
+  <text x="118" y="2640" class="body" fill="#F3F0E9" font-size="25" font-weight="700" letter-spacing="4">CRUXCODE.DEV</text>
+  <text x="2040" y="2640" text-anchor="end" class="body" fill="#8E96A7" font-size="25" font-weight="600" letter-spacing="4">BUILD WITH INTENT.</text>
+</svg>

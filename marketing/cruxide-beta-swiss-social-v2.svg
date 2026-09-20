@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="2700" viewBox="0 0 2160 2700">
+  <defs>
+    <pattern id="microgrid" width="54" height="54" patternUnits="userSpaceOnUse">
+      <path d="M54 0H0V54" fill="none" stroke="#DAD7CF" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="2160" height="2700" fill="#F2EFE7"/>
+  <rect x="0" y="0" width="2160" height="2700" fill="url(#microgrid)" opacity=".55"/>
+
+  <!-- Header -->
+  <rect x="92" y="92" width="1976" height="224" fill="#0B0D12"/>
+  <g transform="translate(128 118) scale(1.1029411765)">
+    <rect width="136" height="136" rx="28" fill="#191C22"/>
+    <path d="M0 0H40L64 24L50 38L32 20H20V36L42 58L28 72L0 44V0Z" transform="translate(20 20) scale(.705882)" fill="#F2EFE7"/>
+    <path d="M136 0V40L112 64L98 50L116 32V20H100L78 42L64 28L92 0H136Z" transform="translate(20 20) scale(.705882)" fill="#F2EFE7"/>
+    <path d="M136 136H96L72 112L86 98L104 116H116V100L94 78L108 64L136 92V136Z" transform="translate(20 20) scale(.705882)" fill="#F2EFE7"/>
+    <path d="M0 136V96L24 72L38 86L20 104V116H36L58 94L72 108L44 136H0Z" transform="translate(20 20) scale(.705882)" fill="#F2EFE7"/>
+    <path d="M53 46H93V60H68V76H93V90H53L43 80V56L53 46Z" transform="translate(20 20) scale(.705882)" fill="#F2EFE7"/>
+  </g>
+  <text x="330" y="190" font-family="Arial, sans-serif" fill="#F2EFE7" font-size="52" font-weight="700" letter-spacing="8">CRUXCODE.DEV</text>
+  <text x="330" y="250" font-family="Arial, sans-serif" fill="#A7ADBA" font-size="25" font-weight="600" letter-spacing="6">PEOPLE  /  IDEAS  /  AGENTS  /  SYSTEMS</text>
+  <text x="2008" y="188" text-anchor="end" font-family="Arial, sans-serif" fill="#2BCBFF" font-size="28" font-weight="700" letter-spacing="7">BETA RELEASE</text>
+  <text x="2008" y="250" text-anchor="end" font-family="Arial, sans-serif" fill="#A7ADBA" font-size="24" letter-spacing="5">CRUXIDE / 01</text>
+
+  <!-- Main editorial title -->
+  <text x="92" y="520" font-family="Arial, sans-serif" fill="#5E6470" font-size="30" font-weight="700" letter-spacing="9">A DEVELOPER-CONTROLLED AI WORKFLOW</text>
+  <text x="70" y="874" font-family="Arial, sans-serif" fill="#0B0D12" font-size="320" font-weight="700" letter-spacing="-22">CRUX</text>
+  <text x="70" y="1160" font-family="Arial, sans-serif" fill="#0B0D12" font-size="320" font-weight="700" letter-spacing="-22">IDE.</text>
+  <rect x="1170" y="648" width="838" height="486" fill="#245CFF"/>
+  <text x="1228" y="754" font-family="Arial, sans-serif" fill="#FFFFFF" font-size="30" font-weight="700" letter-spacing="7">THE CRUX IS CONTROL.</text>
+  <text x="1228" y="874" font-family="Arial, sans-serif" fill="#FFFFFF" font-size="63" font-weight="700">AI writes the code.</text>
+  <text x="1228" y="958" font-family="Arial, sans-serif" fill="#FFFFFF" font-size="63" font-weight="700">You set the rules.</text>
+  <path d="M1230 1044H1870" stroke="#FFFFFF" stroke-width="5"/>
+  <path d="M1870 1024l42 20-42 20z" fill="#FFFFFF"/>
+
+  <!-- Pipeline -->
+  <rect x="92" y="1322" width="1976" height="6" fill="#0B0D12"/>
+  <text x="92" y="1428" font-family="Arial, sans-serif" fill="#0B0D12" font-size="28" font-weight="700" letter-spacing="8">ONE PROMPT / ONE COORDINATED RESULT</text>
+
+  <g font-family="Arial, sans-serif">
+    <g transform="translate(92 1510)">
+      <rect width="438" height="370" fill="#0B0D12"/>
+      <text x="30" y="58" fill="#2BCBFF" font-size="24" font-weight="700" letter-spacing="5">01 / SELECT</text>
+      <text x="30" y="184" fill="#F2EFE7" font-size="62" font-weight="700">SKILLS</text>
+      <text x="30" y="252" fill="#A7ADBA" font-size="25">Use only what the</text>
+      <text x="30" y="290" fill="#A7ADBA" font-size="25">current task needs.</text>
+      <circle cx="378" cy="62" r="18" fill="#245CFF"/>
+    </g>
+    <g transform="translate(604 1510)">
+      <rect width="438" height="370" fill="#FFFFFF" stroke="#0B0D12" stroke-width="4"/>
+      <text x="30" y="58" fill="#5E6470" font-size="24" font-weight="700" letter-spacing="5">02 / GUIDE</text>
+      <text x="30" y="184" fill="#0B0D12" font-size="62" font-weight="700">RULES</text>
+      <text x="30" y="252" fill="#5E6470" font-size="25">Make project standards</text>
+      <text x="30" y="290" fill="#5E6470" font-size="25">part of the context.</text>
+      <circle cx="378" cy="62" r="18" fill="#F2EFE7" stroke="#0B0D12" stroke-width="4"/>
+    </g>
+    <g transform="translate(1116 1510)">
+      <rect width="438" height="370" fill="#FF4A38"/>
+      <text x="30" y="58" fill="#0B0D12" font-size="24" font-weight="700" letter-spacing="5">03 / REVIEW</text>
+      <text x="30" y="167" fill="#0B0D12" font-size="55" font-weight="700">CODE</text>
+      <text x="30" y="230" fill="#0B0D12" font-size="55" font-weight="700">REVIEW</text>
+      <text x="30" y="298" fill="#0B0D12" font-size="25">Find evidence, risk</text>
+      <text x="30" y="336" fill="#0B0D12" font-size="25">and breaking changes.</text>
+      <circle cx="378" cy="62" r="18" fill="#0B0D12"/>
+    </g>
+    <g transform="translate(1630 1510)">
+      <rect width="438" height="370" fill="#0B0D12"/>
+      <text x="30" y="58" fill="#2BCBFF" font-size="24" font-weight="700" letter-spacing="5">04 / SHIP</text>
+      <text x="30" y="167" fill="#F2EFE7" font-size="46" font-weight="700">ONE</text>
+      <text x="30" y="225" fill="#F2EFE7" font-size="46" font-weight="700">RESULT</text>
+      <text x="30" y="298" fill="#A7ADBA" font-size="25">Coordinated, reviewed</text>
+      <text x="30" y="336" fill="#A7ADBA" font-size="25">and ready to verify.</text>
+      <circle cx="378" cy="62" r="18" fill="#245CFF"/>
+    </g>
+  </g>
+
+  <!-- Mascot stage: raster mascot is composited after deterministic SVG export. -->
+  <rect x="92" y="1974" width="1190" height="322" fill="#0B0D12"/>
+  <text x="142" y="2055" font-family="Arial, sans-serif" fill="#2BCBFF" font-size="27" font-weight="700" letter-spacing="5">DEVELOPER IN CONTROL</text>
+  <text x="142" y="2162" font-family="Arial, sans-serif" fill="#F2EFE7" font-size="60" font-weight="700">AI works with your skills.</text>
+  <text x="142" y="2238" font-family="Arial, sans-serif" fill="#F2EFE7" font-size="60" font-weight="700">Code follows your rules.</text>
+  <rect x="1282" y="1974" width="786" height="322" fill="#245CFF"/>
+  <path d="M1334 2240h292" stroke="#FFFFFF" stroke-width="5"/>
+  <path d="M1626 2220l42 20-42 20z" fill="#FFFFFF"/>
+
+  <!-- Footer -->
+  <text x="92" y="2448" font-family="Arial, sans-serif" fill="#0B0D12" font-size="64" font-weight="700">One prompt. The right skills.</text>
+  <text x="92" y="2524" font-family="Arial, sans-serif" fill="#0B0D12" font-size="64" font-weight="700">One coordinated result.</text>
+  <rect x="92" y="2592" width="128" height="10" fill="#245CFF"/>
+  <rect x="230" y="2592" width="74" height="10" fill="#FF4A38"/>
+  <text x="92" y="2660" font-family="Arial, sans-serif" fill="#5E6470" font-size="24" font-weight="700" letter-spacing="5">CRUXCODE.DEV</text>
+  <text x="1272" y="2660" text-anchor="end" font-family="Arial, sans-serif" fill="#5E6470" font-size="24" font-weight="700" letter-spacing="5">BUILD WITH INTENT.</text>
+</svg>

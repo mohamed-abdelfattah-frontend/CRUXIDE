@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1584" height="396" viewBox="0 0 1584 396">
+  <defs>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" fill="none" stroke="#202631" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0A0D12" stop-opacity=".25"/>
+      <stop offset=".34" stop-color="#0A0D12" stop-opacity=".92"/>
+      <stop offset="1" stop-color="#0A0D12"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1584" height="396" fill="#0A0D12"/>
+  <rect width="1584" height="396" fill="url(#grid)" opacity=".58"/>
+  <rect width="1584" height="396" fill="url(#fade)"/>
+
+  <!-- Profile-photo safe zone: no essential text in first 470px -->
+  <path d="M0 0H74L250 176 74 352H0" fill="#245CFF" opacity=".18"/>
+  <path d="M0 44H54L186 176 54 308H0" fill="#245CFF" opacity=".22"/>
+  <path d="M346 0v396M382 0v396M418 0v396" stroke="#FF4A38" stroke-width="2" opacity=".18"/>
+  <circle cx="382" cy="86" r="5" fill="#245CFF"/>
+  <circle cx="418" cy="198" r="5" fill="#FF4A38"/>
+  <circle cx="346" cy="318" r="5" fill="#F3F0E9"/>
+
+  <!-- Personal positioning -->
+  <text x="500" y="78" font-family="Arial, sans-serif" fill="#2BCBFF" font-size="14" font-weight="700" letter-spacing="4">SOFTWARE ARCHITECT  /  AI ENGINEERING ARCHITECT</text>
+  <text x="496" y="143" font-family="Arial, sans-serif" fill="#F3F0E9" font-size="48" font-weight="700" letter-spacing="-1">MOHAMED KHALED</text>
+  <text x="498" y="183" font-family="Arial, sans-serif" fill="#A9B1BF" font-size="24" font-weight="600" letter-spacing="5">ABDELFATTAH</text>
+
+  <rect x="500" y="214" width="82" height="4" fill="#245CFF"/>
+  <rect x="590" y="214" width="46" height="4" fill="#FF4A38"/>
+
+  <text x="500" y="263" font-family="Arial, sans-serif" fill="#F3F0E9" font-size="21" font-weight="600">Web, Mobile &amp; AI-Assisted Engineering</text>
+  <text x="500" y="302" font-family="Arial, sans-serif" fill="#8993A5" font-size="17" letter-spacing="1.5">REACT  /  NEXT.JS  /  ANGULAR  /  REACT NATIVE  /  NODE.JS  /  NESTJS</text>
+  <text x="500" y="350" font-family="Arial, sans-serif" fill="#F3F0E9" font-size="16" font-weight="600" letter-spacing="2">BUILDING SCALABLE SYSTEMS. LEADING AI WITH ENGINEERING DISCIPLINE.</text>
+
+  <!-- CRUX signature -->
+  <g transform="translate(1431 42) scale(.72)">
+    <rect width="136" height="136" rx="30" fill="#171A20" stroke="#303744" stroke-width="2"/>
+    <path d="M0 0H40L64 24L50 38L32 20H20V36L42 58L28 72L0 44V0Z" transform="translate(20 20) scale(.705882)" fill="#F3F0E9"/>
+    <path d="M136 0V40L112 64L98 50L116 32V20H100L78 42L64 28L92 0H136Z" transform="translate(20 20) scale(.705882)" fill="#F3F0E9"/>
+    <path d="M136 136H96L72 112L86 98L104 116H116V100L94 78L108 64L136 92V136Z" transform="translate(20 20) scale(.705882)" fill="#F3F0E9"/>
+    <path d="M0 136V96L24 72L38 86L20 104V116H36L58 94L72 108L44 136H0Z" transform="translate(20 20) scale(.705882)" fill="#F3F0E9"/>
+    <path d="M53 46H93V60H68V76H93V90H53L43 80V56L53 46Z" transform="translate(20 20) scale(.705882)" fill="#F3F0E9"/>
+  </g>
+  <text x="1480" y="172" text-anchor="middle" font-family="Arial, sans-serif" fill="#A9B1BF" font-size="12" font-weight="700" letter-spacing="3">CRUXCODE.DEV</text>
+
+  <rect x="1556" y="0" width="14" height="254" fill="#245CFF"/>
+  <rect x="1556" y="254" width="14" height="142" fill="#FF4A38"/>
+</svg>

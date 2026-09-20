@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { applyExperience, describeExperienceFailure } from './experience.js';
 import { applySetup, getSetupState } from './setup-installer.js';
 import { isSetupMessage } from './setup-message.js';
 import { extensionPlan, resolveTracks, skillPlan, TRACKS_CATALOG } from './tracks-catalog.js';
@@ -63,6 +64,11 @@ export class SetupPanel {
         return;
       }
 
+      if (message.command === 'openSkills') {
+        await vscode.commands.executeCommand('cruxide.openSkills');
+        return;
+      }
+
       if (message.request.profileTarget === 'dedicated') {
         const action = await vscode.window.showInformationMessage(
           'VS Code extensions can only configure the active profile. Create or switch to a dedicated CRUXIDE profile, then run CRUXIDE Setup again.',
@@ -91,9 +97,16 @@ export class SetupPanel {
         { location: vscode.ProgressLocation.Notification, title: 'Applying CRUXIDE tracks…', cancellable: false },
         () => applySetup(this.context, this.output, message.request),
       );
-      await vscode.commands.executeCommand('cruxide.applyExperience');
-      this.output.appendLine(`Setup result: ${JSON.stringify(result)}`);
-      await this.panel.webview.postMessage({ command: 'applied', result });
+      // The confirmed setup applies the CRUXIDE experience automatically. It runs
+      // only after the user confirmed the modal above, and a settings failure is
+      // reported rather than swallowed so setup cannot claim a success it did not have.
+      const experience = await applyExperience();
+      if (!experience.applied) {
+        this.output.appendLine(`Experience incomplete: ${describeExperienceFailure(experience)}`);
+      }
+
+      this.output.appendLine(`Setup result: ${JSON.stringify({ ...result, experience })}`);
+      await this.panel.webview.postMessage({ command: 'applied', result, experience });
 
       const failureText = result.failedExtensions.length > 0
         ? ` ${result.failedExtensions.length} extension(s) need manual review; see CRUXIDE output.`
@@ -101,9 +114,16 @@ export class SetupPanel {
       const skillsText = result.skillsDeferred
         ? ' Open and trust a local project, then run Setup again to create project skills and rules.'
         : '';
-      void vscode.window.showInformationMessage(
-        `CRUXIDE setup applied: ${result.installedExtensions.length} extension(s) installed, ${result.alreadyInstalledExtensions.length} already available.${failureText}${skillsText}`,
-      );
+      const experienceText = experience.applied
+        ? ' CRUXIDE theme, fonts, and window title applied.'
+        : ` ${experience.failed.length} CRUXIDE experience setting(s) could not be written; run CRUXIDE: Apply CRUXIDE Experience to retry.`;
+      const summary = `CRUXIDE setup applied: ${result.installedExtensions.length} extension(s) installed, ${result.alreadyInstalledExtensions.length} already available.${failureText}${skillsText}${experienceText}`;
+
+      if (result.failedExtensions.length > 0 || !experience.applied) {
+        void vscode.window.showWarningMessage(summary);
+      } else {
+        void vscode.window.showInformationMessage(summary);
+      }
     } catch (error: unknown) {
       const detail = error instanceof Error ? error.message : String(error);
       this.output.appendLine(`Setup failed: ${detail}`);
@@ -162,13 +182,14 @@ export class SetupPanel {
     </section>
 
     <section aria-labelledby="agents-title">
-      <div class="section-heading"><span>03</span><div><h2 id="agents-title">Agents, skills & rules</h2><p>Mapped skills and rules are installed for the agents and scope you choose.</p></div></div>
+      <div class="section-heading"><span>03</span><div><h2 id="agents-title">Agents, skills & rules</h2><p>Each selected track automatically includes its mapped skills and rules. Use CRUX Skills Manager only when you want to add, remove, or install individual skills independently.</p></div></div>
       <h3>Agents</h3><div id="agents" class="check-row"></div>
       <div class="settings-grid">
         <label><span>Skills scope</span><select id="scope"><option value="project-local">Project Local — private by default</option><option value="project-shared">Project Shared — commit for the team</option><option value="user">User Global</option></select></label>
         <label><span>Rules mode</span><select id="rule-mode"><option value="guidance">Guidance — recommendations</option><option value="warning">Warning — flag deviations</option><option value="strict">Strict — request compliance</option><option value="custom">Custom — project decides</option></select></label>
       </div>
       <p id="environment" class="notice"></p>
+      <button id="skills" type="button" class="link-button">Open CRUX Skills Manager — advanced</button>
     </section>
 
     <section aria-labelledby="review-title">

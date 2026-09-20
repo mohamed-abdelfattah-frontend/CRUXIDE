@@ -1,0 +1,327 @@
+{
+  "name": "cruxide",
+  "displayName": "CRUXIDE",
+  "description": "A secure, track-based VS Code workspace with curated developer tools, AI skills, engineering rules, and guided setup for web, mobile, backend, data, and DevOps.",
+  "version": "1.2.0",
+  "publisher": "cruxcode",
+  "private": true,
+  "author": {
+    "name": "CRUX Team",
+    "url": "https://www.cruxcode.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohamed-abdelfattah-frontend/CRUXIDE.git"
+  },
+  "homepage": "https://www.cruxcode.dev",
+  "bugs": {
+    "url": "https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/issues"
+  },
+  "license": "MIT",
+  "icon": "media/crux-logo.png",
+  "pricing": "Free",
+  "qna": false,
+  "galleryBanner": {
+    "color": "#15171A",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "extensionKind": [
+    "ui"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": {
+      "supported": true
+    }
+  },
+  "categories": [
+    "Themes",
+    "Other"
+  ],
+  "keywords": [
+    "cruxide",
+    "cruxcode",
+    "developer experience",
+    "vscode setup",
+    "workspace setup",
+    "ai skills",
+    "engineering rules",
+    "coding agents",
+    "code review",
+    "angular",
+    "react",
+    "nextjs",
+    "react native",
+    "nodejs",
+    "express",
+    "nestjs",
+    "databases",
+    "sql",
+    "mongodb",
+    "accessibility",
+    "testing",
+    "devops",
+    "typescript",
+    "theme"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:cruxide.openHome",
+    "onCommand:cruxide.openSkills",
+    "onCommand:cruxide.openSetup",
+    "onCommand:cruxide.applyExperience",
+    "onView:cruxide.actions"
+  ],
+  "files": [
+    "dist/**",
+    "media/**",
+    "skills/**",
+    "licenses/fonts/**",
+    "themes/**",
+    "snippets/**",
+    "README.md",
+    "EXTENSIONS.md",
+    "CHANGELOG.md",
+    "PUBLISHING.md",
+    "SECURITY.md",
+    "PRIVACY.md",
+    "THREAT_MODEL.md",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "generate:skills": "node scripts/generate-skills.mjs",
+    "generate:extensions-doc": "node scripts/generate-extensions-doc.mjs",
+    "compile": "npm run generate:skills && tsc -p tsconfig.json && npm run generate:extensions-doc",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src --max-warnings=0",
+    "test": "npm run compile && node --test test/*.test.mjs",
+    "smoke:test": "npm run compile && node scripts/smoke-test.mjs",
+    "verify:signatures": "npm audit signatures",
+    "verify:workflows": "node scripts/validate-workflows.mjs",
+    "verify:marketplace": "node scripts/verify-marketplace.mjs",
+    "verify:release": "node scripts/verify-release.mjs",
+    "verify": "npm run verify:workflows && npm run typecheck && npm run lint && npm test && npm audit --audit-level=high && npm run verify:signatures",
+    "vscode:prepublish": "npm run compile",
+    "package:vsix": "npm run clean && npm run verify && node scripts/package.mjs",
+    "package:release": "npm run verify:marketplace && npm run verify:release && npm run package:vsix && node scripts/release.mjs",
+    "publish:marketplace": "node scripts/publish-marketplace.mjs"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "cruxide.openHome",
+        "title": "Open Home",
+        "category": "CRUXIDE",
+        "icon": "$(home)"
+      },
+      {
+        "command": "cruxide.openSetup",
+        "title": "Setup & Manage Tracks",
+        "category": "CRUXIDE",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "cruxide.openSkills",
+        "title": "Skills Manager",
+        "category": "CRUXIDE",
+        "icon": "$(tools)"
+      },
+      {
+        "command": "cruxide.applyExperience",
+        "title": "Apply CRUXIDE Experience",
+        "category": "CRUXIDE",
+        "icon": "$(paintcan)"
+      },
+      {
+        "command": "cruxide.newFile",
+        "title": "New Code File",
+        "category": "CRUXIDE",
+        "icon": "$(new-file)"
+      },
+      {
+        "command": "cruxide.openFolder",
+        "title": "Open Project Folder",
+        "category": "CRUXIDE",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "cruxide.openExtensions",
+        "title": "Manage Developer Tools",
+        "category": "CRUXIDE",
+        "icon": "$(extensions)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "cruxide.openHome"
+        },
+        {
+          "command": "cruxide.openSetup"
+        },
+        {
+          "command": "cruxide.openSkills"
+        },
+        {
+          "command": "cruxide.applyExperience"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "cruxide.openHome",
+          "when": "view == cruxide.actions",
+          "group": "navigation"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "cruxide",
+          "title": "CRUXIDE",
+          "icon": "media/cruxide-activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "cruxide": [
+        {
+          "id": "cruxide.actions",
+          "name": "Developer Workspace"
+        }
+      ]
+    },
+    "themes": [
+      {
+        "label": "CRUXIDE Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/cruxide-dark-color-theme.json"
+      },
+      {
+        "label": "CRUXIDE Light",
+        "uiTheme": "vs",
+        "path": "./themes/cruxide-light-color-theme.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "typescript",
+        "path": "./snippets/typescript.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./snippets/typescriptreact.json"
+      }
+    ],
+    "configuration": {
+      "title": "CRUXIDE",
+      "properties": {
+        "cruxide.openHomeOnEmpty": {
+          "type": "boolean",
+          "default": true,
+          "description": "Open CRUXIDE Home when no code files exist in the current workspace."
+        },
+        "cruxide.promptToOpenSetupOnFirstRun": {
+          "type": "boolean",
+          "default": true,
+          "description": "Offer the consent-based CRUXIDE track, tooling, skills, and rules setup on first run."
+        },
+        "cruxide.codeFileExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\.?[A-Za-z0-9]+$"
+          },
+          "maxItems": 128,
+          "uniqueItems": true,
+          "default": [
+            "ts",
+            "tsx",
+            "js",
+            "jsx",
+            "mjs",
+            "cjs",
+            "html",
+            "css",
+            "scss",
+            "vue",
+            "svelte",
+            "json",
+            "cs",
+            "java",
+            "py",
+            "go",
+            "rs",
+            "swift",
+            "kt"
+          ],
+          "description": "File extensions CRUXIDE treats as code when deciding whether to show Home."
+        }
+      }
+    },
+    "walkthroughs": [
+      {
+        "id": "cruxide.getStarted",
+        "title": "Get started with CRUXIDE",
+        "description": "Apply the CRUXCODE.DEV engineering experience to the active VS Code profile.",
+        "steps": [
+          {
+            "id": "cruxide.openHomeStep",
+            "title": "Open CRUXIDE Home",
+            "description": "Launch your branded developer workspace with the [Open Home](command:cruxide.openHome) command.",
+            "media": {
+              "image": "media/walkthrough.svg",
+              "altText": "CRUXIDE"
+            }
+          },
+          {
+            "id": "cruxide.setupStep",
+            "title": "Choose your tracks",
+            "description": "Select profile-specific extensions, skills, agents, and rules with [CRUXIDE Setup](command:cruxide.openSetup).",
+            "media": {
+              "image": "media/walkthrough.svg",
+              "altText": "CRUXIDE Setup"
+            }
+          },
+          {
+            "id": "cruxide.skillsStep",
+            "title": "Choose portable Agent Skills",
+            "description": "Review and install optional CRUX Skills with [Skills Manager](command:cruxide.openSkills).",
+            "media": {
+              "image": "media/walkthrough.svg",
+              "altText": "CRUX Skills"
+            }
+          },
+          {
+            "id": "cruxide.applyExperienceStep",
+            "title": "Apply the CRUXIDE experience",
+            "description": "Activate the CRUXCODE.DEV theme and editor defaults with [Apply Experience](command:cruxide.applyExperience).",
+            "media": {
+              "image": "media/walkthrough.svg",
+              "altText": "CRUXIDE theme"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "22.20.2",
+    "@types/vscode": "1.95.0",
+    "@vscode/test-electron": "3.1.0",
+    "@vscode/vsce": "3.9.2",
+    "eslint": "10.10.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.70.0",
+    "yazl": "2.5.1"
+  }
+}

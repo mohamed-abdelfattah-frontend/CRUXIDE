@@ -16,6 +16,7 @@ const valid = {
 test('accepts strict setup messages', () => {
   assert.equal(isSetupMessage({ command: 'ready' }), true);
   assert.equal(isSetupMessage({ command: 'openProfiles' }), true);
+  assert.equal(isSetupMessage({ command: 'openSkills' }), true);
   assert.equal(isSetupMessage(valid), true);
 });
 
