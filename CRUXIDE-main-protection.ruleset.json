@@ -82,6 +82,12 @@
           },
           {
             "context": "Review summary"
+          },
+          {
+            "context": "Commit attribution"
+          },
+          {
+            "context": "CodeRabbit"
           }
         ]
       }

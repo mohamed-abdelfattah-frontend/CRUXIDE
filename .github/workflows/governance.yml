@@ -94,25 +94,45 @@ jobs:
             # gate that judges it would let a change approve itself. Use a
             # self-contained check written inline in this step instead.
             echo "::warning::No validator at base $BASE_SHA; applying the inline bootstrap check."
+            # This path is the only enforcement while the validator is being
+            # introduced, so it applies the same rules as the script rather
+            # than a weaker subset: the same trailer set, the same identity
+            # list, signatures, attribution URLs and emoji, and control
+            # characters rejected outright rather than merely stripped.
+            IDENTITIES='claude|anthropic|chatgpt|openai|copilot|gemini|cursor|codex|bard|devin|\[bot\]|\bbot\b'
+            TRAILERS='co-authored-by|generated-by|assisted-by|signed-off-by'
             FOUND=0
             while IFS= read -r sha; do
-              # NUL is the only byte a commit message cannot contain, and
-              # tr -d strips control characters used to hide a trailer from
-              # line-anchored matching.
-              MESSAGE=$(git show -s --format=%B "$sha" | tr -d '\000-\010\013\014\016-\037')
+              RAW=$(git show -s --format=%B "$sha")
+              # C0 controls other than tab, newline and carriage return have no
+              # legitimate use and are how a trailer is hidden from ^ anchors.
+              if printf '%s' "$RAW" | LC_ALL=C grep -qP '[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]'; then
+                echo "::error::$sha message contains control characters, which are used to hide attribution."
+                FOUND=1
+              fi
+              MESSAGE=$(printf '%s' "$RAW" | tr -d '\000-\010\013\014\016-\037\177')
               IDENTITY=$(git show -s --format='%an %ae %cn %ce %GS %GK' "$sha")
+
               if printf '%s\n' "$MESSAGE" \
-                 | grep -qiE '^[[:space:]]*(co-authored-by|generated-by|assisted-by)[[:space:]]*:.*(claude|anthropic|chatgpt|openai|copilot|gemini|cursor|codex|\[bot\])'; then
+                 | grep -qiE "^[[:space:]]*($TRAILERS)[[:space:]]*:.*($IDENTITIES)"; then
                 echo "::error::$sha carries a forbidden attribution trailer."
                 FOUND=1
               fi
               if printf '%s\n' "$MESSAGE" \
-                 | grep -qiE 'generated (with|by) (claude|chatgpt|openai|copilot|gemini|cursor|ai)|created by ai|co-authored with ai'; then
+                 | grep -qiE 'generated (with|by) (claude|chatgpt|openai|copilot|gemini|cursor|ai)|created by ai|co-authored with ai|written by (claude|chatgpt|an? ai)'; then
                 echo "::error::$sha carries a forbidden AI signature."
                 FOUND=1
               fi
-              if printf '%s\n' "$IDENTITY" \
-                 | grep -qiE '(claude|anthropic|chatgpt|openai|copilot|gemini|codex|\[bot\])'; then
+              if printf '%s\n' "$MESSAGE" \
+                 | grep -qiE 'https?://(claude\.ai|claude\.com|www\.anthropic\.com|chatgpt\.com|openai\.com)/'; then
+                echo "::error::$sha carries an attribution URL."
+                FOUND=1
+              fi
+              if printf '%s\n' "$MESSAGE" | grep -qF '🤖'; then
+                echo "::error::$sha carries an AI attribution emoji."
+                FOUND=1
+              fi
+              if printf '%s\n' "$IDENTITY" | grep -qiE "($IDENTITIES)"; then
                 echo "::error::$sha has a tool or bot identity as author, committer, or signer."
                 FOUND=1
               fi
