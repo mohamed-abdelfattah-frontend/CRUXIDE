@@ -20,7 +20,7 @@ Never paste the token into a terminal transcript, issue, pull request, repositor
 2. Run `npm ci`, `npm run verify`, `npm run smoke:test`, and `npm run package:release` from the repository root.
 3. Test the generated VSIX on supported Windows and macOS installations. Also test manual VSIX installation in Cursor before claiming compatibility.
 4. Merge only after the protected checks and human smoke testing pass.
-5. Create and push an annotated tag matching the package version exactly, for example `v1.2.0`.
+5. Create and push an annotated tag matching the package version exactly, for example `v1.0.0`.
 6. The **Release** workflow validates the tag, rebuilds the artifacts, generates a CycloneDX SBOM, writes SHA-256 checksums, creates signed provenance and SBOM attestations, and creates the GitHub Release.
 7. Download the GitHub Release once and verify that the ZIP installs cleanly on Windows and macOS.
 8. Run **Publish VS Code Marketplace** manually with the exact release tag. The protected environment requires approval, downloads the existing GitHub Release asset, verifies its checksum, and publishes that exact VSIX.

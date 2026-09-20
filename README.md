@@ -197,7 +197,7 @@ CRUXIDE Setup opens on first launch. Nothing is installed until you confirm.
 
 #### Windows
 
-Extract `CRUXIDE-v1.2.0.zip`, open PowerShell inside the extracted folder, and run:
+Extract `CRUXIDE-v1.0.0.zip`, open PowerShell inside the extracted folder, and run:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
@@ -208,7 +208,7 @@ Start **CRUXIDE** from the Desktop or Start Menu shortcut.
 
 #### macOS
 
-In VS Code, first run **Shell Command: Install 'code' command in PATH**. Extract `CRUXIDE-v1.2.0.zip`, open Terminal inside the folder, and run:
+In VS Code, first run **Shell Command: Install 'code' command in PATH**. Extract `CRUXIDE-v1.0.0.zip`, open Terminal inside the folder, and run:
 
 ```bash
 chmod +x ./install-macos.sh
@@ -221,7 +221,7 @@ CRUXIDE creates a user-level `~/Applications/CRUXIDE.app` launcher.
 
 ```bash
 code --profile "CRUXIDE" --new-window
-code --profile "CRUXIDE" --install-extension ./cruxide-1.2.0.vsix --force
+code --profile "CRUXIDE" --install-extension ./cruxide-1.0.0.vsix --force
 code --profile "CRUXIDE" --new-window
 ```
 

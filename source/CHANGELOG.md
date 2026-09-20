@@ -4,91 +4,69 @@ All notable changes follow Keep a Changelog conventions.
 
 ## Unreleased
 
-## 1.2.0 - 2026-09-17
+## 1.0.0 - 2026-09-20
 
-### Database and ORM engineering
+The first official public release of CRUXIDE on the Visual Studio Marketplace.
 
-- Split database setup into independently selectable SQL/relational, NoSQL, and ORM/data-access tracks.
-- Added official MongoDB, Redis, Prisma, and SQLTools SQLite extensions.
-- Added production-grade skills and version-aware rules for NoSQL architecture, ORM data access, and Sequelize models, associations, transactions, migrations, security, and query performance.
-- Added ORM guidance covering Sequelize, Prisma, TypeORM, Mongoose, EF Core, Hibernate/JPA, SQLAlchemy, Django ORM, and Eloquent without forcing application runtime dependencies.
+Earlier 1.0.0, 1.0.1, 1.1.0 and 1.2.0 entries were internal iterations that
+were never published. Their work ships together here, so it is recorded as one
+release rather than as a history that users never received.
 
-### Branding
+### Track-based setup
 
-- Adopted CRUXCODE.DEV across user-facing product copy, metadata, documentation, installers, snippets, privacy and security notices, and marketing assets while preserving stable Marketplace and extension identifiers.
+- Consent-based first-run **CRUXIDE Setup** with 26 selectable development
+  tracks, all selected by default and reducible before anything is installed.
+- 87 curated editor integrations, deduplicated across tracks, installed only
+  when missing. Existing extensions are preserved and never downgraded.
+- Platform filtering, prerequisite disclosure, and a generated extension and
+  track reference.
+- Frontend, native mobile, backend, Python and AI, data, DevOps, design,
+  collaboration, testing, and agent and review tracks.
 
-### Setup experience
+### Databases and data access
 
-- The confirmed setup now applies the CRUXIDE experience — theme, icon theme, window title, Roboto Mono editor and terminal fonts, and ligatures — without a separate manual step. `CRUXIDE: Apply CRUXIDE Experience` remains available and is idempotent.
-- Each owned setting is written independently, so a setting that cannot be written is reported instead of being swallowed. Setup warns and names what failed rather than showing a complete-success state.
-- Added regression coverage for track-selection scroll and focus preservation across mouse and keyboard selection, Select all, Core only, and search-filtered selection.
+- Independently selectable SQL/relational, NoSQL, and ORM/data-access tracks.
+- Official MongoDB, Redis, Prisma, and SQLTools SQLite tooling.
+- Skills and version-aware rules for NoSQL architecture, ORM data access, and
+  Sequelize models, associations, transactions, migrations, security, and query
+  performance, covering Sequelize, Prisma, TypeORM, Mongoose, EF Core,
+  Hibernate/JPA, SQLAlchemy, Django ORM, and Eloquent, without requiring any
+  application runtime dependency.
 
-### Fixed
+### Skills and rules
 
-- Reconciled the 1.2.0 work into `source/`, the tree CI builds and publishes. The database/ORM tracks, the CRUXCODE.DEV branding, and the version bump had landed in the repository root, so a 1.2.0 build would have shipped 1.1.0 content.
+- 124 skills and rule packs: 84 skills and 40 rule packs, as plain Markdown
+  with no executable hooks.
+- Agent adapters for Codex, Claude Code, GitHub Copilot, Cursor, Gemini, and
+  generic skill-aware agents.
+- Project Local, Project Shared, and User Global scopes, with Guidance,
+  Warning, Strict, and Custom rule modes.
+- Generated `.crux/PROJECT_RULES.md` with a preserved **Custom Project Rules**
+  section, a root pointer, and managed agent instructions.
+- Version-aware technology rule packs that inspect the repository's actual
+  framework and toolchain versions before applying guidance.
+- Independently composable **WCAG 2.2**, **BITV 2.0**, and **BFSG**
+  accessibility packs.
+- `/crux-conductor`, an explicitly invoked orchestration skill for supported
+  external AI agents.
 
-## 1.1.0 - 2026-09-16
+### Experience
 
-### Senior architecture and technology rules
+- CRUXIDE Dark and Light themes, CRUXIDE Home, the CRUXIDE Activity Bar, the
+  Skills Manager, and TypeScript and TSX snippets.
+- Confirmed setup applies the CRUXIDE experience automatically. A setting that
+  cannot be written is reported rather than counted as success, and
+  `CRUXIDE: Apply CRUXIDE Experience` reapplies it idempotently at any time.
+- Track selection preserves scroll position, keyboard focus, and selected
+  state.
+- Windows Desktop and Start Menu launchers and a macOS `CRUXIDE.app` launcher.
 
-- Added version-aware rule packs for every supported language and framework track.
-- Added dedicated Senior Solution Architecture and Senior Technical Lead rule packs.
-- Added official references, review dates, compatibility policy, and pack versions to generated skill documentation and project rules.
-- Added production guidance for frontend, native mobile, backend, databases, containers/CI/CD, and AI/RAG/agent systems.
-- Added regression coverage requiring substantial rules and complete track-to-rule mappings.
+### Privacy and security
 
-### Accessibility standards
-
-- Added independently selectable WCAG 2.2, BITV 2.0, and BFSG rule packs with official references and standalone implementation, testing, evidence, and review workflows.
-- Added deterministic composition guidance for selecting one, two, or all three standards: apply the union, reuse valid technical evidence, preserve separate statutory duties, and require qualified human review for formal claims.
-- Added a dedicated Accessibility Standards setup track with no application runtime dependencies or additional editor extensions.
-
-### Added
-
-- Added consent-based first-run **CRUXIDE Setup** with 23 selectable tracks and an all-tracks default that can be reduced before installation.
-- Added native Android/Kotlin, iOS/Swift, Flutter/Dart, React Native/Expo, Python/AI/data, PHP/Laravel, .NET/ASP.NET Core, Java/Spring Boot, Go/Rust, database, DevOps, and review tooling.
-- Added CRUX skills for PHP, Laravel, .NET, Spring Boot, Go/Rust, Python AI/backend engineering, and databases; the all-track preset maps the complete skills catalog.
-- Added generated `.crux/PROJECT_RULES.md`, a root pointer, and managed agent instructions for Codex, Claude Code, GitHub Copilot, Cursor, and Gemini while preserving custom rules and existing project-authored content.
-- Added platform filtering, prerequisite disclosure, setup state, and a generated extension/track reference.
-
-### Changed
-
-- Replaced the static 61-extension manifest with track-specific, deduplicated installation after explicit confirmation.
-- First launch now opens the track-selection Setup directly when no prior setup exists, so the choice cannot be hidden behind Home or missed as a notification.
-- Offline Windows and macOS installers now install and verify CRUXIDE only; track tooling is selected inside the active profile.
-- Deselecting a track never silently removes an extension, and already-installed or application-provided tools are not downgraded.
-
-### Security
-
-- Added strict setup-message validation, fixed source-controlled Marketplace IDs, local-only setup assets, a restrictive CSP, trusted-workspace checks for project rules, and backups before managed project-file updates.
-
-## 1.0.1 - 2026-09-15
-
-### Fixed
-
-- Made Windows per-user Roboto Mono installation idempotent by skipping byte-identical installed font files instead of attempting to overwrite files currently loaded by VS Code.
-- Added content-addressed fallback filenames when an existing per-user font path contains different bytes, preserving integrity without replacing a locked font.
-
-## 1.0.0 - 2026-09-15
-
-### Added
-
-- Added the CRUXIDE branded VS Code experience with Figma-aligned CRUXCODE.DEV identity, dark and light themes, exact logo assets, custom application shortcuts, and offline typography.
-- Added a responsive 4K Home experience and About section for CRUXIDE, CRUX Team, founder Mohamed Khaled Abdelfattah, company website, and LinkedIn profile.
-- Added a curated 61-extension developer toolset covering Angular, React, React Native, Next.js, Tailwind CSS, shadcn/ui, NestJS, Express, Git, GitHub, testing, containers, AI assistants, autocomplete, spelling, JSON, documentation, and productivity.
-- Added CRUX Skills Manager with searchable selection across bundled CRUX skills, recommended rule packs, and provider-managed references for Codex, Claude Code, GitHub Copilot, Cursor, Gemini, and generic skill-aware agents.
-- Added CRUX Conductor as the required, explicit-only orchestration skill: one prompt selects the minimum relevant installed skills, resolves conflicts, coordinates structured handoffs, and verifies one coherent result.
-- Added Windows and macOS installers, deterministic release archives, SHA-256 manifests, complete source, font assets, icon assets, and VSIX packaging.
-
-### Security
-
-- Webviews use restrictive Content Security Policy, local assets, strict message validation, and fixed allowlists for external navigation.
-- Skills installation requires Workspace Trust, confines writes to known roots, backs up managed skill folders, and never executes provider code or modifies application dependencies or Git hooks.
-- Installers verify release checksums, extension identity, curated extension availability, and the Microsoft signature of the paired Windows VS Code executable.
-- Release verification includes TypeScript, ESLint, automated tests, high-severity dependency audit, npm registry signatures, and Marketplace ID validation.
-
-### Compatibility
-
-- Windows PowerShell 5.1 or later with a supported Visual Studio Code installation.
-- macOS with the VS Code `code` command enabled in `PATH`.
-- Packaging supports current Node.js releases, including Node.js 24 on Windows, without spawning `npx.cmd` from Node.
+- No analytics, telemetry, crash reporting, or background network requests from
+  the extension host.
+- Restrictive webview Content Security Policy, local-only webview assets, and
+  validated webview messages.
+- Workspace Trust respected for every project-scoped write.
+- No runtime, SDK, package, database server, or Git hook is installed, and no
+  project manifest is modified.

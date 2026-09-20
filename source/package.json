@@ -2,7 +2,7 @@
   "name": "cruxide",
   "displayName": "CRUXIDE",
   "description": "A secure, track-based VS Code workspace with curated developer tools, AI skills, engineering rules, and guided setup for web, mobile, backend, data, and DevOps.",
-  "version": "1.2.0",
+  "version": "1.0.0",
   "publisher": "cruxcode",
   "private": true,
   "author": {
