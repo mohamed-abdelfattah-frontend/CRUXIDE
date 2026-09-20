@@ -123,8 +123,12 @@ jobs:
                 echo "::error::$sha carries a forbidden AI signature."
                 FOUND=1
               fi
+              # A vendor URL alone on its line is the shape an attribution
+              # signature takes. The same URL inside a sentence is ordinary
+              # documentation and must not be rejected, matching the rule in
+              # scripts/validate-commit-attribution.mjs.
               if printf '%s\n' "$MESSAGE" \
-                 | grep -qiE 'https?://(claude\.ai|claude\.com|www\.anthropic\.com|chatgpt\.com|openai\.com)/'; then
+                 | grep -qiE '^[[:space:]]*[-*>[:space:]]*https?://(claude\.ai|claude\.com|www\.anthropic\.com|chatgpt\.com|openai\.com)/[^[:space:]]*[[:space:]]*$'; then
                 echo "::error::$sha carries an attribution URL."
                 FOUND=1
               fi
