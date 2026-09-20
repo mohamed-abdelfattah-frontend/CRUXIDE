@@ -86,6 +86,22 @@ a human, an AI assistant, or any automation.
     incorrect.** Do not guess, do not fall back to a default, and do not commit
     with a tool identity. Report the problem instead.
 
+### Platform and dependency automation
+
+Automation that genuinely authors its own commits is not covered by this
+policy, and its attribution must not be stripped:
+
+- `dependabot[bot]` and `renovate[bot]` authoring dependency updates, including
+  their `Signed-off-by` trailers.
+- `github-actions[bot]` committing from a workflow.
+- `GitHub <noreply@github.com>`, the committer for every merge and "Update
+  branch" performed through the web interface, including the maintainer's own.
+
+That is honest attribution of real authorship, which is the opposite of the
+problem this policy exists to prevent. The exemption is matched on name **and**
+address together, so a commit claiming one of these names from a different
+address is still rejected.
+
 ### What this policy does not restrict
 
 This policy governs **Git authorship, commit attribution, generated signatures,
