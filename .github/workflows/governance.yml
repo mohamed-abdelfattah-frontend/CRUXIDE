@@ -86,31 +86,76 @@ jobs:
           if git cat-file -e "$BASE_SHA:scripts/validate-commit-attribution.mjs" 2>/dev/null; then
             git show "$BASE_SHA:scripts/validate-commit-attribution.mjs" > "$VALIDATOR"
             echo "Using the validator from base $BASE_SHA."
-            CHECKED=0
-            while IFS= read -r sha; do
-              [ -n "$sha" ] || continue
-              AUTHOR_NAME="$(git show -s --format='%an' "$sha")"
-              AUTHOR_EMAIL="$(git show -s --format='%ae' "$sha")"
-              COMMITTER_NAME="$(git show -s --format='%cn' "$sha")"
-              COMMITTER_EMAIL="$(git show -s --format='%ce' "$sha")"
-              if node --input-type=module -e "import { pathToFileURL } from 'node:url'; const validatorPath = process.argv[2]; const authorName = process.argv[3]; const authorEmail = process.argv[4]; const committerName = process.argv[5]; const committerEmail = process.argv[6]; const { isToolIdentity } = await import(pathToFileURL(validatorPath).href); process.exit(isToolIdentity(authorName, authorEmail) || isToolIdentity(committerName, committerEmail) ? 0 : 1);" _ "$VALIDATOR" "$AUTHOR_NAME" "$AUTHOR_EMAIL" "$COMMITTER_NAME" "$COMMITTER_EMAIL"; then
-                echo "Skipping tool-managed commit $sha."
-                continue
-              fi
-              if [ "$(git rev-list --parents -n 1 "$sha" | awk '{print NF-1}')" -gt 1 ]; then
-                echo "Skipping merge commit $sha."
-                continue
-              fi
-              CHECKED=1
-              if git rev-parse --verify "$sha^" >/dev/null 2>&1; then
-                node "$VALIDATOR" --range "$sha^..$sha"
-              else
-                node "$VALIDATOR" --range "$sha"
-              fi
-            done < <(git log --reverse --format=%H "$BASE_SHA..$HEAD_SHA")
-            if [ "$CHECKED" -eq 0 ]; then
-              echo "No human-authored commits in range; nothing to validate."
-            fi
+            BASE_SHA="$BASE_SHA" HEAD_SHA="$HEAD_SHA" VALIDATOR="$VALIDATOR" node --input-type=module <<'NODE'
+            import { execFileSync } from 'node:child_process';
+            import { pathToFileURL } from 'node:url';
+
+            const baseSha = process.env.BASE_SHA;
+            const headSha = process.env.HEAD_SHA;
+            const validatorPath = process.env.VALIDATOR;
+            const { inspectIdentity, inspectSigner, inspectMessage, isToolIdentity } =
+              await import(pathToFileURL(validatorPath).href);
+
+            function git(args) {
+              return execFileSync('git', args, { encoding: 'utf8' }).trimEnd();
+            }
+
+            const shas = git(['log', '--reverse', '--format=%H', `${baseSha}..${headSha}`])
+              .split('\n')
+              .filter(Boolean);
+
+            const failures = [];
+            let checked = 0;
+
+            for (const sha of shas) {
+              const parentCount = git(['rev-list', '--parents', '-n', '1', sha]).split(' ').length - 1;
+              if (parentCount > 1) {
+                console.log(`Skipping merge commit ${sha}.`);
+                continue;
+              }
+
+              const raw = git(['show', '-s', '--format=%an%x00%ae%x00%cn%x00%ce%x00%GS%x00%GK%x00%B', sha]);
+              const parts = raw.split('\0');
+              const [authorName, authorEmail, committerName, committerEmail, signerName, signingKey] = parts;
+              const body = parts.slice(6).join('\0');
+
+              if (isToolIdentity(authorName, authorEmail) || isToolIdentity(committerName, committerEmail)) {
+                console.log(`Skipping tool-managed commit ${sha}.`);
+                continue;
+              }
+
+              checked += 1;
+              const problems = [
+                ...inspectIdentity('author', authorName ?? '', authorEmail ?? ''),
+                ...inspectIdentity('committer', committerName ?? '', committerEmail ?? ''),
+                ...inspectSigner(signerName ?? '', signingKey ?? ''),
+                ...inspectMessage(body),
+              ];
+              if (problems.length > 0) {
+                failures.push({ sha: sha.slice(0, 8), subject: body.split('\n')[0], problems });
+              }
+            }
+
+            if (checked === 0) {
+              console.log('No human-authored commits in range; nothing to validate.');
+              process.exit(0);
+            }
+
+            if (failures.length > 0) {
+              console.error(`Attribution policy violations in ${baseSha}..${headSha}:\n`);
+              for (const failure of failures) {
+                console.error(`  ${failure.sha}  ${failure.subject}`);
+                for (const problem of failure.problems) console.error(`      - ${problem}`);
+              }
+              console.error('\nSee PROJECT_RULES.md -> Git Authorship and AI Attribution Policy.');
+              process.exit(1);
+            }
+
+            console.log(
+              `Attribution check passed: ${checked} human commit(s) in ${baseSha}..${headSha} `
+              + 'carry no AI, bot, or tool attribution.',
+            );
+            NODE
           else
             # Only reachable while the validator is first being introduced, when
             # the base revision has no copy to trust yet. The pull request's own
