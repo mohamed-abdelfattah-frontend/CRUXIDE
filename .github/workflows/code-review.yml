@@ -1,0 +1,181 @@
+name: Code Review
+
+# Runs on every change proposed to main, whoever or whatever wrote it. There is
+# deliberately no branch-name, label, commit-message, or author condition: a
+# human commit, a Dependabot bump, and an agent-generated patch all take the
+# same path.
+#
+# This workflow uses pull_request, never pull_request_target. A fork PR
+# therefore runs with a read-only GITHUB_TOKEN and cannot reach repository
+# secrets, so untrusted code never executes with write access. Remediation is
+# published as a reviewable patch artifact instead of being pushed, which is
+# safe for forks and cannot start a fix/review loop.
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: code-review-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Review validation
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    outputs:
+      remediation: ${{ steps.remediate.outputs.changed }}
+    defaults:
+      run:
+        working-directory: source
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: source/package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Validate workflow policy
+        working-directory: .
+        run: node scripts/validate-workflows.mjs
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+
+      - name: Verify package signatures
+        run: npm audit signatures
+
+      - name: Validate extension manifest and release metadata
+        run: npm run verify:release
+
+      - name: Validate Marketplace metadata
+        run: npm run verify:marketplace
+
+      - name: Build VSIX
+        run: npm run package:vsix
+
+      - name: Inspect package contents
+        run: |
+          set -euo pipefail
+          VERSION=$(node -p "require('./package.json').version")
+          VSIX="release/cruxide-${VERSION}.vsix"
+          test -f "$VSIX" || { echo "Expected $VSIX" >&2; exit 1; }
+
+          mkdir -p "$RUNNER_TEMP/vsix"
+          unzip -q "$VSIX" -d "$RUNNER_TEMP/vsix"
+
+          # Development-only material must never reach the Marketplace.
+          if find "$RUNNER_TEMP/vsix" -type f \
+               \( -name '*.ts' -o -name '*.map' -o -name '.env*' -o -name 'tsconfig*' \
+                  -o -name '*.test.*' -o -name '.npmrc' \) | grep -q .; then
+            echo "VSIX contains development-only files" >&2
+            find "$RUNNER_TEMP/vsix" -type f \
+              \( -name '*.ts' -o -name '*.map' -o -name '.env*' -o -name 'tsconfig*' \
+                 -o -name '*.test.*' -o -name '.npmrc' \) >&2
+            exit 1
+          fi
+
+          if find "$RUNNER_TEMP/vsix" -type d \
+               \( -name node_modules -o -name .git \) | grep -q .; then
+            echo "VSIX contains a node_modules or .git directory" >&2
+            exit 1
+          fi
+
+          # Credential shapes. VSCE_PAT may appear as a documented secret NAME in
+          # PUBLISHING.md, so match assignments rather than the bare word.
+          if grep -rlaiE 'ghp_[A-Za-z0-9]{20}|github_pat_[A-Za-z0-9_]{20}|xox[baprs]-[A-Za-z0-9-]{10}|AKIA[0-9A-Z]{16}|BEGIN [A-Z ]*PRIVATE KEY|VSCE_PAT[[:space:]]*=[[:space:]]*[A-Za-z0-9]' \
+               "$RUNNER_TEMP/vsix" | grep -q .; then
+            echo "VSIX may contain a credential" >&2
+            exit 1
+          fi
+
+          echo "VSIX contents validated: $(du -h "$VSIX" | cut -f1)"
+
+      - name: Generate deterministic remediation patch
+        id: remediate
+        run: |
+          set -euo pipefail
+          # Only deterministic, low-risk fixes. Anything requiring judgement is
+          # reported for human review, never auto-applied.
+          npx eslint src --fix || true
+
+          cd "$GITHUB_WORKSPACE"
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No deterministic fixes required."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git diff > "$RUNNER_TEMP/review-remediation.patch"
+            echo "Deterministic fixes are available as a patch:"
+            git diff --stat
+          fi
+
+      - name: Upload remediation patch
+        if: steps.remediate.outputs.changed == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: review-remediation-patch
+          path: ${{ runner.temp }}/review-remediation.patch
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Fail when deterministic fixes are outstanding
+        if: steps.remediate.outputs.changed == 'true'
+        run: |
+          echo "::error::Lint produced deterministic fixes that are not committed." \
+               "Download the review-remediation-patch artifact and apply it with" \
+               "'git apply', or run 'npm run lint -- --fix' in source/."
+          exit 1
+
+  summary:
+    name: Review summary
+    needs: validate
+    if: always() && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Record outcome
+        run: |
+          echo "### CRUXIDE review validation" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Result: **${{ needs.validate.result }}**" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Build, lint, tests, dependency audit, signature verification," >> "$GITHUB_STEP_SUMMARY"
+          echo "release and Marketplace metadata, VSIX packaging, and package" >> "$GITHUB_STEP_SUMMARY"
+          echo "content inspection all run on this commit." >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Findings that need engineering judgement are reported by the" >> "$GITHUB_STEP_SUMMARY"
+          echo "external review provider and by CodeQL, not by this job." >> "$GITHUB_STEP_SUMMARY"
+          [ "${{ needs.validate.result }}" = "success" ]

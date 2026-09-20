@@ -50,7 +50,16 @@ jobs:
         run: |
           VERSION=$(node -p "require('./package.json').version")
           cd release
-          grep "  cruxide-${VERSION}.vsix$" SHA256SUMS.txt | sha256sum --check --strict -
+          # release.yml writes SHA256SUMS.txt with sha256sum ./*.vsix, so the
+          # recorded name carries a ./ prefix. Match it with or without one.
+          ENTRY=$(grep -E "[ *][.]?/?cruxide-${VERSION}[.]vsix$" SHA256SUMS.txt || true)
+          if [ "$(printf '%s\n' "$ENTRY" | grep -c .)" -ne 1 ]; then
+            echo "Expected exactly one checksum entry for cruxide-${VERSION}.vsix" >&2
+            echo "SHA256SUMS.txt contained:" >&2
+            cat SHA256SUMS.txt >&2
+            exit 1
+          fi
+          printf '%s\n' "$ENTRY" | sha256sum --check --strict -
       - name: Publish exact GitHub Release VSIX
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
