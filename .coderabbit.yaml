@@ -33,7 +33,7 @@ reviews:
     - "!source/dist/**"
     - "!source/release/**"
     - "!source/.vscode-test/**"
-    # Generated from scripts/skill-definitions.mjs; review the generator instead.
+    # Generated from source/scripts/skill-definitions.mjs; review the generator instead.
     - "!source/skills/bundled/**"
     - "!source/skills/docs/**"
     - "!source/skills/catalog.json"
@@ -96,7 +96,7 @@ reviews:
         or as published on the Cursor Marketplace. /crux-conductor is a skill
         invoked explicitly inside an external AI agent. Track, extension, and
         skill counts must match the catalog. Version references in install
-        instructions must match package.json.
+        instructions must match source/package.json.
 
   tools:
     markdownlint:
