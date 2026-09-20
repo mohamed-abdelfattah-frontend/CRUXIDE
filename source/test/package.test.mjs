@@ -141,16 +141,11 @@ test('setup webview is local, consent-based, and does not auto-install on ready'
   assert.doesNotMatch(script, /https?:\/\//i);
 });
 
-test('profile experience applies the Figma code typography', async () => {
-  // The owned-settings table lives in src/experience.ts so both the manual
-  // command and the confirmed setup apply the same values.
-  const [extension, experience] = await Promise.all([
-    readText('src/extension.ts'),
-    readText('src/experience.ts'),
-  ]);
-  assert.match(experience, /'Roboto Mono'/);
-  assert.match(experience, /'fontFamily'/);
-  assert.match(experience, /terminal\.integrated/);
+test('first-run setup stays consent-based', async () => {
+  // The owned-settings table lives in src/experience-settings.ts, which has no
+  // vscode dependency; experience.test.mjs asserts the typography values by
+  // running that module rather than matching source text.
+  const extension = await readText('src/extension.ts');
   assert.match(extension, /cruxide\.setupPrompted\.v2/);
   assert.match(extension, /setupOpened = await openFirstRunSetup/);
   assert.match(extension, /SetupPanel\.show\(context, output\)/);

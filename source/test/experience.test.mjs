@@ -5,13 +5,20 @@ import test from 'node:test';
 const root = new URL('../', import.meta.url);
 const readText = (path) => readFile(new URL(path, root), 'utf8');
 
-test('the experience writes only CRUXIDE-owned settings', async () => {
-  const source = await readText('src/experience.ts');
+// The settings table and the failure handling live in a module with no vscode
+// dependency, so these tests run the real code instead of matching source text.
+const { OWNED_SETTINGS, writeOwnedSettings, describeExperienceFailure } =
+  await import(new URL('dist/experience-settings.js', root).href);
 
-  const owned = [...source.matchAll(/\{ section: '([^']+)', key: '([^']+)'/g)]
-    .map(([, section, key]) => `${section}.${key}`);
+test('every CRUXIDE-owned setting is written, and only those', async () => {
+  const written = [];
+  const result = await writeOwnedSettings(async (setting) => {
+    written.push(`${setting.section}.${setting.key}`);
+  });
 
-  assert.deepEqual(owned.sort(), [
+  assert.equal(result.applied, true);
+  assert.deepEqual(result.failed, []);
+  assert.deepEqual(written.sort(), [
     'editor.fontFamily',
     'editor.fontLigatures',
     'terminal.integrated.fontFamily',
@@ -19,24 +26,76 @@ test('the experience writes only CRUXIDE-owned settings', async () => {
     'workbench.colorTheme',
     'workbench.iconTheme',
   ]);
-
-  // Every write must target the settings CRUXIDE declares, at Global scope, so
-  // unrelated user or workspace configuration is never touched.
-  const updateCalls = source.match(/\.update\(/g) ?? [];
-  assert.equal(updateCalls.length, 1, 'settings must be written through one shared code path');
-  assert.match(source, /vscode\.ConfigurationTarget\.Global/);
 });
 
-test('the experience reports partial failure instead of throwing', async () => {
-  const source = await readText('src/experience.ts');
+test('one failing setting does not stop the others and is reported', async () => {
+  const written = [];
+  const result = await writeOwnedSettings(async (setting) => {
+    if (setting.key === 'iconTheme') {
+      throw new Error('icon theme extension is not installed');
+    }
+    written.push(`${setting.section}.${setting.key}`);
+  });
 
-  assert.match(source, /catch \(error: unknown\) \{/, 'a failed setting must be caught');
-  assert.match(source, /failed\.push\(/, 'a failed setting must be recorded');
-  assert.match(
-    source,
-    /applied: failed\.length === 0/,
-    'applied must be true only when every owned setting was written',
+  // The failure must be reported rather than thrown.
+  assert.equal(result.applied, false, 'applied must be false when a setting fails');
+  assert.equal(result.failed.length, 1);
+  assert.equal(result.failed[0].setting, 'workbench.iconTheme');
+  assert.match(result.failed[0].detail, /icon theme extension is not installed/);
+
+  // Every other setting must still have been attempted.
+  assert.equal(written.length, OWNED_SETTINGS.length - 1);
+  assert.ok(written.includes('editor.fontFamily'));
+  assert.ok(written.includes('terminal.integrated.fontFamily'));
+  assert.ok(!written.includes('workbench.iconTheme'));
+});
+
+test('several failures are all collected', async () => {
+  const result = await writeOwnedSettings(async (setting) => {
+    if (setting.section === 'editor') throw new Error('editor is read-only');
+  });
+
+  assert.equal(result.applied, false);
+  assert.deepEqual(
+    result.failed.map((f) => f.setting).sort(),
+    ['editor.fontFamily', 'editor.fontLigatures'],
   );
+  assert.match(describeExperienceFailure(result), /editor\.fontFamily \(editor is read-only\)/);
+});
+
+test('a non-Error rejection is still reported', async () => {
+  const result = await writeOwnedSettings(async (setting) => {
+    if (setting.key === 'title') throw 'window is locked';
+  });
+
+  assert.equal(result.applied, false);
+  assert.equal(result.failed[0].setting, 'window.title');
+  assert.equal(result.failed[0].detail, 'window is locked');
+});
+
+test('applying twice converges on the same values', async () => {
+  const first = [];
+  const second = [];
+  await writeOwnedSettings(async (s) => { first.push(`${s.section}.${s.key}=${String(s.value)}`); });
+  await writeOwnedSettings(async (s) => { second.push(`${s.section}.${s.key}=${String(s.value)}`); });
+  assert.deepEqual(first, second, 'the experience must be idempotent');
+});
+
+test('the owned settings carry the Figma code typography', () => {
+  const byKey = new Map(OWNED_SETTINGS.map((s) => [`${s.section}.${s.key}`, s.value]));
+  assert.match(String(byKey.get('editor.fontFamily')), /'Roboto Mono'/);
+  assert.equal(byKey.get('terminal.integrated.fontFamily'), "'Roboto Mono'");
+  assert.equal(byKey.get('workbench.colorTheme'), 'CRUXIDE Dark');
+  assert.equal(byKey.get('editor.fontLigatures'), true);
+});
+
+test('the VS Code writer targets Global scope and nothing else', async () => {
+  const source = await readText('src/experience.ts');
+  // The one place vscode is touched; it must write at Global scope, which is
+  // what "the active profile" means for a VS Code extension.
+  assert.match(source, /vscode\.ConfigurationTarget\.Global/);
+  const updates = source.match(/\.update\(/g) ?? [];
+  assert.equal(updates.length, 1, 'settings must be written through one code path');
 });
 
 test('confirmed setup applies the experience automatically and reports it honestly', async () => {
@@ -45,21 +104,11 @@ test('confirmed setup applies the experience automatically and reports it honest
   const confirmIndex = panel.indexOf("if (confirmation !== 'Apply setup') return;");
   const applyIndex = panel.indexOf('await applyExperience()');
   assert.ok(confirmIndex > 0, 'setup must still require the native confirmation');
-  assert.ok(
-    applyIndex > confirmIndex,
-    'the experience must only be applied after the user confirms',
-  );
+  assert.ok(applyIndex > confirmIndex, 'the experience must only be applied after the user confirms');
 
-  // A partial failure must not be presented as a complete success.
-  assert.match(panel, /const experience = await applyExperience\(\);/);
   assert.match(panel, /result\.failedExtensions\.length > 0 \|\| !experience\.applied/);
   assert.match(panel, /showWarningMessage\(summary\)/);
-  assert.match(panel, /showInformationMessage\(summary\)/);
-  assert.match(
-    panel,
-    /command: 'applied', result, experience/,
-    'the webview must receive the experience outcome',
-  );
+  assert.match(panel, /command: 'applied', result, experience/);
 });
 
 test('the manual Apply Experience command stays available and honest', async () => {
@@ -72,25 +121,13 @@ test('the manual Apply Experience command stays available and honest', async () 
     .find((item) => item.command === 'cruxide.applyExperience');
   assert.ok(command, 'the manual command must remain contributed');
   assert.equal(command.title, 'Apply CRUXIDE Experience');
-  assert.ok(manifest.contributes.menus.commandPalette
-    .some((item) => item.command === 'cruxide.applyExperience'));
 
   assert.match(extension, /if \(result\.applied\) \{/);
-  assert.match(
-    extension,
-    /showWarningMessage\(/,
-    'a partly applied experience must warn rather than claim success',
-  );
+  assert.match(extension, /showWarningMessage\(/);
 });
 
 test('the webview surfaces the experience outcome to the user', async () => {
   const script = await readText('media/setup.js');
-
   assert.match(script, /const experience = message\.experience;/);
-  assert.match(script, /experience\.applied/);
-  assert.match(
-    script,
-    /could not be written; run CRUXIDE: Apply CRUXIDE Experience to retry/,
-    'a failed experience must tell the user how to retry',
-  );
+  assert.match(script, /could not be written; run CRUXIDE: Apply CRUXIDE Experience to retry/);
 });

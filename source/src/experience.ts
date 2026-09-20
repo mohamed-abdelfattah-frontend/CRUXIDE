@@ -1,57 +1,29 @@
 import * as vscode from 'vscode';
+import {
+  OWNED_SETTINGS,
+  writeOwnedSettings,
+  type ExperienceResult,
+} from './experience-settings.js';
 
-const CODE_FONT_STACK = "'Roboto Mono', Consolas, 'Courier New', monospace";
-
-/**
- * Settings CRUXIDE owns. Applying the experience writes exactly these and
- * nothing else, so unrelated user configuration is never overwritten.
- */
-const OWNED_SETTINGS: readonly {
-  readonly section: string;
-  readonly key: string;
-  readonly value: unknown;
-}[] = [
-  { section: 'workbench', key: 'colorTheme', value: 'CRUXIDE Dark' },
-  { section: 'workbench', key: 'iconTheme', value: 'material-icon-theme' },
-  { section: 'window', key: 'title', value: 'CRUXIDE — ${rootName}${separator}${activeEditorShort}' },
-  { section: 'editor', key: 'fontLigatures', value: true },
-  { section: 'editor', key: 'fontFamily', value: CODE_FONT_STACK },
-  { section: 'terminal.integrated', key: 'fontFamily', value: "'Roboto Mono'" },
-];
-
-export interface ExperienceResult {
-  /** True only when every CRUXIDE-owned setting was written. */
-  readonly applied: boolean;
-  /** Settings that could not be written, with the reason for each. */
-  readonly failed: readonly { readonly setting: string; readonly detail: string }[];
-}
+export { describeExperienceFailure } from './experience-settings.js';
+export { OWNED_SETTINGS } from './experience-settings.js';
+export type { ExperienceResult } from './experience-settings.js';
 
 /**
  * Write the CRUXIDE-owned settings to the active profile.
  *
  * Idempotent: every value is fixed, so re-running converges on the same state.
- * Each setting is written independently and a failure is reported rather than
- * thrown, so one unwritable setting cannot be mistaken for a full success.
+ * The settings table and the partial-failure handling live in
+ * ./experience-settings.ts, which has no vscode dependency and is therefore
+ * testable at runtime; this function only supplies the VS Code writer.
  */
 export async function applyExperience(): Promise<ExperienceResult> {
-  const failed: { setting: string; detail: string }[] = [];
-
-  await Promise.all(OWNED_SETTINGS.map(async ({ section, key, value }) => {
-    try {
+  return writeOwnedSettings(
+    async ({ section, key, value }) => {
       await vscode.workspace
         .getConfiguration(section)
         .update(key, value, vscode.ConfigurationTarget.Global);
-    } catch (error: unknown) {
-      failed.push({
-        setting: `${section}.${key}`,
-        detail: error instanceof Error ? error.message : String(error),
-      });
-    }
-  }));
-
-  return { applied: failed.length === 0, failed };
-}
-
-export function describeExperienceFailure(result: ExperienceResult): string {
-  return result.failed.map((item) => `${item.setting} (${item.detail})`).join(', ');
+    },
+    OWNED_SETTINGS,
+  );
 }

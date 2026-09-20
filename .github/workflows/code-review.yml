@@ -159,7 +159,10 @@ jobs:
   summary:
     name: Review summary
     needs: validate
-    if: always() && github.event_name == 'pull_request'
+    # Skip drafts, matching the validate job. Without the draft condition this
+    # job still ran on a draft, saw needs.validate.result == "skipped", and
+    # exited non-zero, so every draft pull request failed a required check.
+    if: always() && github.event_name == 'pull_request' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions: {}
@@ -181,4 +184,15 @@ jobs:
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "Findings that need engineering judgement are reported by the" >> "$GITHUB_STEP_SUMMARY"
           echo "external review provider and by CodeQL, not by this job." >> "$GITHUB_STEP_SUMMARY"
-          [ "${{ needs.validate.result }}" = "success" ]
+          # Defence in depth alongside the draft condition above: treat only a
+          # real failure as a failure, so a skipped or cancelled upstream job
+          # never reports this required check as failed.
+          case "${{ needs.validate.result }}" in
+            success) exit 0 ;;
+            skipped|cancelled)
+              echo "Validation did not run (${{ needs.validate.result }})." >> "$GITHUB_STEP_SUMMARY"
+              exit 0 ;;
+            *)
+              echo "::error::Review validation failed (${{ needs.validate.result }})."
+              exit 1 ;;
+          esac

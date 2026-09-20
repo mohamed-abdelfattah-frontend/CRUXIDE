@@ -5,6 +5,7 @@ import { once } from 'node:events';
 import { join, relative, resolve, sep } from 'node:path';
 import { pipeline } from 'node:stream/promises';
 import { ZipFile } from 'yazl';
+import { deriveIgnoredEntries, shouldCopyEntry } from './release-exclusions.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const manifest = JSON.parse(await readFile(join(projectRoot, 'package.json'), 'utf8'));
@@ -36,23 +37,13 @@ await cp(join(projectRoot, 'installers', 'fonts'), join(stagingRoot, 'fonts'), {
 await chmod(join(stagingRoot, 'install-macos.sh'), 0o755);
 
 await mkdir(sourceRoot, { recursive: true });
-// Derive the exclusions from .gitignore rather than maintaining a second list.
-// The hand-written set omitted .vscode-test, the VS Code build that the smoke
-// test downloads, so a local package:release after npm run smoke:test bundled a
-// ~300 MB editor into the release archive.
+// The exclusion set is derived from .gitignore in release-exclusions.mjs, so
+// the script and its tests share one implementation instead of two that drift.
 const gitignore = await readFile(join(projectRoot, '.gitignore'), 'utf8');
-const ignoredSourceEntries = new Set([
-  '.git',
-  'release',
-  ...gitignore
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter((line) => line.length > 0 && !line.startsWith('#') && !line.includes('*'))
-    .map((line) => (line.endsWith('/') ? line.slice(0, -1) : line)),
-]);
+const ignoredSourceEntries = deriveIgnoredEntries(gitignore);
 const sourceEntries = await readdir(projectRoot, { withFileTypes: true });
 for (const entry of sourceEntries) {
-  if (!ignoredSourceEntries.has(entry.name)) {
+  if (shouldCopyEntry(ignoredSourceEntries, entry.name)) {
     await cp(join(projectRoot, entry.name), join(sourceRoot, entry.name), { recursive: true });
   }
 }
