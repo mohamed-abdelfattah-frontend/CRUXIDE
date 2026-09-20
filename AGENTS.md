@@ -15,7 +15,7 @@ is non-negotiable and applies to every commit in this repository.
 
 Quick reference (`PROJECT_RULES.md` is authoritative):
 
-- Commit as the repository owner's configured Git identity, never as the agent.
+- Commit as the configured Git identity of the human driving the session, never as the agent.
 - **Never** add a `Co-Authored-By`, `Generated-By`, or `Assisted-By` trailer
   naming an AI or tool, a "Generated with" or "Created by AI" signature, an
   attribution URL, or an attribution emoji.

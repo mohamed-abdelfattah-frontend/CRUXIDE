@@ -29,13 +29,15 @@ test('AI and bot attribution trailers are rejected', () => {
   }
 });
 
-test('AI signatures and attribution URLs are rejected', () => {
+test('AI signatures are rejected', () => {
+  // A vendor URL is handled separately: standing alone on a line it is an
+  // attribution signature, but inside a sentence it is ordinary documentation.
+  // See 'vendor URLs are attribution only when they stand alone'.
   const rejected = [
     'Generated with Claude Code',
     '🤖 Generated with Claude',
     'Created by AI.',
     'Co-authored with AI',
-    'See https://claude.ai/chat/abc for the session',
   ];
 
   for (const signature of rejected) {
@@ -97,7 +99,7 @@ test('the policy is documented in the canonical rules file', async () => {
     'existing human Git identity',
     'author, committer, co-author, signer',
     'attribution trailers and signatures are forbidden',
-    'Before committing, verify the configured identity',
+    'Before committing, verify that a human identity is configured',
     'Before pushing, audit every new commit',
     'Conventional Commit rules',
     'never directly to `main`',
@@ -225,4 +227,68 @@ test('ordinary messages are unaffected by the control-character check', () => {
     '',
   ].join('\n');
   assert.deepEqual(inspectMessage(ordinary), []);
+});
+
+test('a human is never classified as a tool from a name or employer alone', () => {
+  // The guard exists to block AI, bot, and tool attribution, not to block
+  // people. Claude Dupont is a person, and an engineer at Anthropic or OpenAI
+  // commits from a company address like anyone else.
+  for (const [name, email] of [
+    ['Claude Dupont', 'claude.dupont@example.com'],
+    ['Gemini Rossi', 'g.rossi@example.it'],
+    ['Cursor Mendoza', 'cm@example.com'],
+    ['Jane Smith', 'jane@anthropic.com'],
+    ['Sam Chen', 'sam@openai.com'],
+    ['Mohammed Khaled Saad', '58882363+MK167@users.noreply.github.com'],
+  ]) {
+    assert.deepEqual(inspectIdentity('author', name, email), [], `${name} <${email}> is a person`);
+  }
+
+  // A human co-author must survive the trailer check for the same reason.
+  assert.deepEqual(
+    inspectMessage(['fix: x', '', 'Co-authored-by: Claude Dupont <claude@example.com>', ''].join('\n')),
+    [],
+  );
+});
+
+test('a tool is identified by the whole name or a machine address', () => {
+  for (const [name, email] of [
+    ['Claude', 'noreply@anthropic.com'],
+    ['Claude Opus 5 (1M context)', 'noreply@anthropic.com'],
+    ['Claude Code', 'x@y.z'],
+    ['GitHub Copilot', 'copilot@github.com'],
+    ['Codex CLI', 'x@y.z'],
+    ['dependabot[bot]', '49699333+dependabot[bot]@users.noreply.github.com'],
+    // A human-looking name is still caught by the machine address.
+    ['Claude Dupont', 'noreply@anthropic.com'],
+  ]) {
+    assert.ok(inspectIdentity('author', name, email).length > 0, `${name} <${email}> is a tool`);
+  }
+});
+
+test('vendor URLs are attribution only when they stand alone', () => {
+  // A documentation link inside a sentence is a legitimate commit message.
+  const inline = (url) => inspectMessage(`fix: x
+
+See ${url} for the details.
+`);
+  assert.deepEqual(inline('https://openai.com/docs'), []);
+  assert.deepEqual(inline('https://www.anthropic.com/news/claude'), []);
+
+  // A bare vendor URL on its own line is the shape an attribution takes.
+  const alone = inspectMessage(['fix: x', '', 'https://claude.com/claude-code', ''].join('\n'));
+  assert.ok(alone.some((problem) => /attribution URL/.test(problem)));
+});
+
+test('control characters in identity fields are reported', () => {
+  const unitSeparator = String.fromCharCode(0x1f);
+  assert.ok(
+    inspectIdentity('author', `Jane${unitSeparator} Doe`, 'jane@example.com')
+      .some((problem) => /control characters/.test(problem)),
+    'identity fields are contributor-controlled too',
+  );
+  assert.ok(
+    inspectSigner(`Jane${unitSeparator} Doe`, '')
+      .some((problem) => /control characters/.test(problem)),
+  );
 });

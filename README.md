@@ -235,7 +235,7 @@ CRUXIDE Setup opens on the first launch. Review the tracks, target profile, AI a
 
 After you confirm, CRUXIDE configures the active profile:
 
-- CRUXIDE Dark or Light theme;
+- CRUXIDE Dark theme (CRUXIDE Light also ships, and you can select it yourself);
 - Material Icon Theme;
 - CRUX-branded window title;
 - Roboto Mono for the editor and terminal;

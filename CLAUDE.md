@@ -12,7 +12,7 @@ is non-negotiable and applies to every commit you make here.
 
 Quick reference (PROJECT_RULES.md is authoritative):
 
-- Commit as the repository owner's configured Git identity, never as yourself.
+- Commit as the configured Git identity of the human driving the session, never as yourself.
 - **Never** add `Co-Authored-By: Claude`, `Co-Authored-By: Anthropic`,
   `Generated-By`, `Assisted-By`, "Generated with Claude", an attribution URL,
   or any equivalent trailer, signature, or emoji to a commit message.

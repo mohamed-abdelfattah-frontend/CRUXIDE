@@ -93,7 +93,7 @@ Accessibility ships as three independent, composable packs — **WCAG 2.2**, **B
 
 **When you run setup, or whenever you run `CRUXIDE: Apply CRUXIDE Experience`:** CRUXIDE's own theme, icon theme, editor and terminal font *settings*, and window title. Setup applies these after the confirmation above; the command applies them on demand, without a further prompt, because running it is itself the instruction.
 
-**On fonts:** CRUXIDE sets the editor and terminal font to `'Roboto Mono', Consolas, 'Courier New', monospace`. It does **not** install the Roboto Mono font file — a Marketplace or VSIX install changes settings only. If Roboto Mono is not already on your system you will see the next font in that fallback list, which is harmless. The Windows and macOS installers in the GitHub release do install the font.
+**On fonts:** CRUXIDE sets `editor.fontFamily` to `'Roboto Mono', Consolas, 'Courier New', monospace` and `terminal.integrated.fontFamily` to `'Roboto Mono'`, leaving the terminal to fall back to your platform default. It does **not** install the Roboto Mono font file — a Marketplace or VSIX install changes settings only. If Roboto Mono is not already on your system, the editor uses the next font in its stack, which is harmless. The Windows and macOS installers in the GitHub release do install the font.
 
 **Never installs:** language runtimes or SDKs (Node.js, Python, PHP, Composer, JDK, .NET, Go, Rust, Flutter, Android SDK, Swift, Xcode) · database servers · application dependencies or ORM packages · Git hooks · credentials.
 

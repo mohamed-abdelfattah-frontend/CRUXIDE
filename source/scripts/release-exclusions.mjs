@@ -32,6 +32,12 @@ const SENSITIVE_PATTERNS = [
   /\.(pem|key|p12|pfx|keystore|jks)$/i,
   /^.*\.secrets?(\.|$)/i,
   /^secrets?\.(json|ya?ml|txt)$/i,
+  // Credential directories. These hold keys and tokens rather than a single
+  // file, and nothing in .gitignore excludes them, so a developer with any of
+  // them under the tree would otherwise publish the whole directory.
+  /^\.(aws|ssh|gnupg|azure|kube|docker|gcloud|config\/gcloud)$/i,
+  /^\.vault-token$/i,
+  /^credentials$/i,
 ];
 
 /** @param {string} name An entry name. */

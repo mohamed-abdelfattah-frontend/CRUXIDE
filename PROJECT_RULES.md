@@ -36,12 +36,18 @@ a human, an AI assistant, or any automation.
    signatures. Tool-specific, bot, and `noreply` machine identities must not be
    used as author or committer.
 
-4. **Before committing, verify the configured identity:**
+4. **Before committing, verify that a human identity is configured** — the one
+   belonging to the person driving the session, not the assistant's:
 
    ```bash
-   git config user.name    # must be: Mohammed Khaled Saad
-   git config user.email   # must be: 58882363+MK167@users.noreply.github.com
+   git config user.name
+   git config user.email
    ```
+
+   Both must be set, and both must be that contributor's own identity. On the
+   maintainer's machine those values are `Mohammed Khaled Saad` and
+   `58882363+MK167@users.noreply.github.com`; that pairing is an example of a
+   correctly configured identity, not the only accepted one.
 
 5. **Before pushing, audit every new commit:**
 

@@ -41,15 +41,53 @@ const SIGNATURE_PATTERNS = [
   /co-authored\s+with\s+ai\b/i,
   /\bwritten\s+by\s+(?:claude|chatgpt|an?\s+ai)\b/i,
   /🤖\s*generated/i,
-  /https?:\/\/(?:claude\.ai|www\.anthropic\.com|chatgpt\.com|openai\.com)\/\S*/i,
 ];
 
+/**
+ * A vendor URL standing alone on its own line is the shape an attribution
+ * signature takes. The same URL inside a sentence is ordinary documentation:
+ * "see https://openai.com/docs for the rate limits" is a legitimate commit
+ * message and must not be rejected.
+ */
+const ATTRIBUTION_URL_LINE =
+  /^\s*[-*>\s]*https?:\/\/(?:claude\.ai|claude\.com|www\.anthropic\.com|chatgpt\.com|openai\.com)\/\S*\s*$/i;
+
+/**
+ * An identity is rejected on evidence that it is a bot or service account, not
+ * because it mentions a brand. "Claude Dupont" is a person, and an engineer at
+ * Anthropic or OpenAI commits from a company address like anyone else;
+ * rejecting either would block a genuine contributor, which the guard exists
+ * to avoid.
+ *
+ * The whole name must BE a tool identity, optionally with a version or
+ * parenthetical suffix, rather than merely containing one.
+ */
+const TOOL_TOKEN = 'copilot|claude|anthropic|chatgpt|openai|gemini|cursor|codex|bard|devin|github';
+const VERSION_TOKEN = 'code|cli|bot|ai|opus|sonnet|haiku|pro|max|mini|turbo|preview|v?\\d[\\w.]*';
+
+/**
+ * A name is a tool only when *every* token in it is a product or version word.
+ * "OpenAI ChatGPT" and "Claude Opus 5" qualify; "Claude Dupont" and "Gemini
+ * Rossi" — both plausible people — do not, because the surname is not a
+ * product token. When a tool uses a human-looking name, the machine email
+ * address is what identifies it.
+ */
+const TOOL_NAME_PATTERN = new RegExp(
+  `^(?:${TOOL_TOKEN})`
+  + `(?:\\s+(?:${TOOL_TOKEN}|${VERSION_TOKEN}))*`
+  + '(?:\\s*\\([^)]*\\))?'                   // "(1M context)"
+  + '\\s*$',
+  'i',
+);
+
+/** Machine addresses. A human never commits from one of these. */
 const FORBIDDEN_IDENTITY_EMAILS = [
-  /@anthropic\.com$/i,
-  /@openai\.com$/i,
-  /noreply@anthropic\.com$/i,
-  /\[bot\]@users\.noreply\.github\.com$/i,
-  /^\d+\+.*\[bot\]@/i,
+  /^noreply@anthropic\.com$/i,
+  /^noreply@openai\.com$/i,
+  /^copilot@github\.com$/i,
+  /\[bot\]@/i,
+  /^\d+\+[^@]*\[bot\]@/i,
+  /^bot@/i,
 ];
 
 const RECORD = '\u001e';
@@ -89,27 +127,62 @@ export function inspectMessage(message) {
   for (const line of normalised.split(/\r?\n/)) {
     const trailer = line.match(/^\s*([A-Za-z-]+)\s*:\s*(.+)$/);
     if (trailer && ATTRIBUTION_TRAILERS.includes(trailer[1].toLowerCase())) {
-      if (namesToolIdentity(trailer[2])) {
+      // Parse the trailer value as "Name <email>" and judge it exactly as an
+      // author or committer identity would be judged, so a human co-author
+      // called Claude Dupont stays valid.
+      const value = trailer[2].trim();
+      const parsed = value.match(/^(.*?)\s*<([^>]*)>\s*$/);
+      const coAuthorName = (parsed ? parsed[1] : value).trim();
+      const coAuthorEmail = parsed ? parsed[2].trim() : '';
+      if (isToolIdentity(coAuthorName, coAuthorEmail)) {
         problems.push(`forbidden attribution trailer: ${line.trim()}`);
       }
+    }
+
+    if (ATTRIBUTION_URL_LINE.test(line)) {
+      problems.push(`forbidden attribution URL: ${line.trim()}`);
     }
   }
 
   for (const pattern of SIGNATURE_PATTERNS) {
-    const match = message.match(pattern);
+    const match = normalised.match(pattern);
     if (match) problems.push(`forbidden AI signature: ${match[0].trim()}`);
   }
 
   return problems;
 }
 
+/**
+ * Whether an identity is a tool or service account, judged on evidence rather
+ * than on mentioning a brand. A person named Claude Dupont, and an engineer
+ * committing from an @anthropic.com or @openai.com address, are both humans.
+ */
+export function isToolIdentity(name, email) {
+  const cleanName = String(name ?? '').replace(CONTROL_CHARACTERS, '').trim();
+  CONTROL_CHARACTERS.lastIndex = 0;
+  const cleanEmail = String(email ?? '').replace(CONTROL_CHARACTERS, '').trim();
+  CONTROL_CHARACTERS.lastIndex = 0;
+
+  if (/\[bot\]/i.test(cleanName) || /\[bot\]/i.test(cleanEmail)) return true;
+  if (FORBIDDEN_IDENTITY_EMAILS.some((pattern) => pattern.test(cleanEmail))) return true;
+  return TOOL_NAME_PATTERN.test(cleanName);
+}
+
 export function inspectIdentity(role, name, email) {
   const problems = [];
-  if (namesToolIdentity(name)) {
-    problems.push(`${role} name is a tool identity: ${name}`);
+
+  // Identity fields are contributor-controlled too, so the same control
+  // characters that hide a trailer can pad a tool name past a matcher.
+  for (const [field, value] of [['name', name], ['email', email]]) {
+    if (CONTROL_CHARACTERS.test(String(value ?? ''))) {
+      CONTROL_CHARACTERS.lastIndex = 0;
+      problems.push(`${role} ${field} contains control characters: ${JSON.stringify(value)}`);
+    }
+    CONTROL_CHARACTERS.lastIndex = 0;
   }
-  if (FORBIDDEN_IDENTITY_EMAILS.some((pattern) => pattern.test(email))) {
-    problems.push(`${role} email is a tool or bot identity: ${email}`);
+
+  if (isToolIdentity(name, email)) {
+    problems.push(`${role} is a tool or bot identity: ${name} <${email}>`);
   }
   return problems;
 }
@@ -124,7 +197,14 @@ export function inspectIdentity(role, name, email) {
  */
 export function inspectSigner(signerName, signingKey) {
   const problems = [];
-  if (signerName && namesToolIdentity(signerName)) {
+  for (const [field, value] of [['signer', signerName], ['signing key', signingKey]]) {
+    if (CONTROL_CHARACTERS.test(String(value ?? ''))) {
+      CONTROL_CHARACTERS.lastIndex = 0;
+      problems.push(`${field} contains control characters: ${JSON.stringify(value)}`);
+    }
+    CONTROL_CHARACTERS.lastIndex = 0;
+  }
+  if (signerName && isToolIdentity(signerName, '')) {
     problems.push(`signed by a tool identity: ${signerName}`);
   }
   if (signingKey && namesToolIdentity(signingKey)) {
