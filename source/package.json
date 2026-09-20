@@ -1,8 +1,8 @@
 {
   "name": "cruxide",
   "displayName": "CRUXIDE",
-  "description": "The secure CRUXCODE developer experience for Visual Studio Code.",
-  "version": "1.1.0",
+  "description": "The secure CRUXCODE.DEV developer experience for Visual Studio Code.",
+  "version": "1.2.0",
   "publisher": "cruxcode",
   "private": true,
   "author": {
@@ -252,7 +252,7 @@
       {
         "id": "cruxide.getStarted",
         "title": "Get started with CRUXIDE",
-        "description": "Apply the CRUXCODE engineering experience to your workspace.",
+        "description": "Apply the CRUXCODE.DEV engineering experience to your workspace.",
         "steps": [
           {
             "id": "cruxide.openHomeStep",
@@ -284,7 +284,7 @@
           {
             "id": "cruxide.applyExperienceStep",
             "title": "Apply the CRUXIDE experience",
-            "description": "Activate the CRUXCODE theme and editor defaults with [Apply Experience](command:cruxide.applyExperience).",
+            "description": "Activate the CRUXCODE.DEV theme and editor defaults with [Apply Experience](command:cruxide.applyExperience).",
             "media": {
               "image": "media/walkthrough.svg",
               "altText": "CRUXIDE theme"

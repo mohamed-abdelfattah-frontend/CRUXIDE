@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { type HomeCommand, isHomeMessage } from './home-message.js';
 
-const CRUXCODE_URL = vscode.Uri.parse('https://www.cruxcode.dev');
+const CRUXCODE_DEV_URL = vscode.Uri.parse('https://www.cruxcode.dev');
 const LINKEDIN_URL = vscode.Uri.parse('https://www.linkedin.com/in/mohamed-khaled-abdelfattah');
 
 export class HomePanel {
@@ -106,9 +106,9 @@ export class HomePanel {
         <div class="logo-shell">
           <img src="${escapeAttribute(logoUri.toString())}" alt="CRUX logo" />
         </div>
-        <p class="eyebrow">The CRUXCODE developer experience</p>
+        <p class="eyebrow">The CRUXCODE.DEV developer experience</p>
         <h1 id="cruxide-title">Build with intent.<br /><span class="accent">Ship with confidence.</span></h1>
-        <p class="subtitle">CRUXIDE brings architecture-first defaults, focused tooling, and the CRUXCODE visual system into your daily engineering workspace.</p>
+        <p class="subtitle">CRUXIDE brings architecture-first defaults, focused tooling, and the CRUXCODE.DEV visual system into your daily engineering workspace.</p>
         <div class="actions">
           <button type="button" data-command="openFolder">Open Project</button>
           <button type="button" class="secondary" data-command="newFile">New Code File</button>
@@ -124,7 +124,7 @@ export class HomePanel {
         </div>
         <button type="button" data-command="skills">Open Skills Manager</button>
       </section>
-      <section class="principles" aria-label="CRUXCODE principles">
+      <section class="principles" aria-label="CRUXCODE.DEV principles">
         <div class="principle"><strong>Architecture-first</strong><span>Design for real-world complexity and scale.</span></div>
         <div class="principle"><strong>Connected knowledge</strong><span>Keep engineering context close to the code.</span></div>
         <div class="principle"><strong>Scalable delivery</strong><span>Move from idea to impact with confidence.</span></div>
@@ -134,9 +134,9 @@ export class HomePanel {
         <div class="about-copy">
           <p class="section-label">Developed by CRUX Team</p>
           <h2 id="about-title">About CRUXIDE</h2>
-          <p>CRUXIDE is a curated developer experience built on Visual Studio Code. It brings architecture-first defaults, focused tooling, and the CRUXCODE visual system into one consistent workspace—helping developers build with intent and ship with confidence.</p>
+          <p>CRUXIDE is a curated developer experience built on Visual Studio Code. It brings architecture-first defaults, focused tooling, and the CRUXCODE.DEV visual system into one consistent workspace—helping developers build with intent and ship with confidence.</p>
           <div class="about-actions">
-            <button type="button" data-command="website">Visit CRUXCODE</button>
+            <button type="button" data-command="website">Visit CRUXCODE.DEV</button>
             <button type="button" class="secondary" data-command="linkedin">LinkedIn</button>
           </div>
         </div>
@@ -147,10 +147,10 @@ export class HomePanel {
           <p>9+ years of experience building and scaling enterprise applications across telecom, banking, fintech, and government sectors, specializing in Angular, React, TypeScript, Micro Frontends, frontend architecture, performance, and technical leadership.</p>
         </article>
       </section>
-      <section class="brand-visual" aria-label="CRUXCODE brand experience">
+      <section class="brand-visual" aria-label="CRUXCODE.DEV brand experience">
         <img
           src="${escapeAttribute(heroUri.toString())}"
-          alt="CRUXCODE — Code Together. Ship Further."
+          alt="CRUXCODE.DEV — Code Together. Ship Further."
           width="3840"
           height="2160"
           loading="lazy"
@@ -192,7 +192,7 @@ async function executeHomeCommand(command: HomeCommand): Promise<void> {
       await vscode.commands.executeCommand('cruxide.openSetup');
       break;
     case 'website':
-      await vscode.env.openExternal(CRUXCODE_URL);
+      await vscode.env.openExternal(CRUXCODE_DEV_URL);
       break;
   }
 }

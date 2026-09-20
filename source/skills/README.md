@@ -41,6 +41,9 @@ CRUXIDE exposes optional Agent Skills and Recommended Rules. Nothing is installe
 | CRUX Docker & Containers | DevOps & Data | crux | recommended |
 | CRUX CI/CD | DevOps & Data | crux | recommended |
 | CRUX Database Engineering | DevOps & Data | crux | recommended |
+| CRUX NoSQL Database Engineering | DevOps & Data | crux | recommended |
+| CRUX ORM & Data Access | DevOps & Data | crux | recommended |
+| CRUX Sequelize Architecture | Backend & APIs | crux | recommended |
 | CRUX Python AI Engineering | AI Engineering | crux | recommended |
 | CRUX Python Backend | Backend & APIs | crux | recommended |
 | CRUX RAG Architecture | AI Engineering | crux | recommended |
@@ -79,6 +82,9 @@ CRUXIDE exposes optional Agent Skills and Recommended Rules. Nothing is installe
 | CRUX Rust Rules | Technology Rules | crux | recommended |
 | CRUX Python Rules | Technology Rules | crux | recommended |
 | CRUX SQL & Database Rules | Technology Rules | crux | recommended |
+| CRUX NoSQL Database Rules | Technology Rules | crux | recommended |
+| CRUX ORM & Data Access Rules | Technology Rules | crux | recommended |
+| CRUX Sequelize Rules | Technology Rules | crux | recommended |
 | CRUX Containers & CI/CD Rules | Technology Rules | crux | recommended |
 | CRUX AI, Agents & RAG Production Rules | Technology Rules | crux | recommended |
 | CRUX WCAG 2.2 Rules | Accessibility Standards | crux | recommended |

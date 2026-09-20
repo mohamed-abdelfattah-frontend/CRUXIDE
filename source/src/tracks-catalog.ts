@@ -225,16 +225,33 @@ export const TRACKS_CATALOG: TracksCatalog = {
         'crux-python-rules', 'crux-ai-rag-production-rules',
       ], ['Python runtime and a project environment manager', 'Jupyter kernel packages when notebooks are used'], ['python', 'ai', 'ml', 'data']),
 
-    track('databases', 'Databases & Data Tools', 'AI & Data',
-      'SQL clients and drivers for common backend data workflows plus database engineering guidance.', [
+    track('databases', 'SQL & Relational Databases', 'AI & Data',
+      'SQL clients and drivers for PostgreSQL, MySQL/MariaDB, SQL Server, and SQLite plus relational database engineering guidance.', [
         extension('mtxr.sqltools', 'SQLTools'),
         extension('mtxr.sqltools-driver-pg', 'SQLTools PostgreSQL Driver'),
         extension('mtxr.sqltools-driver-mysql', 'SQLTools MySQL/MariaDB Driver'),
+        extension('mtxr.sqltools-driver-sqlite', 'SQLTools SQLite Driver'),
         extension('ms-mssql.mssql', 'SQL Server (mssql)'),
         extension('mechatroner.rainbow-csv', 'Rainbow CSV'),
       ], ['crux-database-engineering', 'supabase-postgres-best-practices'], [
         'crux-security-rules', 'crux-performance-rules', 'crux-sql-database-rules',
-      ], ['Database clients and credentials supplied by the developer'], ['sql', 'postgresql', 'mysql', 'mssql']),
+      ], ['Database clients and credentials supplied by the developer'], ['sql', 'relational', 'postgresql', 'mysql', 'mariadb', 'mssql', 'sqlite']),
+
+    track('databases-nosql', 'NoSQL Databases', 'AI & Data',
+      'Official MongoDB and Redis tooling plus production guidance for document, key-value, cache, consistency, and operational design.', [
+        extension('mongodb.mongodb-vscode', 'MongoDB for VS Code'),
+        extension('Redis.redis-for-vscode', 'Redis for VS Code'),
+      ], ['crux-nosql-database-engineering'], [
+        'crux-security-rules', 'crux-performance-rules', 'crux-nosql-database-rules',
+      ], ['MongoDB, Redis, or another project-selected NoSQL service and credentials'], ['nosql', 'mongodb', 'redis', 'document-database', 'key-value', 'cache']),
+
+    track('database-orm', 'ORMs & Data Access', 'AI & Data',
+      'Prisma editor tooling plus ORM architecture for Sequelize, Prisma, TypeORM, Mongoose, EF Core, Hibernate, SQLAlchemy, Django ORM, and Eloquent.', [
+        extension('Prisma.prisma', 'Prisma'),
+      ], ['crux-orm-data-access', 'crux-sequelize-architecture'], [
+        'crux-security-rules', 'crux-performance-rules', 'crux-testing-rules',
+        'crux-orm-rules', 'crux-sequelize-rules',
+      ], ['The project database driver, ORM runtime package, and migration CLI'], ['orm', 'sequelize', 'prisma', 'typeorm', 'mongoose', 'ef-core', 'hibernate', 'sqlalchemy', 'django-orm', 'eloquent']),
 
     track('devops-containers', 'Containers & DevOps', 'Platform',
       'Containers, dev containers, CI/CD, GitHub Actions, and secure delivery guidance.', [

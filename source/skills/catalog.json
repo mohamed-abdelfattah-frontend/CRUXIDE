@@ -1375,6 +1375,138 @@
       "license": "MIT"
     },
     {
+      "id": "crux-nosql-database-engineering",
+      "name": "CRUX NoSQL Database Engineering",
+      "category": "DevOps & Data",
+      "description": "Design and review MongoDB, Redis, and other NoSQL systems around access patterns, consistency, scale, security, and recovery.",
+      "kind": "skill",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Design and review MongoDB, Redis, and other NoSQL systems around access patterns, consistency, scale, security, and recovery."
+      ],
+      "useCases": [],
+      "tags": [
+        "nosql",
+        "mongodb",
+        "redis",
+        "document-database",
+        "key-value"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-orm-data-access",
+      "name": "CRUX ORM & Data Access",
+      "category": "DevOps & Data",
+      "description": "Design maintainable ORM and data-access layers across Sequelize, Prisma, TypeORM, Mongoose, EF Core, Hibernate, SQLAlchemy, Django ORM, and Eloquent.",
+      "kind": "skill",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Design maintainable ORM and data-access layers across Sequelize, Prisma, TypeORM, Mongoose, EF Core, Hibernate, SQLAlchemy, Django ORM, and Eloquent."
+      ],
+      "useCases": [],
+      "tags": [
+        "orm",
+        "data-access",
+        "sequelize",
+        "prisma",
+        "typeorm",
+        "mongoose",
+        "ef-core",
+        "hibernate",
+        "sqlalchemy",
+        "django-orm",
+        "eloquent"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-sequelize-architecture",
+      "name": "CRUX Sequelize Architecture",
+      "category": "Backend & APIs",
+      "description": "Build production Sequelize data layers with typed models, explicit associations, safe transactions, migrations, and measurable queries.",
+      "kind": "skill",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Build production Sequelize data layers with typed models, explicit associations, safe transactions, migrations, and measurable queries."
+      ],
+      "useCases": [],
+      "tags": [
+        "sequelize",
+        "nodejs",
+        "typescript",
+        "orm",
+        "sql"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [],
+      "license": "MIT"
+    },
+    {
       "id": "crux-python-ai-engineering",
       "name": "CRUX Python AI Engineering",
       "category": "AI Engineering",
@@ -2912,6 +3044,150 @@
       "references": [
         "https://www.postgresql.org/docs/current/sql.html",
         "https://www.postgresql.org/docs/current/ddl-rowsecurity.html"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-nosql-database-rules",
+      "name": "CRUX NoSQL Database Rules",
+      "category": "Technology Rules",
+      "description": "NoSQL rules for document, key-value, cache, consistency, indexing, partitioning, security, and operational safety.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "NoSQL rules for document, key-value, cache, consistency, indexing, partitioning, security, and operational safety."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "nosql",
+        "mongodb",
+        "redis",
+        "document-database",
+        "key-value"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://www.mongodb.com/docs/manual/data-modeling/",
+        "https://www.mongodb.com/docs/manual/core/transactions/",
+        "https://redis.io/docs/latest/"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-orm-rules",
+      "name": "CRUX ORM & Data Access Rules",
+      "category": "Technology Rules",
+      "description": "ORM rules for explicit mappings, query behavior, transactions, migrations, security, performance, and database-native escape hatches.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "ORM rules for explicit mappings, query behavior, transactions, migrations, security, performance, and database-native escape hatches."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "orm",
+        "data-access",
+        "sequelize",
+        "prisma",
+        "typeorm",
+        "mongoose"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://sequelize.org/docs/v6/",
+        "https://www.prisma.io/docs/",
+        "https://typeorm.io/"
+      ],
+      "license": "MIT"
+    },
+    {
+      "id": "crux-sequelize-rules",
+      "name": "CRUX Sequelize Rules",
+      "category": "Technology Rules",
+      "description": "Version-aware Sequelize rules for models, associations, queries, transactions, migrations, security, and production operation.",
+      "kind": "rule-pack",
+      "source": "crux",
+      "status": "recommended",
+      "agents": [
+        "codex",
+        "claude-code",
+        "copilot",
+        "cursor",
+        "gemini",
+        "generic"
+      ],
+      "permissions": {
+        "filesystem": "read",
+        "network": false,
+        "scripts": false,
+        "hooks": false,
+        "authentication": false
+      },
+      "benefits": [
+        "Version-aware Sequelize rules for models, associations, queries, transactions, migrations, security, and production operation."
+      ],
+      "useCases": [],
+      "tags": [
+        "technology-rules",
+        "version-aware",
+        "sequelize",
+        "nodejs",
+        "orm",
+        "sql"
+      ],
+      "required": false,
+      "explicitOnly": false,
+      "version": "1.1.0",
+      "lastReviewed": "2026-09-16",
+      "versionPolicy": "Detect the repository language, framework, runtime, and toolchain versions before applying guidance. Preserve supported project conventions, avoid deprecated APIs in new code, and propose migrations separately with compatibility and rollback notes.",
+      "references": [
+        "https://sequelize.org/docs/v6/",
+        "https://sequelize.org/docs/v6/other-topics/transactions/",
+        "https://sequelize.org/docs/v6/other-topics/migrations/"
       ],
       "license": "MIT"
     },

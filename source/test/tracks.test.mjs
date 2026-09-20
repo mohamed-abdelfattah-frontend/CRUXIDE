@@ -18,6 +18,10 @@ test('track catalog is unique, all-selectable, and maps only known skills', asyn
   assert.equal(new Set(extensionIds).size, extensionIds.length);
   assert.ok(extensionIds.includes('jetbrains.kotlin-server'));
   assert.ok(extensionIds.includes('ms-python.python'));
+  assert.ok(extensionIds.includes('mtxr.sqltools-driver-sqlite'));
+  assert.ok(extensionIds.includes('mongodb.mongodb-vscode'));
+  assert.ok(extensionIds.includes('redis.redis-for-vscode'));
+  assert.ok(extensionIds.includes('prisma.prisma'));
   assert.ok(!extensionIds.includes('sweetpad.sweetpad'));
 });
 
@@ -55,6 +59,8 @@ test('every supported engineering track maps its technology-specific rule packs'
     ['backend-go-rust', ['crux-go-rules', 'crux-rust-rules']],
     ['ai-python', ['crux-python-rules', 'crux-ai-rag-production-rules']],
     ['databases', ['crux-sql-database-rules']],
+    ['databases-nosql', ['crux-nosql-database-rules']],
+    ['database-orm', ['crux-orm-rules', 'crux-sequelize-rules']],
     ['devops-containers', ['crux-container-cicd-rules']],
   ]);
   const byId = new Map(TRACKS_CATALOG.tracks.map((track) => [track.id, track]));

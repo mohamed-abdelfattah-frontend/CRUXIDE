@@ -65,6 +65,10 @@ test('manifest keeps the release security invariants', async () => {
     'ms-dotnettools.csdevkit',
     'vscjava.vscode-java-pack',
     'vmware.vscode-boot-dev-pack',
+    'mtxr.sqltools-driver-sqlite',
+    'mongodb.mongodb-vscode',
+    'Redis.redis-for-vscode',
+    'Prisma.prisma',
   ]) assert.ok(trackExtensionIds.includes(requiredId), `${requiredId} must be curated`);
   assert.equal(manifest.qna, false);
 });
