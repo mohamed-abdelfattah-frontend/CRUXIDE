@@ -103,7 +103,7 @@ jobs:
               else
                 node "$VALIDATOR" --range "$sha"
               fi
-            done < <(git log --format=%H "$BASE_SHA..$HEAD_SHA")
+            done < <(git log --reverse --format=%H "$BASE_SHA..$HEAD_SHA")
             if [ "$CHECKED" -eq 0 ]; then
               echo "No human-authored commits in range; nothing to validate."
             fi
