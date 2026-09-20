@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const repositoryRoot = new URL('../../', import.meta.url);
-const { inspectMessage, inspectIdentity } = await import(
+const { inspectMessage, inspectIdentity, inspectSigner } = await import(
   new URL('scripts/validate-commit-attribution.mjs', repositoryRoot).href
 );
 
@@ -149,7 +149,43 @@ test('CI enforces the policy on every pull request', async () => {
     'utf8',
   );
   assert.match(workflow, /name: Commit attribution/);
-  assert.match(workflow, /validate-commit-attribution\.mjs --range/);
+  assert.match(workflow, /validate-commit-attribution\.mjs/);
+  assert.match(workflow, /--range/);
   // The whole PR range must be inspected, not just the tip commit.
   assert.match(workflow, /fetch-depth: 0/);
+});
+
+test('a tool signing identity is rejected', () => {
+  // PROJECT_RULES.md forbids a tool appearing as signer, not only as author or
+  // committer: a commit authored by a human can still be signed by a tool key.
+  assert.ok(inspectSigner('Claude', '').length > 0, 'a tool signer name must be rejected');
+  assert.ok(inspectSigner('GitHub Copilot', '').length > 0);
+  assert.ok(inspectSigner('', 'anthropic-signing-key').length > 0, 'a tool signing key must be rejected');
+  assert.ok(inspectSigner('dependabot[bot]', '').length > 0, 'a bot signer must be rejected');
+});
+
+test('a human signer and an unsigned commit are both accepted', () => {
+  assert.deepEqual(inspectSigner('Mohammed Khaled Saad', 'ABCDEF0123456789'), []);
+  // Unsigned commits leave %GS and %GK empty, which is not a violation.
+  assert.deepEqual(inspectSigner('', ''), []);
+});
+
+test('CI runs the validator from the base revision, not the pull request copy', async () => {
+  const workflow = await readFile(new URL('.github/workflows/governance.yml', repositoryRoot), 'utf8');
+
+  // Executing the pull request's own copy would let a change edit the checker
+  // and add forbidden trailers in the same commit, so the gate approves itself.
+  // Built without regex literals so the shell-sensitive characters stay intact.
+  assert.ok(
+    workflow.includes('git show "$BASE_SHA:scripts/validate-commit-attribution.mjs"'),
+    'the validator must be read from the base revision',
+  );
+  assert.ok(
+    workflow.includes('node "$VALIDATOR"'),
+    'the validator copied from base is the one that runs',
+  );
+  assert.ok(
+    !workflow.includes('run: node scripts/validate-commit-attribution.mjs'),
+    'the workflow must not execute the checked-out pull request copy directly',
+  );
 });

@@ -95,8 +95,27 @@ export function inspectIdentity(role, name, email) {
   return problems;
 }
 
+/**
+ * Inspect the signing identity. PROJECT_RULES.md forbids a tool appearing as
+ * signer, not only as author or committer, and a signature carries its own
+ * identity: a commit authored by a human can still be signed by a tool key.
+ *
+ * %GS is the signer name and %GK the key used. Both are empty for an unsigned
+ * commit, which is not itself a violation.
+ */
+export function inspectSigner(signerName, signingKey) {
+  const problems = [];
+  if (signerName && namesToolIdentity(signerName)) {
+    problems.push(`signed by a tool identity: ${signerName}`);
+  }
+  if (signingKey && namesToolIdentity(signingKey)) {
+    problems.push(`signed with a tool key: ${signingKey}`);
+  }
+  return problems;
+}
+
 function checkRange(range) {
-  const format = ['%H', '%an', '%ae', '%cn', '%ce', '%B'].join(UNIT) + RECORD;
+  const format = ['%H', '%an', '%ae', '%cn', '%ce', '%GS', '%GK', '%B'].join(UNIT) + RECORD;
   const raw = git(['log', `--format=${format}`, range]);
 
   const commits = raw
@@ -106,10 +125,14 @@ function checkRange(range) {
 
   const failures = [];
   for (const entry of commits) {
-    const [sha, authorName, authorEmail, committerName, committerEmail, body] = entry.split(UNIT);
+    const [
+      sha, authorName, authorEmail, committerName, committerEmail,
+      signerName, signingKey, body,
+    ] = entry.split(UNIT);
     const problems = [
       ...inspectIdentity('author', authorName, authorEmail),
       ...inspectIdentity('committer', committerName, committerEmail),
+      ...inspectSigner(signerName ?? '', signingKey ?? ''),
       ...inspectMessage(body ?? ''),
     ];
     if (problems.length > 0) {

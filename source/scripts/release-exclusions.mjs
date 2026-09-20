@@ -63,8 +63,45 @@ export function isIgnored(rules, name) {
 
 /**
  * @param {{names: Set<string>, globs: RegExp[]}} rules
- * @param {string} name A top-level entry name.
+ * @param {string} name An entry name.
  */
 export function shouldCopyEntry(rules, name) {
   return !isIgnored(rules, name);
+}
+
+/**
+ * Copy a directory tree, applying the ignore rules at every level.
+ *
+ * Filtering only the top level let a nested node_modules, dist, .vscode-test,
+ * or a stray artefact under a kept directory reach the published archive,
+ * because the recursive copy beneath it was unfiltered.
+ *
+ * @param {{names: Set<string>, globs: RegExp[]}} rules
+ * @param {{readdir: Function, mkdir: Function, copyFile: Function}} fs
+ * @param {string} from
+ * @param {string} to
+ * @param {(...parts: string[]) => string} joinPath
+ * @returns {Promise<string[]>} Paths copied, relative to `from`, for testing.
+ */
+export async function copyFiltered(rules, fs, from, to, joinPath) {
+  const copied = [];
+
+  async function walk(sourceDir, targetDir, prefix) {
+    await fs.mkdir(targetDir, { recursive: true });
+    for (const entry of await fs.readdir(sourceDir, { withFileTypes: true })) {
+      if (isIgnored(rules, entry.name)) continue;
+      const relative = prefix ? `${prefix}/${entry.name}` : entry.name;
+      const source = joinPath(sourceDir, entry.name);
+      const target = joinPath(targetDir, entry.name);
+      if (entry.isDirectory()) {
+        await walk(source, target, relative);
+      } else if (entry.isFile()) {
+        await fs.copyFile(source, target);
+        copied.push(relative);
+      }
+    }
+  }
+
+  await walk(from, to, '');
+  return copied;
 }

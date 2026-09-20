@@ -222,3 +222,37 @@ test('focus stays in the search box across applying and clearing a filter', asyn
   assert.equal(view.activeElement(), search, 'focus must stay in the search box when cleared');
   assert.equal(view.isFocusLost(), false);
 });
+
+test('scroll position survives a track toggle and the bulk controls', async () => {
+  const view = await mountedWebview();
+  const list = view.element('track-list');
+
+  // The user has scrolled down to a track low on the page.
+  list.scrollTop = 420;
+
+  const target = view.trackInputs()[4];
+  target.checked = false;
+  target.dispatchEvent('change');
+  assert.equal(list.scrollTop, 420, 'toggling must not scroll the list back to the top');
+
+  view.click('core');
+  assert.equal(list.scrollTop, 420, 'Core only must not scroll the list back to the top');
+
+  view.click('all');
+  assert.equal(list.scrollTop, 420, 'Select all must not scroll the list back to the top');
+});
+
+test('the harness does detect scroll loss, so the assertion above is not vacuous', async () => {
+  const view = await mountedWebview();
+  const list = view.element('track-list');
+  list.scrollTop = 420;
+
+  // Filtering legitimately rebuilds the list. A browser resets a scroll
+  // container when its content is replaced, and so must the harness, or
+  // 'scroll survives a toggle' could never fail.
+  const search = view.element('search');
+  search.value = 'Track 1';
+  search.dispatchEvent('input');
+
+  assert.equal(list.scrollTop, 0, 'replacing the content resets the scroll container');
+});

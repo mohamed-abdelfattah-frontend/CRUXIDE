@@ -76,4 +76,21 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: node scripts/validate-commit-attribution.mjs --range "$BASE_SHA..$HEAD_SHA"
+        run: |
+          set -euo pipefail
+          # Run the validator from the BASE revision, not the pull request's own
+          # copy. Executing the checked-out PR copy would let a change edit the
+          # checker and add forbidden trailers in the same commit, so the gate
+          # would approve itself.
+          VALIDATOR="$RUNNER_TEMP/validate-commit-attribution.mjs"
+          if git cat-file -e "$BASE_SHA:scripts/validate-commit-attribution.mjs" 2>/dev/null; then
+            git show "$BASE_SHA:scripts/validate-commit-attribution.mjs" > "$VALIDATOR"
+            echo "Using the validator from base $BASE_SHA."
+          else
+            # Only reachable while the validator is first being introduced, when
+            # the base revision has no copy to trust yet. Every later run uses
+            # the merged, trusted one.
+            cp scripts/validate-commit-attribution.mjs "$VALIDATOR"
+            echo "::warning::No validator at base $BASE_SHA; using this pull request's copy for the first introduction only."
+          fi
+          node "$VALIDATOR" --range "$BASE_SHA..$HEAD_SHA"

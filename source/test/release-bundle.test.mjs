@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { copyFile, cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -9,7 +9,7 @@ const readText = (path) => readFile(new URL(path, root), 'utf8');
 
 // The release script imports this module, so the tests exercise the same
 // implementation rather than a copy of the algorithm.
-const { deriveIgnoredEntries, shouldCopyEntry, isIgnored } =
+const { deriveIgnoredEntries, shouldCopyEntry, isIgnored, copyFiltered } =
   await import(new URL('scripts/release-exclusions.mjs', root).href);
 
 /**
@@ -103,11 +103,20 @@ test('the release script uses the shared module rather than its own copy', async
 
   assert.match(
     script,
-    /import \{ deriveIgnoredEntries, shouldCopyEntry \} from '\.\/release-exclusions\.mjs'/,
+    /import \{ copyFiltered, deriveIgnoredEntries \} from '\.\/release-exclusions\.mjs'/,
     'release.mjs must import the shared exclusion logic',
   );
   assert.match(script, /deriveIgnoredEntries\(gitignore\)/);
-  assert.match(script, /shouldCopyEntry\(ignoredSourceEntries, entry\.name\)/);
+
+  // The copy must go through copyFiltered, which applies the rules at every
+  // level. A blanket recursive cp of a kept directory would carry nested
+  // node_modules and build output into the archive.
+  assert.match(script, /await copyFiltered\(/);
+  assert.doesNotMatch(
+    script,
+    /cp\(join\(projectRoot, entry\.name\)[\s\S]{0,60}recursive: true/,
+    'the source tree must not be copied with an unfiltered recursive cp',
+  );
 
   // If the derivation were re-implemented here, the two could diverge again.
   assert.doesNotMatch(
@@ -124,4 +133,48 @@ test('the smoke-test download directory is ignored by git', async () => {
     /^\.vscode-test\/$/m,
     '.vscode-test/ must be ignored so a 300 MB editor is never committed or bundled',
   );
+});
+
+test('the ignore rules are applied at every level, not only the top', async (t) => {
+  // Filtering only top-level names let the recursive copy carry a nested
+  // node_modules, dist, or stray artefact through under a kept directory.
+  const workspace = await mkdtemp(join(tmpdir(), 'cruxide-nested-'));
+  t.after(() => rm(workspace, { force: true, recursive: true }));
+
+  const source = join(workspace, 'source');
+  const bundle = join(workspace, 'bundle');
+
+  const files = [
+    ['src', 'index.ts'],
+    ['src/nested', 'helper.ts'],
+    ['src/nested/node_modules/pkg', 'index.js'],   // nested dependency tree
+    ['test/fixtures', 'fixture.json'],
+    ['test/fixtures/dist', 'bundle.js'],           // nested build output
+    ['media', 'logo.png'],
+    ['media', 'stray.vsix'],                       // nested artefact, glob rule
+  ];
+  for (const [dir, name] of files) {
+    await mkdir(join(source, dir), { recursive: true });
+    await writeFile(join(source, dir, name), name);
+  }
+  await writeFile(join(source, '.gitignore'), ['node_modules/', 'dist/', '*.vsix', ''].join('\n'));
+
+  const rules = deriveIgnoredEntries(await readFile(join(source, '.gitignore'), 'utf8'));
+  const copied = await copyFiltered(rules, { readdir, mkdir, copyFile }, source, bundle, join);
+
+  assert.deepEqual(copied.sort(), [
+    '.gitignore',
+    'media/logo.png',
+    'src/index.ts',
+    'src/nested/helper.ts',
+    'test/fixtures/fixture.json',
+  ]);
+
+  for (const leaked of ['src/nested/node_modules/pkg/index.js', 'test/fixtures/dist/bundle.js', 'media/stray.vsix']) {
+    assert.ok(!copied.includes(leaked), `${leaked} must not reach the release bundle`);
+  }
+
+  // And the directories themselves must not have been created at all.
+  await assert.rejects(readdir(join(bundle, 'src', 'nested', 'node_modules')));
+  await assert.rejects(readdir(join(bundle, 'test', 'fixtures', 'dist')));
 });

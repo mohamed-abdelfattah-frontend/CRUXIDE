@@ -41,6 +41,10 @@ class Element {
     this.type = '';
     this.name = '';
     this.classList = new ClassList(this);
+    // Browsers reset a scroll container to the top when its content is
+    // replaced. Modelling scrollTop is what lets a test pin the scroll half of
+    // the preservation contract, not just focus and node identity.
+    this.scrollTop = 0;
   }
 
   append(...nodes) {
@@ -76,6 +80,7 @@ class Element {
     }
     for (const child of this.children) child.parentNode = null;
     this.children = [];
+    this.scrollTop = 0;
     this.append(...nodes);
   }
 
