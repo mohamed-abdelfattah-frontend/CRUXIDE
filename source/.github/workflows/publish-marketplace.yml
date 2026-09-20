@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: Existing GitHub Release tag, for example v1.1.0
+        description: Existing GitHub Release tag, for example v1.0.0
         required: true
         type: string
 
