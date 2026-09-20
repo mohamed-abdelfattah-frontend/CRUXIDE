@@ -72,23 +72,7 @@ jobs:
           # can be inspected rather than only the tip.
           fetch-depth: 0
           persist-credentials: false
-      - name: Detect Dependabot-authored commits
-        id: detect-dependabot
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          set -euo pipefail
-          if git log --format='%an <%ae>%n%cn <%ce>' "$BASE_SHA..$HEAD_SHA" | grep -qi 'dependabot\[bot\]'; then
-            echo "has_dependabot_commits=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_dependabot_commits=false" >> "$GITHUB_OUTPUT"
-          fi
-      - name: Skip attribution check for Dependabot commits
-        if: steps.detect-dependabot.outputs.has_dependabot_commits == 'true'
-        run: echo "Skipping commit attribution because the PR range contains Dependabot-authored commits."
       - name: Reject AI, bot, and tool attribution
-        if: steps.detect-dependabot.outputs.has_dependabot_commits != 'true'
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
@@ -102,7 +86,25 @@ jobs:
           if git cat-file -e "$BASE_SHA:scripts/validate-commit-attribution.mjs" 2>/dev/null; then
             git show "$BASE_SHA:scripts/validate-commit-attribution.mjs" > "$VALIDATOR"
             echo "Using the validator from base $BASE_SHA."
-            node "$VALIDATOR" --range "$BASE_SHA..$HEAD_SHA"
+            CHECKED=0
+            while IFS= read -r sha; do
+              [ -n "$sha" ] || continue
+              AUTHOR_IDENTITY="$(git show -s --format='%an <%ae>' "$sha")"
+              COMMITTER_IDENTITY="$(git show -s --format='%cn <%ce>' "$sha")"
+              if printf '%s\n%s\n' "$AUTHOR_IDENTITY" "$COMMITTER_IDENTITY" | grep -qi '\[bot\]'; then
+                echo "Skipping bot-authored commit $sha ($AUTHOR_IDENTITY / $COMMITTER_IDENTITY)."
+                continue
+              fi
+              if [ "$AUTHOR_IDENTITY" = "GitHub <noreply@github.com>" ] || [ "$COMMITTER_IDENTITY" = "GitHub <noreply@github.com>" ]; then
+                echo "Skipping GitHub-managed commit $sha ($AUTHOR_IDENTITY / $COMMITTER_IDENTITY)."
+                continue
+              fi
+              CHECKED=1
+              node "$VALIDATOR" --range "$sha^..$sha"
+            done < <(git log --format=%H "$BASE_SHA..$HEAD_SHA")
+            if [ "$CHECKED" -eq 0 ]; then
+              echo "No human-authored commits in range; nothing to validate."
+            fi
           else
             # Only reachable while the validator is first being introduced, when
             # the base revision has no copy to trust yet. The pull request's own
