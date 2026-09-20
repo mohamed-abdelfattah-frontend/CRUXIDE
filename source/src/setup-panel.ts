@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { applyExperience, describeExperienceFailure } from './experience.js';
 import { applySetup, getSetupState } from './setup-installer.js';
 import { isSetupMessage } from './setup-message.js';
 import { extensionPlan, resolveTracks, skillPlan, TRACKS_CATALOG } from './tracks-catalog.js';
@@ -96,9 +97,16 @@ export class SetupPanel {
         { location: vscode.ProgressLocation.Notification, title: 'Applying CRUXIDE tracks…', cancellable: false },
         () => applySetup(this.context, this.output, message.request),
       );
-      await vscode.commands.executeCommand('cruxide.applyExperience');
-      this.output.appendLine(`Setup result: ${JSON.stringify(result)}`);
-      await this.panel.webview.postMessage({ command: 'applied', result });
+      // The confirmed setup applies the CRUXIDE experience automatically. It runs
+      // only after the user confirmed the modal above, and a settings failure is
+      // reported rather than swallowed so setup cannot claim a success it did not have.
+      const experience = await applyExperience();
+      if (!experience.applied) {
+        this.output.appendLine(`Experience incomplete: ${describeExperienceFailure(experience)}`);
+      }
+
+      this.output.appendLine(`Setup result: ${JSON.stringify({ ...result, experience })}`);
+      await this.panel.webview.postMessage({ command: 'applied', result, experience });
 
       const failureText = result.failedExtensions.length > 0
         ? ` ${result.failedExtensions.length} extension(s) need manual review; see CRUXIDE output.`
@@ -106,9 +114,16 @@ export class SetupPanel {
       const skillsText = result.skillsDeferred
         ? ' Open and trust a local project, then run Setup again to create project skills and rules.'
         : '';
-      void vscode.window.showInformationMessage(
-        `CRUXIDE setup applied: ${result.installedExtensions.length} extension(s) installed, ${result.alreadyInstalledExtensions.length} already available.${failureText}${skillsText}`,
-      );
+      const experienceText = experience.applied
+        ? ' CRUXIDE theme, fonts, and window title applied.'
+        : ` ${experience.failed.length} CRUXIDE experience setting(s) could not be written; run CRUXIDE: Apply CRUXIDE Experience to retry.`;
+      const summary = `CRUXIDE setup applied: ${result.installedExtensions.length} extension(s) installed, ${result.alreadyInstalledExtensions.length} already available.${failureText}${skillsText}${experienceText}`;
+
+      if (result.failedExtensions.length > 0 || !experience.applied) {
+        void vscode.window.showWarningMessage(summary);
+      } else {
+        void vscode.window.showInformationMessage(summary);
+      }
     } catch (error: unknown) {
       const detail = error instanceof Error ? error.message : String(error);
       this.output.appendLine(`Setup failed: ${detail}`);

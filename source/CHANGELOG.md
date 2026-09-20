@@ -4,6 +4,29 @@ All notable changes follow Keep a Changelog conventions.
 
 ## Unreleased
 
+## 1.2.0 - 2026-09-17
+
+### Database and ORM engineering
+
+- Split database setup into independently selectable SQL/relational, NoSQL, and ORM/data-access tracks.
+- Added official MongoDB, Redis, Prisma, and SQLTools SQLite extensions.
+- Added production-grade skills and version-aware rules for NoSQL architecture, ORM data access, and Sequelize models, associations, transactions, migrations, security, and query performance.
+- Added ORM guidance covering Sequelize, Prisma, TypeORM, Mongoose, EF Core, Hibernate/JPA, SQLAlchemy, Django ORM, and Eloquent without forcing application runtime dependencies.
+
+### Branding
+
+- Adopted CRUXCODE.DEV across user-facing product copy, metadata, documentation, installers, snippets, privacy and security notices, and marketing assets while preserving stable Marketplace and extension identifiers.
+
+### Setup experience
+
+- The confirmed setup now applies the CRUXIDE experience — theme, icon theme, window title, Roboto Mono editor and terminal fonts, and ligatures — without a separate manual step. `CRUXIDE: Apply CRUXIDE Experience` remains available and is idempotent.
+- Each owned setting is written independently, so a setting that cannot be written is reported instead of being swallowed. Setup warns and names what failed rather than showing a complete-success state.
+- Added regression coverage for track-selection scroll and focus preservation across mouse and keyboard selection, Select all, Core only, and search-filtered selection.
+
+### Fixed
+
+- Reconciled the 1.2.0 work into `source/`, the tree CI builds and publishes. The database/ORM tracks, the CRUXCODE.DEV branding, and the version bump had landed in the repository root, so a 1.2.0 build would have shipped 1.1.0 content.
+
 ## 1.1.0 - 2026-09-16
 
 ### Senior architecture and technology rules
@@ -50,7 +73,7 @@ All notable changes follow Keep a Changelog conventions.
 
 ### Added
 
-- Added the CRUXIDE branded VS Code experience with Figma-aligned CRUXCODE identity, dark and light themes, exact logo assets, custom application shortcuts, and offline typography.
+- Added the CRUXIDE branded VS Code experience with Figma-aligned CRUXCODE.DEV identity, dark and light themes, exact logo assets, custom application shortcuts, and offline typography.
 - Added a responsive 4K Home experience and About section for CRUXIDE, CRUX Team, founder Mohamed Khaled Abdelfattah, company website, and LinkedIn profile.
 - Added a curated 61-extension developer toolset covering Angular, React, React Native, Next.js, Tailwind CSS, shadcn/ui, NestJS, Express, Git, GitHub, testing, containers, AI assistants, autocomplete, spelling, JSON, documentation, and productivity.
 - Added CRUX Skills Manager with searchable selection across bundled CRUX skills, recommended rule packs, and provider-managed references for Codex, Claude Code, GitHub Copilot, Cursor, Gemini, and generic skill-aware agents.

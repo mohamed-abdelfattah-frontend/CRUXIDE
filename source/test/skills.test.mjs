@@ -28,7 +28,7 @@ test('catalog covers agreed platforms, review, Archify, ESLint, and Git workflow
   for (const expected of ['angular', 'react', 'next.js', 'react native', 'tailwind', 'shadcn', 'kotlin', 'swift', 'flutter', 'express', 'nestjs', 'coderabbit', 'archify', 'eslint', 'code review']) {
     assert.match(text, new RegExp(expected.replace('.', '\\.')));
   }
-  for (const expected of ['php', 'laravel', '.net', 'asp.net core', 'spring boot', 'python ai', 'fastapi', 'django', 'database engineering']) {
+  for (const expected of ['php', 'laravel', '.net', 'asp.net core', 'spring boot', 'python ai', 'fastapi', 'django', 'database engineering', 'nosql', 'mongodb', 'redis', 'orm', 'sequelize', 'prisma', 'typeorm', 'mongoose']) {
     assert.ok(text.includes(expected), `${expected} must be represented in the skills catalog`);
   }
   const gitSkill = await readText('skills/bundled/crux-git-workflow-rules/SKILL.md');
@@ -62,7 +62,8 @@ test('technology rules are version-aware, current, sourced, and substantial', as
     'crux-nodejs-rules', 'crux-express-rules', 'crux-nestjs-rules',
     'crux-php-rules', 'crux-laravel-rules', 'crux-csharp-dotnet-rules',
     'crux-java-spring-rules', 'crux-go-rules', 'crux-rust-rules',
-    'crux-python-rules', 'crux-sql-database-rules', 'crux-container-cicd-rules',
+    'crux-python-rules', 'crux-sql-database-rules', 'crux-nosql-database-rules',
+    'crux-orm-rules', 'crux-sequelize-rules', 'crux-container-cicd-rules',
     'crux-ai-rag-production-rules',
   ];
   const catalogIds = new Set(catalog.skills.map(({ id }) => id));

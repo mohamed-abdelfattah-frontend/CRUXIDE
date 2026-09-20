@@ -1,12 +1,12 @@
-# Install CRUXIDE 1.1.0
+# Install CRUXIDE 1.2.0
 
-Download the versioned `CRUXIDE-v1.1.0.zip` asset from [GitHub Releases](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/releases). Do not use GitHub's **Code → Download ZIP** source archive; it is source code, not an installable release.
+Download the versioned `CRUXIDE-v1.2.0.zip` asset from [GitHub Releases](https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/releases). Do not use GitHub's **Code → Download ZIP** source archive; it is source code, not an installable release.
 
 Do not run an installer directly from inside the ZIP. Extract the entire archive first so the VSIX, icon, and checksum manifest stay together.
 
 ## Windows
 
-Open PowerShell in the extracted `CRUXIDE-v1.1.0` folder. In File Explorer, open that folder, click the address bar, type `powershell`, and press Enter. Then run:
+Open PowerShell in the extracted `CRUXIDE-v1.2.0` folder. In File Explorer, open that folder, click the address bar, type `powershell`, and press Enter. Then run:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
@@ -38,7 +38,7 @@ Use `./install-macos.sh --no-launch` to install without opening CRUXIDE.
 
 ```bash
 code --profile "CRUXIDE" --new-window
-code --profile "CRUXIDE" --install-extension ./cruxide-1.1.0.vsix --force
+code --profile "CRUXIDE" --install-extension ./cruxide-1.2.0.vsix --force
 code --profile "CRUXIDE" --list-extensions
 code --profile "CRUXIDE" --new-window
 ```
@@ -50,13 +50,13 @@ The list must contain `cruxcode.cruxide`. Track-specific extensions appear only 
 Windows:
 
 ```powershell
-Get-FileHash .\cruxide-1.1.0.vsix -Algorithm SHA256
+Get-FileHash .\cruxide-1.2.0.vsix -Algorithm SHA256
 ```
 
 macOS:
 
 ```bash
-shasum -a 256 ./cruxide-1.1.0.vsix
+shasum -a 256 ./cruxide-1.2.0.vsix
 ```
 
 Compare the result with `SHA256SUMS.txt` included in the release.

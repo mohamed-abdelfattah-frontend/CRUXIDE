@@ -34,7 +34,13 @@
       render();
     } else if (message.command === 'applied') {
       const result = message.result;
-      status.textContent = `Applied ${result.tracks} tracks. Installed ${result.installedExtensions.length} extensions; ${result.alreadyInstalledExtensions.length} were already available.${result.failedExtensions.length ? ` ${result.failedExtensions.length} need manual review.` : ''}${result.skillsDeferred ? ' Project skills and rules are deferred until a trusted local folder is open.' : ' Skills and PROJECT_RULES are ready.'}`;
+      const experience = message.experience;
+      const experienceText = !experience
+        ? ''
+        : experience.applied
+          ? ' CRUXIDE theme, fonts, and window title applied.'
+          : ` ${experience.failed.length} CRUXIDE experience setting(s) could not be written; run CRUXIDE: Apply CRUXIDE Experience to retry.`;
+      status.textContent = `Applied ${result.tracks} tracks. Installed ${result.installedExtensions.length} extensions; ${result.alreadyInstalledExtensions.length} were already available.${result.failedExtensions.length ? ` ${result.failedExtensions.length} need manual review.` : ''}${result.skillsDeferred ? ' Project skills and rules are deferred until a trusted local folder is open.' : ' Skills and PROJECT_RULES are ready.'}${experienceText}`;
     } else if (message.command === 'profileRequired') {
       status.textContent = 'Create or switch to the dedicated profile, then reopen this setup. Nothing was installed.';
     } else if (message.command === 'error') {

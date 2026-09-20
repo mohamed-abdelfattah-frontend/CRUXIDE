@@ -76,6 +76,18 @@
           },
           {
             "context": "CodeQL analysis"
+          },
+          {
+            "context": "Review validation"
+          },
+          {
+            "context": "Review summary"
+          },
+          {
+            "context": "Commit attribution"
+          },
+          {
+            "context": "CodeRabbit"
           }
         ]
       }

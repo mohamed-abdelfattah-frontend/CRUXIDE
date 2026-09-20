@@ -10,6 +10,7 @@ try {
   await runTests({
     extensionDevelopmentPath: projectRoot,
     extensionTestsPath: join(projectRoot, 'test', 'smoke', 'suite.cjs'),
+    timeout: 120_000,
     launchArgs: [
       '--disable-extensions',
       '--disable-workspace-trust',

@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { ActionsProvider } from './actions-provider.js';
 import { hasCodeFiles } from './code-files.js';
+import { applyExperience, describeExperienceFailure } from './experience.js';
 import { HomePanel } from './home-panel.js';
 import { getSetupState } from './setup-installer.js';
 import { SetupPanel } from './setup-panel.js';
@@ -8,7 +9,6 @@ import { SkillsPanel } from './skills-panel.js';
 
 const EXPERIENCE_PROMPTED_KEY = 'cruxide.experiencePrompted.v3';
 const SETUP_PROMPTED_KEY = 'cruxide.setupPrompted.v2';
-const CODE_FONT_STACK = "'Roboto Mono', Consolas, 'Courier New', monospace";
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
   const output = vscode.window.createOutputChannel('CRUXIDE');
@@ -28,9 +28,17 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     }),
     vscode.commands.registerCommand('cruxide.applyExperience', async () => {
       await runUserAction(output, 'Apply experience', async () => {
-        await applyExperience();
+        const result = await applyExperience();
         await context.globalState.update(EXPERIENCE_PROMPTED_KEY, true);
-        void vscode.window.showInformationMessage('CRUXIDE experience applied to this profile.');
+        if (result.applied) {
+          void vscode.window.showInformationMessage('CRUXIDE experience applied to this profile.');
+          return;
+        }
+        const detail = describeExperienceFailure(result);
+        output.appendLine(`Apply experience incomplete: ${detail}`);
+        void vscode.window.showWarningMessage(
+          `CRUXIDE experience partly applied. ${result.failed.length} setting(s) could not be written: ${detail}`,
+        );
       });
     }),
     vscode.commands.registerCommand('cruxide.newFile', async () => {
@@ -80,31 +88,6 @@ async function openFirstRunSetup(
   SetupPanel.show(context, output);
   output.appendLine('Opened first-run track selection. No tools are installed until the user confirms the plan.');
   return true;
-}
-
-export async function applyExperience(): Promise<void> {
-  await Promise.all([
-    vscode.workspace.getConfiguration('workbench').update(
-      'colorTheme', 'CRUXIDE Dark', vscode.ConfigurationTarget.Global,
-    ),
-    vscode.workspace.getConfiguration('workbench').update(
-      'iconTheme', 'material-icon-theme', vscode.ConfigurationTarget.Global,
-    ),
-    vscode.workspace.getConfiguration('window').update(
-      'title',
-      'CRUXIDE — ${rootName}${separator}${activeEditorShort}',
-      vscode.ConfigurationTarget.Global,
-    ),
-    vscode.workspace.getConfiguration('editor').update(
-      'fontLigatures', true, vscode.ConfigurationTarget.Global,
-    ),
-    vscode.workspace.getConfiguration('editor').update(
-      'fontFamily', CODE_FONT_STACK, vscode.ConfigurationTarget.Global,
-    ),
-    vscode.workspace.getConfiguration('terminal.integrated').update(
-      'fontFamily', "'Roboto Mono'", vscode.ConfigurationTarget.Global,
-    ),
-  ]);
 }
 
 async function openHomeWhenEmpty(

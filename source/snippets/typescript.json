@@ -7,7 +7,7 @@
       "}",
       ""
     ],
-    "description": "Create an immutable CRUXCODE TypeScript contract"
+    "description": "Create an immutable CRUXCODE.DEV TypeScript contract"
   },
   "CRUX result type": {
     "prefix": "crux-result",

@@ -17,6 +17,16 @@ All notable changes follow Keep a Changelog conventions.
 
 - Adopted CRUXCODE.DEV across user-facing product copy, metadata, documentation, installers, snippets, privacy and security notices, and marketing assets while preserving stable Marketplace and extension identifiers.
 
+### Setup experience
+
+- The confirmed setup now applies the CRUXIDE experience — theme, icon theme, window title, Roboto Mono editor and terminal fonts, and ligatures — without a separate manual step. `CRUXIDE: Apply CRUXIDE Experience` remains available and is idempotent.
+- Each owned setting is written independently, so a setting that cannot be written is reported instead of being swallowed. Setup warns and names what failed rather than showing a complete-success state.
+- Added regression coverage for track-selection scroll and focus preservation across mouse and keyboard selection, Select all, Core only, and search-filtered selection.
+
+### Fixed
+
+- Reconciled the 1.2.0 work into `source/`, the tree CI builds and publishes. The database/ORM tracks, the CRUXCODE.DEV branding, and the version bump had landed in the repository root, so a 1.2.0 build would have shipped 1.1.0 content.
+
 ## 1.1.0 - 2026-09-16
 
 ### Senior architecture and technology rules

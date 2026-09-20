@@ -1,10 +1,11 @@
 import { createHash } from 'node:crypto';
 import { createReadStream, createWriteStream } from 'node:fs';
-import { chmod, cp, mkdir, open, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
+import { chmod, copyFile, cp, mkdir, open, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
 import { once } from 'node:events';
 import { join, relative, resolve, sep } from 'node:path';
 import { pipeline } from 'node:stream/promises';
 import { ZipFile } from 'yazl';
+import { copyFiltered, deriveIgnoredEntries } from './release-exclusions.mjs';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const manifest = JSON.parse(await readFile(join(projectRoot, 'package.json'), 'utf8'));
@@ -36,13 +37,19 @@ await cp(join(projectRoot, 'installers', 'fonts'), join(stagingRoot, 'fonts'), {
 await chmod(join(stagingRoot, 'install-macos.sh'), 0o755);
 
 await mkdir(sourceRoot, { recursive: true });
-const ignoredSourceEntries = new Set(['.git', 'dist', 'node_modules', 'release']);
-const sourceEntries = await readdir(projectRoot, { withFileTypes: true });
-for (const entry of sourceEntries) {
-  if (!ignoredSourceEntries.has(entry.name)) {
-    await cp(join(projectRoot, entry.name), join(sourceRoot, entry.name), { recursive: true });
-  }
-}
+// The exclusion set is derived from .gitignore in release-exclusions.mjs, so
+// the script and its tests share one implementation instead of two that drift.
+// copyFiltered applies the rules at every level: filtering only the top level
+// let a nested node_modules or build directory through under a kept folder.
+const gitignore = await readFile(join(projectRoot, '.gitignore'), 'utf8');
+const ignoredSourceEntries = deriveIgnoredEntries(gitignore);
+await copyFiltered(
+  ignoredSourceEntries,
+  { readdir, mkdir, copyFile },
+  projectRoot,
+  sourceRoot,
+  join,
+);
 
 const checksumTargets = [
   join(stagingRoot, vsixName),

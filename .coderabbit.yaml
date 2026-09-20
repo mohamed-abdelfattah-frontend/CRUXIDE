@@ -1,0 +1,120 @@
+# CodeRabbit configuration for CRUXIDE.
+#
+# This file takes effect once the CodeRabbit GitHub App is installed on
+# mohamed-abdelfattah-frontend/CRUXIDE and granted access to the repository.
+# Until then it is inert: no review is produced and no check is reported.
+#
+# Every pull request targeting main is reviewed, whoever or whatever authored
+# it, including Dependabot and AI-generated changes.
+
+language: en-GB
+
+early_access: false
+
+reviews:
+  profile: assertive
+  request_changes_workflow: true
+  high_level_summary: true
+  review_status: true
+  poem: false
+
+  # Draft PRs are reviewed once marked ready; see auto_review below.
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+    # No author, label, or branch-name exclusions: Dependabot and agent-authored
+    # changes receive the same review as human-authored ones.
+    ignore_title_keywords: []
+
+  path_filters:
+    - "!**/node_modules/**"
+    - "!source/dist/**"
+    - "!source/release/**"
+    - "!source/.vscode-test/**"
+    # Generated from scripts/skill-definitions.mjs; review the generator instead.
+    - "!source/skills/bundled/**"
+    - "!source/skills/docs/**"
+    - "!source/skills/catalog.json"
+    - "!source/EXTENSIONS.md"
+    - "!**/package-lock.json"
+
+  path_instructions:
+    - path: "source/src/**/*.ts"
+      instructions: >
+        Review against VS Code Extension API best practice. Every webview must
+        keep a restrictive Content Security Policy, load only local assets
+        through localResourceRoots, and validate each incoming message against a
+        fixed allowlist before acting on it. Reject any construction of HTML from
+        unvalidated input, any innerHTML or eval use, and any command execution
+        built from user or workspace data. Project-scoped filesystem writes must
+        respect Workspace Trust. Every disposable must be registered on the
+        extension context. Flag anything that reports success when an operation
+        partly failed.
+
+    - path: "source/src/*-message.ts"
+      instructions: >
+        These are the trust boundary between webviews and the extension host.
+        Validation must reject unknown keys, non-literal types, prototype
+        pollution, duplicates, and oversized arrays. Any new message field
+        without a matching check is a security finding.
+
+    - path: "source/src/skills-installer.ts"
+      instructions: >
+        Reviews filesystem safety. Paths must stay inside the resolved target
+        scope with no traversal. CRUXIDE-owned files must be backed up before
+        removal and user-authored content must be preserved. Project Local must
+        use the managed .git/info/exclude block and must never modify the shared
+        .gitignore.
+
+    - path: "source/scripts/**/*.mjs"
+      instructions: >
+        Release and packaging scripts. Reject shell:true, spawnSync or execSync
+        on interpolated input, unpinned network fetches, and any code path that
+        could publish an artifact built from an unverified commit.
+
+    - path: ".github/workflows/**"
+      instructions: >
+        Every third-party action must be pinned to a full 40-character commit
+        SHA. GITHUB_TOKEN permissions must be minimal and job-scoped.
+        pull_request_target is forbidden. Flag any workflow that exposes secrets
+        to fork code, runs untrusted code with write permissions, lacks a
+        timeout or concurrency group, or lets automation write to main.
+
+    - path: "source/test/**"
+      instructions: >
+        Assess whether the tests would actually fail if the behaviour regressed.
+        Flag assertions that cannot fail, tests that restate the implementation,
+        and changed behaviour left uncovered.
+
+    - path: "**/*.md"
+      instructions: >
+        Check every user-facing claim against the implementation. CRUXIDE must
+        not be described as creating VS Code profiles automatically, as shipping
+        a built-in AI model, chat, autonomous reviewer, or multi-agent runtime,
+        or as published on the Cursor Marketplace. /crux-conductor is a skill
+        invoked explicitly inside an external AI agent. Track, extension, and
+        skill counts must match the catalog. Version references in install
+        instructions must match package.json.
+
+  tools:
+    markdownlint:
+      enabled: true
+    actionlint:
+      enabled: true
+    eslint:
+      enabled: true
+    gitleaks:
+      enabled: true
+    yamllint:
+      enabled: true
+    osvScanner:
+      enabled: true
+    semgrep:
+      enabled: true
+    shellcheck:
+      enabled: true
+
+chat:
+  auto_reply: true

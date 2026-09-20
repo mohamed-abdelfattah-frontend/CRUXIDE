@@ -65,6 +65,10 @@ test('manifest keeps the release security invariants', async () => {
     'ms-dotnettools.csdevkit',
     'vscjava.vscode-java-pack',
     'vmware.vscode-boot-dev-pack',
+    'mtxr.sqltools-driver-sqlite',
+    'mongodb.mongodb-vscode',
+    'Redis.redis-for-vscode',
+    'Prisma.prisma',
   ]) assert.ok(trackExtensionIds.includes(requiredId), `${requiredId} must be curated`);
   assert.equal(manifest.qna, false);
 });
@@ -137,11 +141,11 @@ test('setup webview is local, consent-based, and does not auto-install on ready'
   assert.doesNotMatch(script, /https?:\/\//i);
 });
 
-test('profile experience applies the Figma code typography', async () => {
+test('first-run setup stays consent-based', async () => {
+  // The owned-settings table lives in src/experience-settings.ts, which has no
+  // vscode dependency; experience.test.mjs asserts the typography values by
+  // running that module rather than matching source text.
   const extension = await readText('src/extension.ts');
-  assert.match(extension, /'Roboto Mono'/);
-  assert.match(extension, /'fontFamily'/);
-  assert.match(extension, /terminal\.integrated/);
   assert.match(extension, /cruxide\.setupPrompted\.v2/);
   assert.match(extension, /setupOpened = await openFirstRunSetup/);
   assert.match(extension, /SetupPanel\.show\(context, output\)/);

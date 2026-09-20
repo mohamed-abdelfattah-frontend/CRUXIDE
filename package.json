@@ -1,7 +1,7 @@
 {
   "name": "cruxide",
   "displayName": "CRUXIDE",
-  "description": "The secure CRUXCODE.DEV developer experience for Visual Studio Code.",
+  "description": "A secure, track-based VS Code workspace with curated developer tools, AI skills, engineering rules, and guided setup for web, mobile, backend, data, and DevOps.",
   "version": "1.2.0",
   "publisher": "cruxcode",
   "private": true,
@@ -44,12 +44,30 @@
     "Other"
   ],
   "keywords": [
-    "cruxcode",
     "cruxide",
+    "cruxcode",
     "developer experience",
-    "profile",
-    "theme",
-    "typescript"
+    "vscode setup",
+    "workspace setup",
+    "ai skills",
+    "engineering rules",
+    "coding agents",
+    "code review",
+    "angular",
+    "react",
+    "nextjs",
+    "react native",
+    "nodejs",
+    "express",
+    "nestjs",
+    "databases",
+    "sql",
+    "mongodb",
+    "accessibility",
+    "testing",
+    "devops",
+    "typescript",
+    "theme"
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
@@ -253,7 +271,7 @@
       {
         "id": "cruxide.getStarted",
         "title": "Get started with CRUXIDE",
-        "description": "Apply the CRUXCODE.DEV engineering experience to your workspace.",
+        "description": "Apply the CRUXCODE.DEV engineering experience to the active VS Code profile.",
         "steps": [
           {
             "id": "cruxide.openHomeStep",
