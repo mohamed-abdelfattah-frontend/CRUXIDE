@@ -9,7 +9,7 @@ const readText = (path) => readFile(new URL(path, root), 'utf8');
 
 // The release script imports this module, so the tests exercise the same
 // implementation rather than a copy of the algorithm.
-const { deriveIgnoredEntries, shouldCopyEntry } =
+const { deriveIgnoredEntries, shouldCopyEntry, isIgnored } =
   await import(new URL('scripts/release-exclusions.mjs', root).href);
 
 /**
@@ -26,8 +26,15 @@ test('the real .gitignore excludes every build directory', async () => {
   const ignored = deriveIgnoredEntries(await readText('.gitignore'));
 
   for (const required of ['.git', 'release', 'node_modules', 'dist', '.vscode-test']) {
-    assert.ok(ignored.has(required), `${required} must be excluded from the release bundle`);
+    assert.ok(isIgnored(ignored, required), `${required} must be excluded from the release bundle`);
   }
+
+  // Glob rules must be honoured, not discarded: a stray root-level artefact
+  // such as build.vsix is covered by *.vsix and must never reach the archive.
+  assert.ok(isIgnored(ignored, 'build.vsix'), '*.vsix must exclude a root .vsix');
+  assert.ok(isIgnored(ignored, 'cruxide-1.2.0.vsix'));
+  assert.ok(isIgnored(ignored, 'CRUXIDE-v1.2.0.zip'), '*.zip must exclude a root .zip');
+  assert.ok(!isIgnored(ignored, 'vsix-notes.md'), 'a glob must not over-match');
 
   // Source that must survive.
   for (const kept of ['src', 'scripts', 'test', 'media', 'themes', 'skills', 'package.json']) {
@@ -48,15 +55,15 @@ test('derivation handles comments, blanks, negations, globs, and nested paths', 
     '  spaced/  ',
   ].join('\n'));
 
-  assert.ok(ignored.has('node_modules'));
-  assert.ok(ignored.has('.vscode-test'));
-  assert.ok(ignored.has('dist'));
-  assert.ok(ignored.has('spaced'), 'surrounding whitespace must be trimmed');
+  assert.ok(isIgnored(ignored, 'node_modules'));
+  assert.ok(isIgnored(ignored, '.vscode-test'));
+  assert.ok(isIgnored(ignored, 'dist'));
+  assert.ok(isIgnored(ignored, 'spaced'), 'surrounding whitespace must be trimmed');
 
-  assert.ok(!ignored.has('*.vsix'), 'globs must not be treated as entry names');
-  assert.ok(!ignored.has('!keep-me') && !ignored.has('keep-me'), 'negations must not exclude');
-  assert.ok(!ignored.has('build/output') && !ignored.has('build'), 'nested paths must not exclude a top-level dir');
-  assert.ok(!ignored.has('# a comment') && !ignored.has(''));
+  assert.ok(isIgnored(ignored, 'anything.vsix'), 'globs must be applied, not discarded');
+  assert.ok(!isIgnored(ignored, 'keep-me'), 'negations must not exclude');
+  assert.ok(!isIgnored(ignored, 'build'), 'nested paths must not exclude a top-level dir');
+  assert.ok(!isIgnored(ignored, '# a comment') && !isIgnored(ignored, ''));
 });
 
 test('a copy driven by the derived set leaves build output behind', async (t) => {

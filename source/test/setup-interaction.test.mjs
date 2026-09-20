@@ -165,3 +165,60 @@ test('the track list stays an announced live region', async () => {
   assert.match(panel, /id="track-list"[^>]*aria-live="polite"/);
   assert.match(panel, /id="status" role="status"/);
 });
+
+test('keyboard focus survives a track toggle', async () => {
+  const view = await mountedWebview();
+  const target = view.trackInputs()[4];
+
+  target.focus();
+  assert.equal(view.activeElement(), target, 'precondition: the input holds focus');
+
+  target.checked = false;
+  target.dispatchEvent('change');
+
+  assert.equal(view.activeElement(), target, 'toggling must not move keyboard focus');
+  assert.equal(view.isFocusLost(), false);
+});
+
+test('the harness does detect focus loss, so the assertions above are not vacuous', async () => {
+  const view = await mountedWebview();
+  const target = view.trackInputs()[3];
+  target.focus();
+
+  // Filtering legitimately rebuilds the list, which detaches the focused input.
+  // A browser resets activeElement to <body> here, and so must the harness —
+  // otherwise "focus survives a toggle" could never fail.
+  const search = view.element('search');
+  search.value = 'Track 1';
+  search.dispatchEvent('input');
+
+  assert.notEqual(view.activeElement(), target, 'a detached node cannot keep focus');
+  assert.equal(view.isFocusLost(), true, 'focus falls back to the document body');
+});
+
+test('keyboard focus survives Select all and Core only', async () => {
+  const view = await mountedWebview();
+  const target = view.trackInputs()[2];
+  target.focus();
+
+  view.click('core');
+  assert.equal(view.activeElement(), target, 'Core only must not move focus');
+
+  view.click('all');
+  assert.equal(view.activeElement(), target, 'Select all must not move focus');
+});
+
+test('focus stays in the search box across applying and clearing a filter', async () => {
+  const view = await mountedWebview();
+  const search = view.element('search');
+
+  search.focus();
+  search.value = 'Track 3';
+  search.dispatchEvent('input');
+  assert.equal(view.activeElement(), search, 'focus must stay in the search box while filtering');
+
+  search.value = '';
+  search.dispatchEvent('input');
+  assert.equal(view.activeElement(), search, 'focus must stay in the search box when cleared');
+  assert.equal(view.isFocusLost(), false);
+});

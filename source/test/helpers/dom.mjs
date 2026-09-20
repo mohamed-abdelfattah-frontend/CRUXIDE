@@ -53,8 +53,27 @@ class Element {
 
   appendChild(node) { this.append(node); return node; }
 
+  /** Mirrors HTMLElement.focus(): the node becomes the document activeElement. */
+  focus() {
+    if (this.ownerDocument) this.ownerDocument.activeElement = this;
+  }
+
+  blur() {
+    if (this.ownerDocument && this.ownerDocument.activeElement === this) {
+      this.ownerDocument.activeElement = this.ownerDocument.body;
+    }
+  }
+
   /** Detaches every current child. This is what destroys scroll and focus. */
   replaceChildren(...nodes) {
+    // A browser resets activeElement to <body> when the focused node is
+    // detached. Modelling that is the whole point: it is how a rebuild loses
+    // keyboard focus, which is half of the scroll-preservation contract.
+    const doc = this.ownerDocument;
+    if (doc && doc.activeElement) {
+      const detached = new Set(this.descendants());
+      if (detached.has(doc.activeElement)) doc.activeElement = doc.body;
+    }
     for (const child of this.children) child.parentNode = null;
     this.children = [];
     this.append(...nodes);
@@ -113,9 +132,15 @@ export async function loadSetupWebview(scriptPath) {
   const root = new Element('body');
   root.isRoot = true;
 
+  // Focus lives on the document, as it does in a browser, so detaching the
+  // focused node can reset it.
+  const doc = { body: root, activeElement: root };
+  root.ownerDocument = doc;
+
   const byId = new Map();
+  const adopt = (el) => { el.ownerDocument = doc; return el; };
   const make = (id, tagName = 'div') => {
-    const el = new Element(tagName);
+    const el = adopt(new Element(tagName));
     el.id = id;
     byId.set(id, el);
     root.append(el);
@@ -129,7 +154,7 @@ export async function loadSetupWebview(scriptPath) {
     el.value = id === 'scope' ? 'project-local' : 'guidance';
   }
 
-  const profileInput = new Element('input');
+  const profileInput = adopt(new Element('input'));
   profileInput.name = 'profile';
   profileInput.type = 'radio';
   profileInput.checked = true;
@@ -140,10 +165,12 @@ export async function loadSetupWebview(scriptPath) {
   const windowListeners = new Map();
 
   const document = {
+    get body() { return doc.body; },
+    get activeElement() { return doc.activeElement; },
     getElementById: (id) => byId.get(id) ?? null,
-    createElement: (tagName) => new Element(tagName),
+    createElement: (tagName) => adopt(new Element(tagName)),
     createTextNode: (text) => {
-      const node = new Element('#text');
+      const node = adopt(new Element('#text'));
       node.textContent = String(text);
       return node;
     },
@@ -182,6 +209,9 @@ export async function loadSetupWebview(scriptPath) {
     /** Every track checkbox currently in the list, in document order. */
     trackInputs: () => byId.get('track-list').querySelectorAll('input[data-track-id]'),
     click: (id) => byId.get(id).dispatchEvent('click'),
+    /** The node that currently holds keyboard focus. */
+    activeElement: () => doc.activeElement,
+    isFocusLost: () => doc.activeElement === doc.body,
   };
 }
 
