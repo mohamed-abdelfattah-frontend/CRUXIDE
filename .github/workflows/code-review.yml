@@ -162,10 +162,12 @@ jobs:
     if: always() && github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    permissions:
-      # Writes only to $GITHUB_STEP_SUMMARY and reads needs.validate.result.
-      # It calls no pull-request API, so it needs no pull-requests scope.
-      contents: read
+    permissions: {}
+      # Intentionally empty, and intentionally present. This job checks out
+      # nothing, calls no API, and only writes $GITHUB_STEP_SUMMARY while
+      # reading the needs context, so it needs no token scopes at all.
+      # Removing the block would silently inherit the workflow-level
+      # contents: read instead.
     steps:
       - name: Record outcome
         run: |

@@ -115,6 +115,12 @@ if (detail.enforcement !== 'active') {
   problems.push(`enforcement is "${detail.enforcement}", expected "active"`);
 }
 
+// A ruleset retargeted from branches to tags would still look "active" and
+// still carry every rule, while protecting no branch at all.
+if (detail.target !== desired.target) {
+  problems.push(`target is "${detail.target}", expected "${desired.target}"`);
+}
+
 const desiredIncluded = desired.conditions?.ref_name?.include ?? [];
 for (const ref of desiredIncluded) {
   if (!included.includes(ref)) problems.push(`does not target ${ref} (includes: ${included.join(', ') || 'none'})`);

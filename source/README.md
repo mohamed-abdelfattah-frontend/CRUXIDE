@@ -46,7 +46,7 @@ Everything is reviewable before anything is written, and nothing installs until 
 3. **Review the tracks.** All 26 start selected — uncheck what this profile does not need.
 4. **Confirm the plan** in VS Code's native dialog. This is the point of consent.
 5. **Missing tools install.** Anything you already have is skipped and never downgraded.
-6. **The CRUXIDE experience applies** — theme, icon theme, window title, monospace font settings, ligatures.
+6. **CRUXIDE applies its experience** — theme, icon theme, window title, monospace font settings, ligatures. If a setting cannot be written, it tells you which one rather than reporting success.
 7. **Open the Skills Manager** from Home, the Activity Bar, or the Command Palette.
 8. **Choose** skills, rules, scope, rule mode, and your AI agent, then install the guidance.
 9. **Invoke `/crux-conductor`** in your agent when a task needs several skills coordinated.
@@ -89,7 +89,9 @@ Accessibility ships as three independent, composable packs — **WCAG 2.2**, **B
 
 ## What installs, and what never does
 
-**Installs, only after you confirm:** VS Code extensions for the tracks you selected, into the active profile · CRUXIDE's own theme, editor and terminal font *settings*, and window title · Markdown skill and rule files in the scope you chose.
+**Only after you confirm the native dialog:** VS Code extensions for the tracks you selected, into the active profile · Markdown skill and rule files in the scope you chose.
+
+**When you run setup, or whenever you run `CRUXIDE: Apply CRUXIDE Experience`:** CRUXIDE's own theme, icon theme, editor and terminal font *settings*, and window title. Setup applies these after the confirmation above; the command applies them on demand, without a further prompt, because running it is itself the instruction.
 
 **On fonts:** CRUXIDE sets the editor and terminal font to `'Roboto Mono', Consolas, 'Courier New', monospace`. It does **not** install the Roboto Mono font file — a Marketplace or VSIX install changes settings only. If Roboto Mono is not already on your system you will see the next font in that fallback list, which is harmless. The Windows and macOS installers in the GitHub release do install the font.
 
