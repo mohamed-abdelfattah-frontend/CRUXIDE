@@ -17,8 +17,13 @@ Non-negotiable. Applies to every commit in this repository, whether written by
 a human, an AI assistant, or any automation.
 
 1. **All commits created during an AI-assisted session use the repository's
-   existing human Git identity.** The assistant commits as the repository
-   owner, never as itself.
+   existing human Git identity.** The assistant commits as the human who is
+   driving the session, never as itself.
+
+   This is not a single-author rule. External contributors commit under their
+   own identity as normal; `scripts/validate-commit-attribution.mjs`
+   deliberately accepts any human identity and rejects only AI, bot, and tool
+   identities, so the guard never blocks a genuine contributor.
 
 2. **No AI or tool may appear as author, committer, co-author, signer,
    contributor, or attribution** in Git metadata or commit messages.
