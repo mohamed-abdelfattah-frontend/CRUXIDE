@@ -101,22 +101,77 @@ console.log(`  Branch deletion:   ${rules.has('deletion') ? 'blocked' : 'ALLOWED
 console.log(`  Linear history:    ${rules.has('required_linear_history') ? 'required' : 'not required'}`);
 console.log('');
 
+// Verification compares the live ruleset against the declared policy field by
+// field. Checking only coarse properties ("is active", "has some checks") would
+// report success after someone weakened the ruleset remotely: dropped required
+// checks, lowered the approval count, removed code-owner review, or added a
+// bypass actor. Each of those leaves a ruleset that is still "active" and still
+// "requires pull requests", yet no longer enforces the declared policy.
+const problems = [];
+
 // A ruleset that exists but is disabled or evaluate-only protects nothing, and
 // neither does one that targets a branch other than the default.
-const problems = [];
-if (detail.enforcement !== 'active') problems.push(`enforcement is "${detail.enforcement}", not "active"`);
-if (!included.includes('~DEFAULT_BRANCH') && !included.includes('refs/heads/main')) {
-  problems.push(`does not target main (includes: ${included.join(', ') || 'none'})`);
+if (detail.enforcement !== 'active') {
+  problems.push(`enforcement is "${detail.enforcement}", expected "active"`);
 }
-if (!rules.has('pull_request')) problems.push('does not require pull requests');
-if (!rules.has('non_fast_forward')) problems.push('does not block force pushes');
-if (!rules.has('deletion')) problems.push('does not block branch deletion');
-if (statusChecks.length === 0) problems.push('requires no status checks');
+
+const desiredIncluded = desired.conditions?.ref_name?.include ?? [];
+for (const ref of desiredIncluded) {
+  if (!included.includes(ref)) problems.push(`does not target ${ref} (includes: ${included.join(', ') || 'none'})`);
+}
+
+// Every rule type the policy declares must still be present.
+const desiredRules = new Map(desired.rules.map((rule) => [rule.type, rule.parameters ?? {}]));
+for (const type of desiredRules.keys()) {
+  if (!rules.has(type)) problems.push(`missing rule: ${type}`);
+}
+
+// Pull-request parameters, compared value by value.
+const desiredPullRequest = desiredRules.get('pull_request') ?? {};
+for (const key of [
+  'required_approving_review_count',
+  'require_code_owner_review',
+  'dismiss_stale_reviews_on_push',
+  'required_review_thread_resolution',
+]) {
+  if (key in desiredPullRequest && pullRequest[key] !== desiredPullRequest[key]) {
+    problems.push(`pull_request.${key} is ${JSON.stringify(pullRequest[key])}, expected ${JSON.stringify(desiredPullRequest[key])}`);
+  }
+}
+
+// Every declared status check must still be required. Extra checks are allowed:
+// adding one strengthens protection.
+const desiredChecksRule = desiredRules.get('required_status_checks') ?? {};
+const desiredChecks = (desiredChecksRule.required_status_checks ?? []).map((check) => check.context);
+const liveChecks = new Set(statusChecks.map((check) => check.context));
+for (const context of desiredChecks) {
+  if (!liveChecks.has(context)) problems.push(`required status check missing: "${context}"`);
+}
+if ('strict_required_status_checks_policy' in desiredChecksRule
+  && (rules.get('required_status_checks') ?? {}).strict_required_status_checks_policy
+     !== desiredChecksRule.strict_required_status_checks_policy) {
+  problems.push('strict_required_status_checks_policy does not match the declared policy');
+}
+
+// Bypass actors are the one place where a difference is always a weakening:
+// an actor present remotely but absent from the policy can skip these rules.
+const describeActor = (actor) => `${actor.actor_type}#${actor.actor_id}(${actor.bypass_mode})`;
+const desiredActors = new Set((desired.bypass_actors ?? []).map(describeActor));
+for (const actor of detail.bypass_actors ?? []) {
+  if (!desiredActors.has(describeActor(actor))) {
+    problems.push(`undeclared bypass actor: ${describeActor(actor)}`);
+  }
+}
 
 if (problems.length > 0) {
-  console.error('Branch protection is NOT complete:');
+  console.error('Branch protection does NOT match the declared policy:');
   for (const problem of problems) console.error(`  - ${problem}`);
+  console.error('\nRe-apply with: node scripts/apply-ruleset.mjs');
   process.exit(1);
 }
 
-console.log('Branch protection verified: active, targeting main, PRs and checks required.');
+console.log(
+  `Branch protection verified against CRUXIDE-main-protection.ruleset.json: active, `
+  + `targeting ${included.join(', ')}, ${desiredChecks.length} required checks, `
+  + `${desiredActors.size} declared bypass actor(s), no undeclared bypass.`,
+);

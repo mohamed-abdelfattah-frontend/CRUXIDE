@@ -114,14 +114,31 @@ test('the policy is documented in the canonical rules file', async () => {
   assert.match(rules, /must not be removed/);
 });
 
-test('agent instruction files reference the canonical rules without restating them', async () => {
+test('agent instruction files defer to the canonical rules', async () => {
   for (const file of ['CLAUDE.md', 'AGENTS.md']) {
     const text = await readFile(new URL(file, repositoryRoot), 'utf8');
     assert.match(text, /PROJECT_RULES\.md/, `${file} must reference the canonical rules`);
+    assert.match(text, /single source of truth/, `${file} must name the canonical source`);
+
+    // These files repeat the policy as a convenience summary, because an agent
+    // that reads only CLAUDE.md still has to get the rule. That is only safe
+    // while the precedence is explicit: a bare "adds no rules of its own" next
+    // to a list of rules is self-contradictory and invites the two to drift.
+    // Prose wraps, so match across line breaks rather than pinning the layout.
     assert.match(
       text,
-      /single source of truth|adds no rules of its own/,
-      `${file} must defer to the canonical rules`,
+      /non-normative\s+summary,\s+not\s+a\s+second\s+policy/,
+      `${file} must mark its summary as non-normative`,
+    );
+    assert.match(
+      text,
+      /that\s+file\s+governs/,
+      `${file} must state that PROJECT_RULES.md wins on any difference`,
+    );
+    assert.match(
+      text,
+      /Quick reference \(`?PROJECT_RULES\.md`? is authoritative\)/,
+      `${file} must label the summary as a quick reference`,
     );
   }
 });

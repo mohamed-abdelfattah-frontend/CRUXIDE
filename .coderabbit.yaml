@@ -109,7 +109,7 @@ reviews:
       enabled: true
     yamllint:
       enabled: true
-    osv-scanner:
+    osvScanner:
       enabled: true
     semgrep:
       enabled: true

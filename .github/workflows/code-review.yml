@@ -163,8 +163,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
+      # Writes only to $GITHUB_STEP_SUMMARY and reads needs.validate.result.
+      # It calls no pull-request API, so it needs no pull-requests scope.
       contents: read
-      pull-requests: write
     steps:
       - name: Record outcome
         run: |

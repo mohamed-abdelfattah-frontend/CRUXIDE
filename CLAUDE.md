@@ -1,15 +1,16 @@
 # Claude instructions for the CRUXIDE repository
 
 The canonical rules for this repository are in [`PROJECT_RULES.md`](PROJECT_RULES.md).
-Read it before making changes and obey it. It is the single source of truth;
-this file adds no rules of its own and never overrides it.
+Read it before making changes and obey it. It is the single source of truth.
+The quick reference below is a non-normative summary, not a second policy: if it
+ever differs from `PROJECT_RULES.md`, that file governs.
 
 ## Before you commit — read this
 
 [`PROJECT_RULES.md` → Git Authorship and AI Attribution Policy](PROJECT_RULES.md#git-authorship-and-ai-attribution-policy)
 is non-negotiable and applies to every commit you make here.
 
-The short version:
+Quick reference (PROJECT_RULES.md is authoritative):
 
 - Commit as the repository owner's configured Git identity, never as yourself.
 - **Never** add `Co-Authored-By: Claude`, `Co-Authored-By: Anthropic`,

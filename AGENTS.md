@@ -4,12 +4,16 @@ Applies to Codex, GitHub Copilot, Cursor, Gemini, and any other coding agent.
 Claude Code reads [`CLAUDE.md`](CLAUDE.md), which carries the same rule.
 
 The canonical rules are in [`PROJECT_RULES.md`](PROJECT_RULES.md). It is the
-single source of truth; this file adds no rules of its own.
+single source of truth. The quick reference below is a non-normative summary,
+not a second policy: if it ever differs from `PROJECT_RULES.md`, that file
+governs.
 
 ## Before you commit — read this
 
 [`PROJECT_RULES.md` → Git Authorship and AI Attribution Policy](PROJECT_RULES.md#git-authorship-and-ai-attribution-policy)
 is non-negotiable and applies to every commit in this repository.
+
+Quick reference (`PROJECT_RULES.md` is authoritative):
 
 - Commit as the repository owner's configured Git identity, never as the agent.
 - **Never** add a `Co-Authored-By`, `Generated-By`, or `Assisted-By` trailer

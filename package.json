@@ -271,7 +271,7 @@
       {
         "id": "cruxide.getStarted",
         "title": "Get started with CRUXIDE",
-        "description": "Apply the CRUXCODE.DEV engineering experience to your workspace.",
+        "description": "Apply the CRUXCODE.DEV engineering experience to the active VS Code profile.",
         "steps": [
           {
             "id": "cruxide.openHomeStep",
