@@ -36,7 +36,20 @@ await cp(join(projectRoot, 'installers', 'fonts'), join(stagingRoot, 'fonts'), {
 await chmod(join(stagingRoot, 'install-macos.sh'), 0o755);
 
 await mkdir(sourceRoot, { recursive: true });
-const ignoredSourceEntries = new Set(['.git', 'dist', 'node_modules', 'release']);
+// Derive the exclusions from .gitignore rather than maintaining a second list.
+// The hand-written set omitted .vscode-test, the VS Code build that the smoke
+// test downloads, so a local package:release after npm run smoke:test bundled a
+// ~300 MB editor into the release archive.
+const gitignore = await readFile(join(projectRoot, '.gitignore'), 'utf8');
+const ignoredSourceEntries = new Set([
+  '.git',
+  'release',
+  ...gitignore
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0 && !line.startsWith('#') && !line.includes('*'))
+    .map((line) => (line.endsWith('/') ? line.slice(0, -1) : line)),
+]);
 const sourceEntries = await readdir(projectRoot, { withFileTypes: true });
 for (const entry of sourceEntries) {
   if (!ignoredSourceEntries.has(entry.name)) {
