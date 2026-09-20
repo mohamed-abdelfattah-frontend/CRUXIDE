@@ -1,10 +1,16 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/mohamed-abdelfattah-frontend/CRUXIDE/main/source/media/crux-logo.png" width="96" alt="CRUXIDE" />
+  <img src="https://raw.githubusercontent.com/mohamed-abdelfattah-frontend/CRUXIDE/v1.0.0/source/media/crux-logo.png" width="96" alt="CRUXIDE" />
 </p>
 
 <h1 align="center">CRUXIDE</h1>
 
 <p align="center"><strong>Your stack. Your standards. One developer experience.</strong></p>
+
+<p align="center">
+  Pick the technologies you work in. CRUXIDE installs the matching VS Code
+  extensions and writes engineering rules your AI coding agent reads —
+  and installs nothing until you confirm.
+</p>
 
 <p align="center">
   <a href="https://www.cruxcode.dev">CRUXCODE.DEV</a> ·

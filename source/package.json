@@ -1,7 +1,7 @@
 {
   "name": "cruxide",
-  "displayName": "CRUXIDE",
-  "description": "A secure, track-based VS Code workspace with curated developer tools, AI skills, engineering rules, and guided setup for web, mobile, backend, data, and DevOps.",
+  "displayName": "CRUXIDE — AI Rules & Dev Setup",
+  "description": "Track-based VS Code setup: curated extensions and AI agent rules for Angular, React, Node, Python, Java, PHP, Rust and SQL. Nothing installs until you confirm.",
   "version": "1.0.0",
   "publisher": "cruxcode",
   "private": true,
@@ -20,7 +20,7 @@
   "license": "MIT",
   "icon": "media/crux-logo.png",
   "pricing": "Free",
-  "qna": false,
+  "qna": "https://github.com/mohamed-abdelfattah-frontend/CRUXIDE/issues",
   "galleryBanner": {
     "color": "#15171A",
     "theme": "dark"
@@ -40,34 +40,31 @@
     }
   },
   "categories": [
-    "Themes",
-    "Other"
+    "AI",
+    "Other",
+    "Themes"
   ],
   "keywords": [
     "cruxide",
     "cruxcode",
-    "developer experience",
-    "vscode setup",
-    "workspace setup",
-    "ai skills",
-    "engineering rules",
-    "coding agents",
+    "ai rules",
+    "agent skills",
+    "agents.md",
+    "project rules",
+    "coding standards",
     "code review",
+    "claude code",
+    "github copilot",
+    "cursor",
+    "dev environment",
     "angular",
     "react",
     "nextjs",
-    "react native",
-    "nodejs",
-    "express",
-    "nestjs",
-    "databases",
-    "sql",
+    "typescript",
     "mongodb",
     "accessibility",
     "testing",
-    "devops",
-    "typescript",
-    "theme"
+    "devops"
   ],
   "main": "./dist/extension.js",
   "activationEvents": [

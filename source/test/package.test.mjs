@@ -70,7 +70,10 @@ test('manifest keeps the release security invariants', async () => {
     'Redis.redis-for-vscode',
     'Prisma.prisma',
   ]) assert.ok(trackExtensionIds.includes(requiredId), `${requiredId} must be curated`);
-  assert.equal(manifest.qna, false);
+  // Marketplace Q&A must route to the support channel the manifest already
+  // declares, so a question cannot land in an inbox nobody is watching. The
+  // earlier `qna: false` removed the only in-listing route entirely.
+  assert.equal(manifest.qna, manifest.bugs.url);
 });
 
 test('release publication is version-gated, secret-gated, and publishes an existing VSIX', async () => {
