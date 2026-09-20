@@ -1,0 +1,19 @@
+#!/bin/sh
+# Reject AI, bot, and tool attribution in commit messages.
+# See PROJECT_RULES.md -> Git Authorship and AI Attribution Policy.
+#
+# Enable with:  git config core.hooksPath .githooks
+#
+# Hooks are per-clone and can be skipped with --no-verify, so the authoritative
+# gate is the "Commit attribution" job in .github/workflows/governance.yml.
+
+set -e
+
+repository_root=$(git rev-parse --show-toplevel)
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "commit-msg: node is required to validate commit attribution." >&2
+  exit 1
+fi
+
+node "$repository_root/scripts/validate-commit-attribution.mjs" --message "$1"

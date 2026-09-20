@@ -55,3 +55,22 @@ jobs:
           persist-credentials: false
       - name: Validate GitHub Actions policy
         run: node scripts/validate-workflows.mjs
+
+  commit-attribution:
+    name: Commit attribution
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The full range of the pull request, plus the base, so every commit
+          # can be inspected rather than only the tip.
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reject AI, bot, and tool attribution
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: node scripts/validate-commit-attribution.mjs --range "$BASE_SHA..$HEAD_SHA"
