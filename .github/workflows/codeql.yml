@@ -38,4 +38,4 @@ jobs:
           languages: javascript-typescript
           queries: security-extended
       - name: Analyze source
-        uses: github/codeql-action/analyze@faaca9a8f6edddba5725ffe5adefdab6669a2eca # v4.38.0
+        uses: github/codeql-action/analyze@1c5b675653bb5c22dbe9b12b556ec555138e09fd # v4.38.0
